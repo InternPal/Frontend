@@ -1,13 +1,11 @@
 import React from "react";
 
-import BasicInfoForm from "components/BasicInfoForm";
-import RegForm from "components/RegForm";
-import UploadDocument from "components/UploadDocument";
+import CreateUserProfile from "containers/CreateUserProfile/CreateUserProfile";
 
 const App = () => {
     return <div>
-        <h1>InternPal</h1>
-        <BasicInfoForm />
+        {/* <center><h1>InternPal</h1></center> */}
+        <CreateUserProfile/>
     </div>
 }
 
