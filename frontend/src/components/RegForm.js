@@ -1,4 +1,5 @@
 import React from "react";
+import './RegForm.css';
 
 import {
     Button,
@@ -17,16 +18,16 @@ import {
 const RegForm = () => {
     return (
         <div>
-            <Card className="card-user">
-                <CardHeader>
-                    <CardTitle tag="h5">Add Basic Info</CardTitle>
+            <Card className="reg-card">
+                <CardHeader className="reg-header">
+                    <CardTitle tag="h5">Login</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form>
                         <Row>
-                            <Col className="pr-1" md="6">
+                            <Col className="pr-1" md="12">
                                 <FormGroup>
-                                    <label>First Name</label>
+                                    <label>Full Name</label>
                                     <Input
                                         defaultValue="Chet"
                                         placeholder="Company"
@@ -66,6 +67,13 @@ const RegForm = () => {
                                 </FormGroup>
                             </Col>
                         </Row>
+                        <Button
+                            className="btn-round"
+                            color="primary"
+                            type="submit"
+                        >
+                            {"Login"}
+                        </Button>
                     </Form>
                 </CardBody>
             </Card>
