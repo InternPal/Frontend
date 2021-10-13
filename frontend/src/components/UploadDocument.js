@@ -19,42 +19,47 @@ const UploadDocument = () => {
         <div>
             <Card className="card-user">
                 <CardHeader>
-                    <CardTitle tag="h5">Add Basic Info</CardTitle>
+                    <CardTitle tag="h5">Upload Your Documents</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form>
                         <Row>
                             <Col className="pr-1" md="6">
                                 <FormGroup>
-                                    <label for="exampleCustomFileBrowser">File Browser</label>
+                                    <label for="exampleCustomFileBrowser">College Resume</label>
+                                    <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
+                                </FormGroup>
+                            </Col>
+                            <Col className="pl-1" md="6">
+                                <FormGroup>
+                                    <label for="exampleCustomFileBrowser">College DMC (Any Semester)</label>
                                     <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="12">
+                            <Col className="pr-1" md="6">
                                 <FormGroup>
-                                    <label for="exampleCustomFileBrowser">File Browser</label>
+                                    <label for="exampleCustomFileBrowser">Class 12 DMC</label>
+                                    <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
+                                </FormGroup>
+                            </Col>
+                            <Col className="pl-1" md="6">
+                                <FormGroup>
+                                    <label for="exampleCustomFileBrowser">Class 10 DMC</label>
                                     <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
                                 </FormGroup>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md="12">
-                                <FormGroup>
-                                    <label for="exampleCustomFileBrowser">File Browser</label>
-                                    <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="12">
-                                <FormGroup>
-                                    <label for="exampleCustomFileBrowser">File Browser</label>
-                                    <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
-                                </FormGroup>
-                            </Col>
-                        </Row>
+                        <div className="update ml-auto mr-auto">
+                            <Button
+                                className="btn-round"
+                                color="primary"
+                                type="submit"
+                            >
+                                {"Save & Continue"}
+                            </Button>
+                        </div>
                     </Form>
                 </CardBody>
             </Card>
