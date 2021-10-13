@@ -5,10 +5,12 @@ import BasicInfoForm from "../../components/BasicInfoForm";
 import AcademicDetailsForm from "../../components/AcademicDetailsForm";
 
 const CreateUserProfile = ()=>{
-    return <div className="user-profile-outer-div">
+    return( 
+    // <div className="user-profile-outer-div ">
+    <div className="content">
        <BasicInfoForm/>
        <AcademicDetailsForm/>
-    </div>
+    </div>);
 }
 
 export default CreateUserProfile;

@@ -12,7 +12,7 @@ import App from "./App";
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path = "/"><App/></Route>
+      <Route path = "/" render={(props) => <App {...props}/>} />
       <Redirect to="/"/>
     </Switch>
   </BrowserRouter>,

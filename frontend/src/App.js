@@ -1,11 +1,13 @@
 import React from "react";
 
-import CreateUserProfile from "containers/CreateUserProfile/CreateUserProfile";
+import StudentDashboard from "./containers/StudentDashboard/StudentDashboard";
+// import CreateUserProfile from "containers/CreateUserProfile/CreateUserProfile";
 
-const App = () => {
+
+const App = (props) => {
     return <div>
-        {/* <center><h1>InternPal</h1></center> */}
-        <CreateUserProfile/>
+        <StudentDashboard {...props}/>
+        {/* <CreateUserProfile/> */}
     </div>
 }
 
