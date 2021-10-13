@@ -6,20 +6,15 @@ import BasicInfoForm from "../../components/BasicInfoForm";
 import AcademicDetailsForm from "../../components/AcademicDetailsForm";
 import UploadDocument from "components/UploadDocument";
 
-// const CreateUserProfile = ()=>{
-//     return( 
-//     // <div className="user-profile-outer-div ">
-//     <div className="content">
-//        <BasicInfoForm/>
-//        <AcademicDetailsForm/>
-//     </div>);
-const CreateUserProfile = () => {
-    return <div className="user-profile-outer-div">
-        <RegForm />
+const CreateUserProfile = ()=>{
+    return( 
+    // <div className="user-profile-outer-div ">
+    <div className="content">
+       <RegForm />
         <BasicInfoForm />
         <AcademicDetailsForm />
         <UploadDocument />
-    </div>
+    </div>);
 }
 
 export default CreateUserProfile;

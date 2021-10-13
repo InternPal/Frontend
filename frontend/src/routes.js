@@ -1,4 +1,6 @@
 import CreateUserProfile from "./containers/CreateUserProfile/CreateUserProfile";
+import JobPage from "./components/JobPage";
+import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 
 var routes = [
   {
@@ -25,6 +27,21 @@ var routes = [
     layout: "/admin",
   },
 
+  {
+    path: "/job",
+    name: "Job",
+    icon: "fas fa-briefcase",
+    component: JobPage,
+    layout: "/admin",
+  },
+
+  {
+    path: "/applied-jobs",
+    name: "Applied Jobs",
+    icon: "fas fa-briefcase",
+    component: AppliedJobs,
+    layout: "/admin",
+  },
   
 ];
 export default routes;
