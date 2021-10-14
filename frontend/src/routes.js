@@ -1,5 +1,5 @@
 import CreateUserProfile from "./containers/CreateUserProfile/CreateUserProfile";
-import JobPage from "./components/JobPage";
+import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 
 var routes = [
@@ -28,7 +28,7 @@ var routes = [
   },
 
   {
-    path: "/job",
+    path: "/job-page",
     name: "Job",
     icon: "fas fa-briefcase",
     component: JobPage,

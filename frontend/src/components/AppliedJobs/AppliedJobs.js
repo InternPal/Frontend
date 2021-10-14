@@ -1,6 +1,7 @@
 import React from "react";
 import "./AppliedJobs.css";
 
+
 import {
     Card,
     CardHeader,
