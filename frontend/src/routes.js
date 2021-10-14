@@ -1,6 +1,7 @@
 import CreateUserProfile from "./containers/CreateUserProfile/CreateUserProfile";
 import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
+import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
 
 var routes = [
   {
@@ -23,7 +24,7 @@ var routes = [
     path: "/submission",
     name: "Internship Evaluation",
     icon: "fas fa-clipboard-check",
-    component: CreateUserProfile,
+    component: SubmissionPortal,
     layout: "/admin",
   },
 
