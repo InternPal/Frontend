@@ -20,29 +20,16 @@ const RegForm = () => {
         <div>
             <Card className="reg-card">
                 <CardHeader className="reg-header">
-                    <CardTitle tag="h5">Login</CardTitle>
+                    <CardTitle tag="h5">Registration Details</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form>
-                        <Row>
-                            <Col className="pr-1" md="12">
-                                <FormGroup>
-                                    <label>Full Name</label>
-                                    <Input
-                                        defaultValue="Chet"
-                                        placeholder="Company"
-                                        type="text"
-                                    />
-                                </FormGroup>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
                                     <label>SID</label>
                                     <Input
-                                        defaultValue="19103007"
-                                        disabled
+                                        defaultValue="1910xxxx"
                                         placeholder="SID"
                                         type="text"
                                     />
@@ -52,18 +39,24 @@ const RegForm = () => {
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label htmlFor="exampleInputEmail1">
-                                        Email address
-                                    </label>
-                                    <Input placeholder="Email" type="email" />
+                                    <label for="exampleEmail">Email</label>
+                                    <Input type="email" name="email" id="exampleEmail" placeholder="example@gmail.com" />
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label for="examplePassword" hidden>Password</label>
-                                    <Input type="password" name="password" id="examplePassword" placeholder="Password" />
+                                    <label for="examplePassword">Password</label>
+                                    <Input type="password" name="password" id="examplePassword" placeholder="Enter a valid password" />
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="12">
+                                <FormGroup>
+                                    <label for="examplePassword">Confirm Password</label>
+                                    <Input type="password" name="password" id="examplePassword" placeholder="Confirm password" />
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -72,7 +65,7 @@ const RegForm = () => {
                             color="primary"
                             type="submit"
                         >
-                            {"Login"}
+                            {"Save & Continue"}
                         </Button>
                     </Form>
                 </CardBody>
