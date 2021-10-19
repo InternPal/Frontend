@@ -1,0 +1,9 @@
+h1.heading {
+    padding: 1em;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 5em;
+    font-weight: 900;
+    margin: 0 0 0.5em;
+    color: #505050;
+  }

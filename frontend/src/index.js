@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Redirect, Route} from "react-router-dom";
+import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.3.0";
@@ -12,8 +12,8 @@ import App from "./App";
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path = "/" render={(props) => <App {...props}/>} />
-      <Redirect to="/"/>
+      <Route path="/" render={(props) => <App {...props} />} />
+      <Redirect to="/" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
