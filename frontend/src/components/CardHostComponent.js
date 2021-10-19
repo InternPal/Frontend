@@ -4,21 +4,12 @@ import './CardHostComponent.css';
 import {
     Button,
     Card,
-    Container,
-    CardHeader,
     CardBody,
     CardTitle,
     CardImg,
     CardText,
     CardSubtitle,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup
+
 } from "reactstrap";
 
 const CardHostComponent = (props) => (

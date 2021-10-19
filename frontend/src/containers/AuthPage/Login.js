@@ -8,6 +8,21 @@ const Login = () => {
             <Row>
                 <Col md="12">
                     <FormGroup>
+                        <label htmlFor="role">
+                            Select Role
+                        </label>
+                        <Input type="select">
+                            <option>{"---Select---"}</option>
+                            <option>{"Admin"}</option>
+                            <option>{"Mentor"}</option>
+                            <option>{"Student"}</option>
+                        </Input>
+                    </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col md="12">
+                    <FormGroup>
                         <label htmlFor="exampleInputEmail1">
                             Email address
                         </label>
@@ -24,17 +39,17 @@ const Login = () => {
                 </Col>
             </Row>
             <Row>
-                        <div className="update ml-auto mr-auto">
-                            <Button
-                                className="btn-round"
-                                color="primary"
-                                type="submit"
-                                href="/"
-                            >
-                                {"Sign In"}
-                            </Button>
-                        </div>
-                    </Row>
+                <div className="update ml-auto mr-auto">
+                    <Button
+                        className="btn-round"
+                        color="primary"
+                        type="submit"
+                        href="/"
+                    >
+                        {"Sign In"}
+                    </Button>
+                </div>
+            </Row>
         </Form>
     </CardBody>
 }

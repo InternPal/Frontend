@@ -3,6 +3,7 @@ import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
 import AllotedStudents from "./components/AllotedStudents";
+import JobSearch from "./containers/JobSearch/JobSearch";
 
 var routes = [
   {
@@ -50,6 +51,14 @@ var routes = [
     name: "Alloted Students",
     icon: "fas fa-users",
     component: AllotedStudents,
+    layout: "/admin",
+  },
+
+  {
+    path: "/job-search",
+    name: "Job Search",
+    icon: "fas fa-briefcase",
+    component: JobSearch,
     layout: "/admin",
   },
   
