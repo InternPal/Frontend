@@ -2,6 +2,7 @@ import CreateUserProfile from "./containers/CreateUserProfile/CreateUserProfile"
 import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
+import AllotedStudents from "./components/AllotedStudents";
 
 var routes = [
   {
@@ -41,6 +42,14 @@ var routes = [
     name: "Applied Jobs",
     icon: "fas fa-briefcase",
     component: AppliedJobs,
+    layout: "/admin",
+  },
+
+  {
+    path: "/alloted-students",
+    name: "Alloted Students",
+    icon: "fas fa-users",
+    component: AllotedStudents,
     layout: "/admin",
   },
   
