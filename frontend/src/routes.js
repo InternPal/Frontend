@@ -1,4 +1,3 @@
-import CreateUserProfile from "./containers/CreateUserProfile/CreateUserProfile";
 import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
@@ -7,21 +6,6 @@ import JobSearch from "./containers/JobSearch/JobSearch";
 import AdminJobs from "./containers/AdminJobs/AdminJobs";
 
 var routes = [
-  {
-    path: "/create-user-profile",
-    name: "User Profile",
-    icon: "fas fa-user",
-    component: CreateUserProfile,
-    layout: "/admin",
-  },
-
-  {
-    path: "/job-openings",
-    name: "Job Openings",
-    icon: "fas fa-briefcase",
-    component: CreateUserProfile,
-    layout: "/admin",
-  },
   
   {
     path: "/submission",

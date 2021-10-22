@@ -43,7 +43,7 @@ const AuthPage = () => {
                             <Row><Login /></Row>
                             <Row><Col style={{
                                 textAlign: "end"
-                            }}>Not registered yet? <a href="/">Sign Up!</a></Col></Row>
+                            }}>Not registered yet? <a href="/student-register">Sign Up!</a></Col></Row>
                         </div>
                     </Col>
                 </Row>

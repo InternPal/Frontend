@@ -18,7 +18,7 @@ import {
 
 import {IoLogoLinkedin , IoLogoGithub} from "react-icons/io5"
 
-const BasicInfoForm = ()=>{
+const BasicInfoForm = (props)=>{
     return <div>
         <Card className="card-user">
               <CardHeader>
@@ -136,7 +136,7 @@ const BasicInfoForm = ()=>{
                       <Button
                         className="btn-round"
                         color="primary"
-                        type="submit"
+                        onClick = {props.saveFunc}
                       >
                         {"Save & Continue"}
                       </Button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
     Button,
@@ -11,12 +11,13 @@ import {
     Input,
     Row,
     Col,
-    Table
+    Table,
+    Label
 } from "reactstrap";
 
 
 
-const AcademicDetailsForm = () => {
+const AcademicDetailsForm = (props) => {
 
     const Branches = ["---Select---", "Aerospace Engineering",
         "Civil Engineering",
@@ -28,6 +29,9 @@ const AcademicDetailsForm = () => {
         "Production and Industrial Engineering"];
 
     const semesters = Array.from({ length: 9 }, (_, i) => i);
+
+    const [sem, changeSem] = useState(0);
+    const [backlogFlag, setBacklogFlag] = useState(false);
 
     return <div>
         <Card className="card-user">
@@ -55,6 +59,9 @@ const AcademicDetailsForm = () => {
                                 <label>Semester</label>
                                 <Input
                                     type="select"
+                                    onChange={(event) => {
+                                        changeSem(event.target.value)
+                                    }}
                                 >
                                     {semesters.map((s) => {
                                         return <option>{s}</option>;
@@ -67,74 +74,113 @@ const AcademicDetailsForm = () => {
                     <br />
 
                     {/* Work Here */}
-                    <label>Enter Details For Each Semester </label>
+                    {sem > 0 && <>
+                        <label>Enter Details For Each Semester </label>
 
-                    <Table striped>
-                        <thead className="text-primary">
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                        <Table striped responsive>
+                            <thead className="text-primary">
+                                <tr>
+                                    <th>Semester</th>
+                                    <th className="text-right">SGPA</th>
+                                    <th className="text-right">CGPA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.from({ length: sem }, (_, i) => i).map(sem => {
+                                    return <tr key={sem}>
+                                        <th scope="row">{sem + 1}</th>
+                                        <td className="text-right">
+                                            <Input type="number" min="0" max="10" step="0.01" />
+                                        </td>
+                                        <td className="text-right">
+                                            <Input type="number" min="0" max="10" step="0.01" />
+                                        </td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </Table>
+                        <br />
+                    </>}
 
-                    <br/>
+                    {
+                        sem > 0 && <>
 
-                    <label>Enter Backlog Details</label>
+                        <label>Have Backlogs?</label>   
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="radio" name="radio2"  onChange={()=>{
+                                        setBacklogFlag(true);
+                                    }} />{' '}
+                                    Yes
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="radio" name="radio2" onChange={()=>{
+                                        setBacklogFlag(false);
+                                    }} />{' '}
+                                    No
+                                </Label>
+                            </FormGroup>
 
-                    <Table striped>
-                        <thead className="text-primary">
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                        </tbody>
-                    </Table>
+
+                        </>
+                    }
+
+                    {sem > 0 && backlogFlag && <>
+                        <br /><br />
+                        <label>Enter Backlog Details</label>
+
+                        <Table striped responsive>
+                            <thead className="text-primary">
+                                <tr>
+                                    <th>Semester</th>
+                                    <th className="text-right">Ongoing Backlogs</th>
+                                    <th className="text-right">Total Backlogs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.from({ length: sem }, (_, i) => i).map(sem => {
+                                    return <tr key={sem}>
+                                        <th scope="row">{sem + 1}</th>
+                                        <td className="text-right">
+                                            <Input type="number" min="0" max="10" step="1" />
+                                        </td>
+                                        <td className="text-right">
+                                            <Input type="number" min="0" max="10" step="1" />
+                                        </td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </Table>
+                        <br/>
+                    </>}
+
 
                     <br/>
 
                     <Row>
-                    <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>Percentage equivalent of 12th Marks</label>
-                        <Input
-                          defaultValue=""
-                          placeholder=""
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <FormGroup>
-                        <label>Percentage equivalent of 10th Marks</label>
-                        <Input
-                          defaultValue=""
-                          placeholder=""
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                        <Col className="pr-1" md="6">
+                            <FormGroup>
+                                <label>Percentage equivalent of 12th Marks</label>
+                                <Input
+                                    defaultValue=""
+                                    placeholder=""
+                                    type="text"
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Col className="pl-1" md="6">
+                            <FormGroup>
+                                <label>Percentage equivalent of 10th Marks</label>
+                                <Input
+                                    defaultValue=""
+                                    placeholder=""
+                                    type="text"
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
 
 
 
@@ -143,7 +189,7 @@ const AcademicDetailsForm = () => {
                             <Button
                                 className="btn-round"
                                 color="primary"
-                                type="submit"
+                                onClick={props.saveFunc}
                             >
                                 {"Save & Continue"}
                             </Button>

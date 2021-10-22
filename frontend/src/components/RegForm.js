@@ -1,12 +1,10 @@
 import React from "react";
-import './RegForm.css';
 
 import {
     Button,
     Card,
     CardHeader,
     CardBody,
-    // CardFooter,
     CardTitle,
     FormGroup,
     Form,
@@ -15,9 +13,9 @@ import {
     Col,
 } from "reactstrap";
 
-const RegForm = () => {
+const RegForm = (props) => {
     return (
-        <div>
+        <div className="reg-form-div">
             <Card className="reg-card">
                 <CardHeader className="reg-header">
                     <CardTitle tag="h5">Registration Details</CardTitle>
@@ -29,7 +27,6 @@ const RegForm = () => {
                                 <FormGroup>
                                     <label>SID</label>
                                     <Input
-                                        defaultValue="1910xxxx"
                                         placeholder="SID"
                                         type="text"
                                     />
@@ -40,7 +37,7 @@ const RegForm = () => {
                             <Col md="12">
                                 <FormGroup>
                                     <label for="exampleEmail">Email</label>
-                                    <Input type="email" name="email" id="exampleEmail" placeholder="example@gmail.com" />
+                                    <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -60,14 +57,16 @@ const RegForm = () => {
                                 </FormGroup>
                             </Col>
                         </Row>
+                        <Row>  <div className="update ml-auto mr-auto">
                         <Button
                             className="btn-round"
                             color="primary"
-                            type="submit"
+                            onClick = {props.saveFunc}
                         >
                             {"Save & Continue"}
                         </Button>
-                    </Form>
+                        </div>
+</Row>                    </Form>
                 </CardBody>
             </Card>
         </div>
