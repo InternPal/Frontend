@@ -23,13 +23,13 @@ import {
 } from "reactstrap";
 
 const cards = [
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
+    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
 ];
 
 function Cards() {

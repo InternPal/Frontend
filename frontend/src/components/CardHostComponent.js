@@ -3,6 +3,7 @@ import './CardHostComponent.css';
 
 import {
     Button,
+    Badge,
     Card,
     Container,
     CardHeader,
@@ -22,16 +23,17 @@ import {
 } from "reactstrap";
 
 const CardHostComponent = (props) => (
-    <div className="cardhead">
+    <div className="jobcard-heading">
 
-        <Card className="card">
+        <Card className="jobcard-main">
             <CardBody>
-                <CardImg className="img-card" top width="100%" src={props.image} alt=" Card image cap" />
-                <CardTitle className="card-title">{props.title}</CardTitle>
-                <CardSubtitle className="card-content">{props.profile}</CardSubtitle>
-                <CardSubtitle className="card-content">{props.location}</CardSubtitle>
-                <CardText>{props.stipend}</CardText>
-                <Button color="primary">Apply</Button>
+                <CardImg className="jobcard-img" top width="100%" src={props.image} alt=" Card image cap" />
+                <CardTitle className="jobcard-title">{props.title}</CardTitle>
+                <CardSubtitle className="jobcard-main-content"><span>Profile: </span> {props.profile}</CardSubtitle>
+                <CardSubtitle className="jobcard-main-content"><span>Location: </span> {props.location}</CardSubtitle>
+                <div align="center">
+                    <Button color="primary">Apply</Button>
+                </div>
             </CardBody>
         </Card>
     </div>

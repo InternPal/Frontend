@@ -9,6 +9,7 @@ import { Card, CardHeader, CardBody, Badge, Table } from "reactstrap";
 import FlowChart from "./flowchart";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { FiDownload } from "react-icons/fi";
+import DisplayUserProfile from "components/DisplayUserProfile/DisplayUserProfile";
 
 const JobPage = () => {
     return <div className="content">
@@ -87,11 +88,11 @@ const JobPage = () => {
                 <h5>Eligibilty Criteria</h5><hr />
                 <Table striped>
                     <tbody>
-                        {Object.keys(Job.elegibilityCriteria).map((key)=>{
+                        {Object.keys(Job.elegibilityCriteria).map((key) => {
                             return <tr>
-                            <th scope="row" className="job-page-table-header">{key}</th>
-                            <td>{Job.elegibilityCriteria[key]}</td>
-                        </tr>
+                                <th scope="row" className="job-page-table-header">{key}</th>
+                                <td>{Job.elegibilityCriteria[key]}</td>
+                            </tr>
                         })}
                     </tbody>
                 </Table>
@@ -99,6 +100,7 @@ const JobPage = () => {
             </CardBody>
 
         </Card>
+        <DisplayUserProfile />
     </div>
 }
 
