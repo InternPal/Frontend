@@ -132,14 +132,14 @@ const BasicInfoForm = (props)=>{
                       </Row>
 
                   <Row> 
-                    <div className="update ml-auto mr-auto">
+                    <div className="update ml-auto mr-auto"><center>
                       <Button
                         className="btn-round"
                         color="primary"
                         onClick = {props.saveFunc}
                       >
                         {"Save & Continue"}
-                      </Button>
+                      </Button></center>
                     </div>
                   </Row>
                 </Form>

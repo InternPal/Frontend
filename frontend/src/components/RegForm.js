@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
     Button,
@@ -14,6 +14,22 @@ import {
 } from "reactstrap";
 
 const RegForm = (props) => {
+
+    const [regCred, setRegCred] = useState({
+        SID: null,
+        email: null,
+        password: null
+    });
+
+    const changeHandler = (e) => {
+        setRegCred((prev) => {
+            return {
+                ...prev,
+                [e.target.name]: e.target.value
+            };
+        })
+    }
+
     return (
         <div className="reg-form-div">
             <Card className="reg-card">
@@ -27,8 +43,10 @@ const RegForm = (props) => {
                                 <FormGroup>
                                     <label>SID</label>
                                     <Input
+                                        name="SID"
                                         placeholder="SID"
                                         type="text"
+                                        onChange={changeHandler}
                                     />
                                 </FormGroup>
                             </Col>
@@ -36,37 +54,41 @@ const RegForm = (props) => {
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label for="exampleEmail">Email</label>
-                                    <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
+                                    <label>Email</label>
+                                    <Input type="email" name="email" placeholder="Email" onChange={changeHandler} />
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label for="examplePassword">Password</label>
-                                    <Input type="password" name="password" id="examplePassword" placeholder="Enter a valid password" />
+                                    <label>Password</label>
+                                    <Input type="password" name="password" placeholder="Password" onChange={changeHandler} />
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label for="examplePassword">Confirm Password</label>
-                                    <Input type="password" name="password" id="examplePassword" placeholder="Confirm password" />
+                                    <label>Confirm Password</label>
+                                    <Input type="password" name="password" placeholder="Confirm password" />
                                 </FormGroup>
                             </Col>
                         </Row>
-                        <Row>  <div className="update ml-auto mr-auto">
-                        <Button
-                            className="btn-round"
-                            color="primary"
-                            onClick = {props.saveFunc}
-                        >
-                            {"Save & Continue"}
-                        </Button>
+                        <Row>  <div className="update ml-auto mr-auto"><center>
+                            <Button
+                                className="btn-round"
+                                color="primary"
+                                // onClick = {props.saveFunc}
+                                onClick={() => {
+                                    // console.log(regCred)
+                                    props.saveFunc(regCred);
+                                }}
+                            >
+                                {"Save & Continue"}
+                            </Button></center>
                         </div>
-</Row>                    </Form>
+                        </Row>                    </Form>
                 </CardBody>
             </Card>
         </div>

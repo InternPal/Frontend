@@ -1,0 +1,11 @@
+//User Actions : (Student + Admin + Mentor)
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+
+//Student Actions
+
+export const REGISTER_CRED_VALID = "REGISTER_CRED_VALID";
+export const REGISTER_CRED_INVALID = "REGISTER_CRED_INVALID";
+
+export const REGISTERATION_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTERATION_FAILED = "REGISTERATION_FAILED";

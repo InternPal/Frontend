@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./JobFIlterBar.css";
-import BarButtons from "./BarButtons";
+import SideFilterBar from "./SideFilterBar";
 
-import { Badge } from "reactstrap";
+import { Row, Button , Badge, Form } from "reactstrap";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-// tier + profiles + locations
+
 
 
 const JobFilterBar = () => {
@@ -48,17 +48,19 @@ const JobFilterBar = () => {
     }
 
     return <>
-        <BarButtons
-            TierList={TierList}
-            Profiles={Profiles}
-            Locations={Locations}
-            addTier={addTier}
-            addProfile={addProfile}
-            addLocation={addLocation}
+        <SideFilterBar
+            TierList = {TierList}
+            Profiles = {Profiles}
+            Locations = {Locations}
+            addTier = {addTier}
+            addProfile = {addProfile}
+            addLocation = {addLocation}
         />
-        <div className="filter-pill-div">
+        
+
+        <div>
             {selectedTiers.map(tier => {
-                return <Badge color="info" pill className="filter-pill">{"Tier : "}{tier}
+                return <Badge  color="info" pill className="filter-pill">{"Tier : "}{tier}
                     <AiOutlineCloseCircle
                         onClick={() => { removeTier(tier) }}
                         size="20px"
@@ -80,6 +82,19 @@ const JobFilterBar = () => {
                         style={{ marginLeft: "8px", paddingBottom: "2px", cursor: "pointer" }} /></Badge>
             })}
         </div>
+
+        <Row>  <div className="update ml-auto mr-auto">
+            <center>
+                            <Button
+                                className="btn-round"
+                                color="success"
+                               >
+                                {"Apply Filters"}
+                            </Button>
+                            </center>
+                        </div>
+                        </Row> 
+                        
     </>
 }
 

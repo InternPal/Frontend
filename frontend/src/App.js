@@ -6,15 +6,16 @@ import AuthPage from "./containers/AuthPage/AuthPage";
 import CreateUserProfile from "containers/CreateUserProfile/CreateUserProfile";
 
 
+
+
 const App = (props) => {
     return <div>
         <Switch>
             <Route path="/auth" render={()=><AuthPage/>}/>
             <Route path="/student-register" render={()=><CreateUserProfile/>}/>
             <Route path="/" render={(props)=> <StudentDashboard {...props}/>}/>
-            <Redirect to="/"/>
+            <Redirect to="/auth"/>
         </Switch>
-        {/* <CreateUserProfile/> */}
     </div>
 }
 
