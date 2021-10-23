@@ -36,15 +36,15 @@ const JobFilterBar = () => {
     }
 
     const removeTier = (tier) => {
-        setTiers(prev => prev.filter((t) =>  t != tier ))
+        setTiers(prev => prev.filter((t) => t != tier))
     }
 
     const removeProfile = (profile) => {
-        setProfiles(prev => prev.filter((p) =>  p != profile ))
+        setProfiles(prev => prev.filter((p) => p != profile))
     }
 
     const removeLocation = (location) => {
-        setLocations(prev => prev.filter((l) =>  l != location ))
+        setLocations(prev => prev.filter((l) => l != location))
     }
 
     return <>
@@ -77,7 +77,7 @@ const JobFilterBar = () => {
             {selectedLocations.map(location => {
                 return <Badge color="info" pill className="filter-pill">{"Location : "}{location}
                     <AiOutlineCloseCircle
-                        onClick={() => { removeLocation(location)}}
+                        onClick={() => { removeLocation(location) }}
                         size="20px"
                         style={{ marginLeft: "8px", paddingBottom: "2px", cursor: "pointer" }} /></Badge>
             })}
