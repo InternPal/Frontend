@@ -41,7 +41,7 @@ function Sidebar(props) {
           </div>
         </a>
         <a
-          href=""
+          href="/auth"
           className="simple-text logo-normal"
         >
           InternPal

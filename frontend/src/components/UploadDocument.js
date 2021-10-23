@@ -14,7 +14,7 @@ import {
     Col,
 } from "reactstrap";
 
-const UploadDocument = () => {
+const UploadDocument = (props) => {
     return (
         <div>
             <Card className="card-user">
@@ -32,7 +32,7 @@ const UploadDocument = () => {
                             </Col>
                             <Col className="pl-1" md="6">
                                 <FormGroup>
-                                    <label for="exampleCustomFileBrowser">College DMC (Any Semester)</label>
+                                    <label for="exampleCustomFileBrowser">College DMC (Latest)</label>
                                     <Input type="file" id="exampleCustomFileBrowser" name="customFile" />
                                 </FormGroup>
                             </Col>
@@ -51,15 +51,17 @@ const UploadDocument = () => {
                                 </FormGroup>
                             </Col>
                         </Row>
+                        <Row>
                         <div className="update ml-auto mr-auto">
                             <Button
                                 className="btn-round"
                                 color="primary"
-                                type="submit"
+                                onClick = {props.saveFunc}
                             >
-                                {"Save & Continue"}
+                                {"Save & Finish"}
                             </Button>
                         </div>
+                    </Row>
                     </Form>
                 </CardBody>
             </Card>

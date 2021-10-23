@@ -1,0 +1,46 @@
+.auth-page-div{
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    /* background-color: #f4f3ef; */
+}
+
+.auth-page-bg-img{
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+.auth-page-content{
+    z-index: 100;
+    position: absolute;
+    top : 0;
+    width: 75%;
+    margin: 15vh 12.5%;
+    height: 70vh;
+    overflow: scroll;
+}
+
+.auth-page-left-div{
+    font-size: 8vh;
+    height: 100%;
+    background-color:  #f4f3ef;
+    border-radius: 10px;
+    padding: 40% 2%;
+    background-image: url("https://images.unsplash.com/photo-1615400014497-55726234cccb?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzg4Njg0Ng&ixlib=rb-1.2.1&q=85");
+    background-size: cover;
+    background-position: center;
+}
+
+.auth-page-left-div p{
+    font-size: 20px;
+    padding-left: 1%;
+}
+
+.auth-page-right-div{
+    padding: 15% 5%;
+}
+

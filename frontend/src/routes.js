@@ -1,24 +1,11 @@
-import CreateUserProfile from "./containers/CreateUserProfile/CreateUserProfile";
 import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
+import AllotedStudents from "./components/AllotedStudents";
+import JobSearch from "./containers/JobSearch/JobSearch";
+import AdminJobs from "./containers/AdminJobs/AdminJobs";
 
 var routes = [
-  {
-    path: "/create-user-profile",
-    name: "User Profile",
-    icon: "fas fa-user",
-    component: CreateUserProfile,
-    layout: "/admin",
-  },
-
-  {
-    path: "/job-openings",
-    name: "Job Openings",
-    icon: "fas fa-briefcase",
-    component: CreateUserProfile,
-    layout: "/admin",
-  },
   
   {
     path: "/submission",
@@ -41,6 +28,30 @@ var routes = [
     name: "Applied Jobs",
     icon: "fas fa-briefcase",
     component: AppliedJobs,
+    layout: "/admin",
+  },
+
+  {
+    path: "/alloted-students",
+    name: "Alloted Students",
+    icon: "fas fa-users",
+    component: AllotedStudents,
+    layout: "/admin",
+  },
+
+  {
+    path: "/job-search",
+    name: "Job Search",
+    icon: "fas fa-briefcase",
+    component: JobSearch,
+    layout: "/admin",
+  },
+
+  {
+    path: "/admin-jobs",
+    name: "Admin Jobs",
+    icon: "fas fa-briefcase",
+    component: AdminJobs,
     layout: "/admin",
   },
   

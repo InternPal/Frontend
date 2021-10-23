@@ -2,6 +2,7 @@ import React from "react";
 import "./SubmissionPortal.css";
 
 import { Row, Col, Card, CardHeader, CardBody, Table } from "reactstrap";
+import {GrDocumentTime} from "react-icons/gr";
 
 import SubmissionForm from "./SubmissionForm";
 
@@ -43,6 +44,7 @@ const SubmissionPortal = () => {
                 <Card>
                     <CardHeader>
                         <h5>Mid Internship Evaluation</h5>
+                        <p><GrDocumentTime/> Deadline : {"21/10/2021 18:00"}</p>
                     </CardHeader>
                     <SubmissionForm/>
                 </Card>
@@ -51,6 +53,7 @@ const SubmissionPortal = () => {
                 <Card>
                     <CardHeader>
                         <h5>Final Evaluation</h5>
+                        <p><GrDocumentTime/> Deadline : {"21/10/2021 18:00"}</p>
                     </CardHeader>
                     <SubmissionForm/>
                 </Card>

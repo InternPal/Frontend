@@ -5,21 +5,12 @@ import {
     Button,
     Badge,
     Card,
-    Container,
-    CardHeader,
     CardBody,
     CardTitle,
     CardImg,
     CardText,
     CardSubtitle,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup
+
 } from "reactstrap";
 
 const CardHostComponent = (props) => (
