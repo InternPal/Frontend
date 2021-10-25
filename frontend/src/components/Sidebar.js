@@ -33,19 +33,12 @@ function Sidebar(props) {
       data-active-color={props.activeColor}
     >
       <div className="logo">
+        <center>
         <a
-          href=""
-          className="simple-text logo-mini"
-        >
-          <div className="logo-img">
-          </div>
-        </a>
-        <a
-          href="/auth"
           className="simple-text logo-normal"
         >
           InternPal
-        </a>
+        </a></center>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>

@@ -5,22 +5,23 @@ import AllotedStudents from "./components/AllotedStudents";
 import JobSearch from "./containers/JobSearch/JobSearch";
 import AdminJobs from "./containers/AdminJobs/AdminJobs";
 import CreateJobForm from "./components/JobForm/CreateJobForm";
+import DisplayUserProfile from "./components/DisplayUserProfile/DisplayUserProfile";
 
-var routes = [
-  
+export const StudentRoutes = [
+
   {
-    path: "/submission",
-    name: "Internship Evaluation",
-    icon: "fas fa-clipboard-check",
-    component: SubmissionPortal,
+    path: "/user-profile",
+    name: "User Profile",
+    icon: "fas fa-user",
+    component: DisplayUserProfile,
     layout: "/admin",
   },
 
   {
-    path: "/job-page",
-    name: "Job",
-    icon: "fas fa-briefcase",
-    component: JobPage,
+    path: "/job-search",
+    name: "Search Jobs",
+    icon: "fas fa-search",
+    component: JobSearch,
     layout: "/admin",
   },
 
@@ -33,18 +34,22 @@ var routes = [
   },
 
   {
-    path: "/alloted-students",
-    name: "Alloted Students",
-    icon: "fas fa-users",
-    component: AllotedStudents,
+    path: "/submission",
+    name: "Internship Evaluation",
+    icon: "fas fa-clipboard-check",
+    component: SubmissionPortal,
     layout: "/admin",
   },
 
+];
+
+export const AdminRoutes = [
+
   {
-    path: "/job-search",
-    name: "Job Search",
-    icon: "fas fa-briefcase",
-    component: JobSearch,
+    path: "/post-jobs",
+    name: "Post Jobs",
+    icon: "fas fa-pen-square",
+    component: CreateJobForm,
     layout: "/admin",
   },
 
@@ -57,12 +62,74 @@ var routes = [
   },
 
   {
-    path: "/create-jobs",
-    name: "Create Jobs",
+    path: "/create-mentor",
+    name: "Create Mentor",
     icon: "fas fa-briefcase",
-    component: CreateJobForm,
+    component: ()=><div className="content"></div>,
     layout: "/admin",
-  },
-  
+  }
+
 ];
-export default routes;
+
+// BsPencilSquare
+
+// export const routes = [
+
+//   {
+//     path: "/submission",
+//     name: "Internship Evaluation",
+//     icon: "fas fa-clipboard-check",
+//     component: SubmissionPortal,
+//     layout: "/admin",
+//   },
+
+//   {
+//     path: "/job-page",
+//     name: "Job",
+//     icon: "fas fa-briefcase",
+//     component: JobPage,
+//     layout: "/admin",
+//   },
+
+//   {
+//     path: "/applied-jobs",
+//     name: "Applied Jobs",
+//     icon: "fas fa-briefcase",
+//     component: AppliedJobs,
+//     layout: "/admin",
+//   },
+
+//   {
+//     path: "/alloted-students",
+//     name: "Alloted Students",
+//     icon: "fas fa-users",
+//     component: AllotedStudents,
+//     layout: "/admin",
+//   },
+
+//   {
+//     path: "/job-search",
+//     name: "Job Search",
+//     icon: "fas fa-briefcase",
+//     component: JobSearch,
+//     layout: "/admin",
+//   },
+
+//   {
+//     path: "/admin-jobs",
+//     name: "Admin Jobs",
+//     icon: "fas fa-briefcase",
+//     component: AdminJobs,
+//     layout: "/admin",
+//   },
+
+//   {
+//     path: "/create-jobs",
+//     name: "Create Jobs",
+//     icon: "fas fa-briefcase",
+//     component: CreateJobForm,
+//     layout: "/admin",
+//   },
+
+// ];
+

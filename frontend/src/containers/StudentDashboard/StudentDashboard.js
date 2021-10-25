@@ -2,15 +2,20 @@ import React from "react";
 
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, useLocation } from "react-router-dom";
+import { connect } from "react-redux";
 
 import DemoNavbar from "../../components/DemoNavbar.js";
 import Sidebar from "../../components/Sidebar.js";
 
-import routes from "routes.js";
+import * as routesTypes from "../../routes";
 
 var ps;
 
 const StudentDashboard = (props)=>{
+  let routes = [];
+  if(props.role === "Student")routes = routesTypes.StudentRoutes;
+  else if(props.role === "Admin")routes = routesTypes.AdminRoutes;
+  
 const backgroundColor = "black";
 const activeColor = "info";
   const mainPanel = React.useRef();
@@ -58,4 +63,10 @@ const activeColor = "info";
     </div>);
 }
 
-export default StudentDashboard;
+const mapStateToProps = (state)=>{
+  return {
+    role : state.user.role
+  }
+}
+
+export default connect(mapStateToProps)(StudentDashboard);

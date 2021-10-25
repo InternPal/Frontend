@@ -16,10 +16,16 @@ import {
   Container,
 } from "reactstrap";
 
-import routes from "../routes.js";
+import * as routesTypes from "../routes.js";
+
 import {AiOutlineLogout} from "react-icons/ai"
 
 function Header(props) {
+
+  let routes = [];
+  if(props.role === "Student")routes = routesTypes.StudentRoutes;
+  else if(props.role === "Admin")routes = routesTypes.AdminRoutes;
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [color, setColor] = React.useState("transparent");
@@ -100,7 +106,7 @@ function Header(props) {
               <span className="navbar-toggler-bar bar3" />
             </button>
           </div>
-          <NavbarBrand href="/">{getBrand()}</NavbarBrand>
+          <NavbarBrand>{getBrand()}</NavbarBrand>
         </div>
         <NavbarToggler onClick={toggle}>
           <span className="navbar-toggler-bar navbar-kebab" />
@@ -128,10 +134,16 @@ function Header(props) {
   );
 }
 
+const mapStateToProps = (state)=>{
+  return {
+    role : state.user.role
+  }
+}
+
 const mapDispatchToProps = (dispatch)=>{
   return {
     logout : ()=>dispatch(UserActions.logout())
   }
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
