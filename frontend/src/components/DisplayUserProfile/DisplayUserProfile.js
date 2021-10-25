@@ -2,13 +2,11 @@ import React from "react";
 import "./DisplayUserProfile.css";
 
 import UserData from "./UserData";
-import Job from "components/JobPage/fakeJobData";
 import FakeDoc from "./fakeDoc.pdf";
 
 import { Card, CardHeader, CardBody, Badge, Table } from "reactstrap";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { FiDownload } from "react-icons/fi";
-import fakeJobData from "components/JobPage/fakeJobData";
 
 const DisplayUserProfile = () => {
     return <div className="content">
@@ -22,7 +20,7 @@ const DisplayUserProfile = () => {
                             <img src="https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="profile-sample1" class="background" />
                         </div>
                         <div class="profile-thumb-block">
-                            <img src={UserData.personalDetails.displayPicture} alt="profile-image" class="profile" />
+                            <img src={UserData.personalDetails.displayPicture} alt="profile-image" className="profile" />
                         </div>
                         <div class="top-card-content">
                             <h2>{UserData.personalDetails.name}

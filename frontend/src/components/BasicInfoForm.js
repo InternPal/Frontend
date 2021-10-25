@@ -1,6 +1,6 @@
-import React from "react";
+  import React, { useState } from "react";
 
-import {
+  import {
     Button,
     Card,
     CardHeader,
@@ -16,136 +16,171 @@ import {
     InputGroup
   } from "reactstrap";
 
-import {IoLogoLinkedin , IoLogoGithub} from "react-icons/io5"
+  import { IoLogoLinkedin, IoLogoGithub } from "react-icons/io5"
 
-const BasicInfoForm = (props)=>{
+  const BasicInfoForm = (props) => {
+
+    const [basicCred, setBasicCred] = useState({
+            fName: null,
+            lName: null,
+            dob: null,
+            gender: null,
+            phone: null,
+            linkedin: null,
+            github: null,
+          });
+
+    const changeHandler = (e)=>{
+      setBasicCred(prev=>{
+        return {
+          ...prev,
+          [e.target.name] : e.target.value
+        };
+      })
+    }
+
+
     return <div>
-        <Card className="card-user">
-              <CardHeader>
-                <CardTitle tag="h5">Add Basic Info</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Form>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>SID</label>
-                        <Input
-                          defaultValue="19103007"
-                          disabled
-                          placeholder="SID"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
+      <Card className="card-user">
+        <CardHeader>
+          <CardTitle tag="h5">Add Basic Info</CardTitle>
+        </CardHeader>
+        <CardBody>
+          <Form>
+            <Row>
+              <Col className="pr-1" md="6">
+                <FormGroup>
+                  <label>SID</label>
+                  <Input
+                    defaultValue={props.SID}
+                    disabled
+                    placeholder="SID"
+                    type="text"
+                  />
+                </FormGroup>
+              </Col>
 
-                    <Col className="pl-1" md="6">
-                      <FormGroup>
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <Input placeholder="Email" type="email" disabled />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>First Name</label>
-                        <Input
-                          defaultValue=""
-                          placeholder="First Name"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <FormGroup>
-                        <label>Last Name</label>
-                        <Input
-                          defaultValue=""
-                          placeholder="Last Name"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
+              <Col className="pl-1" md="6">
+                <FormGroup>
+                  <label htmlFor="exampleInputEmail1">
+                    Email address
+                  </label>
+                  <Input placeholder={props.email} type="email" disabled />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="pr-1" md="6">
+                <FormGroup>
+                  <label>First Name</label>
+                  <Input
+                    placeholder="First Name"
+                    type="text"
+                    name = "fName"
+                    onChange = {changeHandler}
+                  />
+                </FormGroup>
+              </Col>
+              <Col className="pl-1" md="6">
+                <FormGroup>
+                  <label>Last Name</label>
+                  <Input
+                    placeholder="Last Name"
+                    type="text"
+                    name = "lName"
+                    onChange = {changeHandler}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
 
-                  <Row>
-                    <Col className="pr-1" md="4">
-                    <FormGroup>
-                        <label>Date Of Birth</label>
-                        <Input
-                          type="date"
-                        />
-                      </FormGroup>
-                      
-                    </Col>
-                    <Col className="px-1" md="4">
-                    <FormGroup>
-                        <label>Gender</label>
-                        <Input
-                          defaultValue=""
-                          placeholder="City"
-                          type="select"
-                        >
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <FormGroup>
-                        <label>Phone Number</label>
-                        <Input placeholder="Phone Number" type="text" />
-                      </FormGroup>
-                    </Col>
-                  </Row>
+            <Row>
+              <Col className="pr-1" md="4">
+                <FormGroup>
+                  <label>Date Of Birth</label>
+                  <Input
+                    type="date"
+                    name = "dob"
+                    onChange = {changeHandler}
+                  />
+                </FormGroup>
 
-                  <Row>
-                  <Col md="12">
-                  <label>Link LinkedIn Account (Optional)</label>
-                  <InputGroup>
+              </Col>
+              <Col className="px-1" md="4">
+                <FormGroup>
+                  <label>Gender</label>
+                  <Input
+                    type="select"
+                    name = "gender"
+                    onChange = {changeHandler}
+                  >
+                    <option>---Select---</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </Input>
+                </FormGroup>
+              </Col>
+              <Col className="pl-1" md="4">
+                <FormGroup>
+                  <label>Phone Number</label>
+                  <Input
+                    placeholder="Phone Number" 
+                    type="text"
+                    name = "phone"
+                    onChange = {changeHandler}
+                      />
+                </FormGroup>
+              </Col>
+            </Row>
 
-                        <Input />
-                        <InputGroupAddon addonType="append">
-                        <InputGroupText><IoLogoLinkedin size="25" color="#51cbce"/></InputGroupText>
-                        </InputGroupAddon>
-                        </InputGroup>
-               
-                      </Col>
-                      </Row>
-                      
-                      <Row>
-                  <Col md="12">
-                  <label>Link Github Account (Optional)</label>
-                  <InputGroup>
+            <Row>
+              <Col md="12">
+                <label>Link LinkedIn Account (Optional)</label>
+                <InputGroup>
+                  <Input 
+                    name = "linkedin"
+                    onChange = {changeHandler}
+                    />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText><IoLogoLinkedin size="25" color="#51cbce" /></InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
 
-                        <Input />
-                        <InputGroupAddon addonType="append">
-                        <InputGroupText><IoLogoGithub size="25" color="#51cbce"/></InputGroupText>
-                        </InputGroupAddon>
-                        </InputGroup>
-               
-                      </Col>
-                      </Row>
+              </Col>
+            </Row>
 
-                  <Row> 
-                    <div className="update ml-auto mr-auto"><center>
-                      <Button
-                        className="btn-round"
-                        color="primary"
-                        onClick = {props.saveFunc}
-                      >
-                        {"Save & Continue"}
-                      </Button></center>
-                    </div>
-                  </Row>
-                </Form>
-              </CardBody>
-            </Card>
+            <Row>
+              <Col md="12">
+                <label>Link Github Account (Optional)</label>
+                <InputGroup>
+                  <Input 
+                    name = "github"
+                    onChange = {changeHandler}
+                    />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText><IoLogoGithub size="25" color="#51cbce" /></InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+
+              </Col>
+            </Row>
+
+            <Row>
+              <div className="update ml-auto mr-auto"><center>
+                <Button
+                  className="btn-round"
+                  color="primary"
+                  onClick={()=>{props.saveFunc(basicCred)}}
+                >
+                  {"Save & Continue"}
+                </Button></center>
+              </div>
+            </Row>
+          </Form>
+        </CardBody>
+      </Card>
     </div>
-}
+  }
 
-export default BasicInfoForm;
+  export default BasicInfoForm;

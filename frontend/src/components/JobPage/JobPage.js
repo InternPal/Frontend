@@ -5,11 +5,11 @@ import "./JobPage.css";
 import Job from "./fakeJobData";
 import FakeDoc from "./fakeDoc.pdf";
 
-import { Card, CardHeader, CardBody, Badge, Table } from "reactstrap";
+import { Card, CardHeader, CardBody, Table } from "reactstrap";
+import Badge from 'react-bootstrap/Badge';
 import FlowChart from "./flowchart";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { FiDownload } from "react-icons/fi";
-import DisplayUserProfile from "components/DisplayUserProfile/DisplayUserProfile";
 
 const JobPage = () => {
     return <div className="content">
@@ -20,7 +20,7 @@ const JobPage = () => {
                 <img className="job-page-company-logo" src={Job.logo} />
                 <h4 className="title">{Job.profile}</h4>
                 <p >{Job.company} . {Job.location}</p>
-                <Badge color="info" pill>Internship</Badge>
+                <Badge bg="info" pill>Internship</Badge>
             </CardHeader>
 
 
@@ -99,8 +99,7 @@ const JobPage = () => {
 
             </CardBody>
 
-        </Card>
-        <DisplayUserProfile />
+        </Card>      
     </div>
 }
 

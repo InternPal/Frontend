@@ -19,6 +19,24 @@ import {
 
 const AcademicDetailsForm = (props) => {
 
+    const [academicCred, setAcademicCred] = useState({
+        branch : null,
+        semester : null,
+        class10 : null,
+        class12 : null,
+        cgTable : null,
+        backlogTable : null 
+    });
+
+    const changeHandler = (e)=>{
+        setAcademicCred(prev=>{
+            return {
+                ...prev,
+                [e.target.name] : e.target.value
+            };
+        })
+    }
+
     const Branches = ["---Select---", "Aerospace Engineering",
         "Civil Engineering",
         "Computer Science & Engineering",
@@ -47,6 +65,8 @@ const AcademicDetailsForm = (props) => {
                                 <label>Branch</label>
                                 <Input
                                     type="select"
+                                    name = "branch"
+                                    onChange = {changeHandler}
                                 >
                                     {Branches.map((Branch) => {
                                         return <option>{Branch}</option>;
@@ -61,6 +81,14 @@ const AcademicDetailsForm = (props) => {
                                     type="select"
                                     onChange={(event) => {
                                         changeSem(event.target.value)
+                                        setAcademicCred(prev=>{
+                                            return {
+                                                ...prev,
+                                                semester : event.target.value,
+                                                cgTable : Array.from({ length: event.target.value }, (_, i) => i).map(_=> {return {cgpa : null, sgpa : null}})
+                                            };
+                                        })
+                                        changeHandler(event)
                                     }}
                                 >
                                     {semesters.map((s) => {
@@ -90,10 +118,20 @@ const AcademicDetailsForm = (props) => {
                                     return <tr key={sem}>
                                         <th scope="row">{sem + 1}</th>
                                         <td className="text-right">
-                                            <Input type="number" min="0" max="10" step="0.01" />
+                                            <Input type="number" min="0" max="10" step="0.01" onChange ={(e)=>{
+                                                setAcademicCred(prev=>{
+                                                    prev.cgTable[sem].sgpa = e.target.value;
+                                                    return prev;
+                                                })
+                                            }} />
                                         </td>
                                         <td className="text-right">
-                                            <Input type="number" min="0" max="10" step="0.01" />
+                                            <Input type="number" min="0" max="10" step="0.01" onChange ={(e)=>{
+                                                setAcademicCred(prev=>{
+                                                    prev.cgTable[sem].cgpa = e.target.value;
+                                                    return prev;
+                                                })
+                                            }} />
                                         </td>
                                     </tr>
                                 })}
@@ -110,6 +148,12 @@ const AcademicDetailsForm = (props) => {
                                 <Label check>
                                     <Input type="radio" name="radio2"  onChange={()=>{
                                         setBacklogFlag(true);
+                                        setAcademicCred(prev=>{
+                                            return {
+                                                ...prev,
+                                                backlogTable : Array.from({ length: sem}, (_, i) => i).map(_=> {return {ongoing : null, total : null}})
+                                            };
+                                        })
                                     }} />{' '}
                                     Yes
                                 </Label>
@@ -118,12 +162,16 @@ const AcademicDetailsForm = (props) => {
                                 <Label check>
                                     <Input type="radio" name="radio2" onChange={()=>{
                                         setBacklogFlag(false);
+                                        setAcademicCred(prev=>{
+                                            return {
+                                                ...prev,
+                                                backlogTable : null
+                                            };
+                                        })
                                     }} />{' '}
                                     No
                                 </Label>
                             </FormGroup>
-
-
                         </>
                     }
 
@@ -144,10 +192,20 @@ const AcademicDetailsForm = (props) => {
                                     return <tr key={sem}>
                                         <th scope="row">{sem + 1}</th>
                                         <td className="text-right">
-                                            <Input type="number" min="0" max="10" step="1" />
+                                            <Input type="number" min="0" max="10" step="1" onChange={(e)=>{
+                                                 setAcademicCred(prev=>{
+                                                    prev.backlogTable[sem].ongoing = e.target.value;
+                                                    return prev;
+                                                })
+                                            }}/>
                                         </td>
                                         <td className="text-right">
-                                            <Input type="number" min="0" max="10" step="1" />
+                                            <Input type="number" min="0" max="10" step="1" onChange={(e)=>{
+                                                 setAcademicCred(prev=>{
+                                                    prev.backlogTable[sem].total = e.target.value;
+                                                    return prev;
+                                                })
+                                            }}/>
                                         </td>
                                     </tr>
                                 })}
@@ -164,9 +222,9 @@ const AcademicDetailsForm = (props) => {
                             <FormGroup>
                                 <label>Percentage equivalent of 12th Marks</label>
                                 <Input
-                                    defaultValue=""
-                                    placeholder=""
-                                    type="text"
+                                    name = "class12"
+                                    onChange = {changeHandler}
+                                    type="number"
                                 />
                             </FormGroup>
                         </Col>
@@ -174,8 +232,8 @@ const AcademicDetailsForm = (props) => {
                             <FormGroup>
                                 <label>Percentage equivalent of 10th Marks</label>
                                 <Input
-                                    defaultValue=""
-                                    placeholder=""
+                                    name = "class10"
+                                    onChange = {changeHandler}
                                     type="text"
                                 />
                             </FormGroup>
@@ -189,7 +247,7 @@ const AcademicDetailsForm = (props) => {
                             <Button
                                 className="btn-round"
                                 color="primary"
-                                onClick={props.saveFunc}
+                                onClick={()=>props.saveFunc(academicCred)}
                             >
                                 {"Save & Continue"}
                             </Button></center>

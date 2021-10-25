@@ -1,4 +1,5 @@
 import React from "react";
+import "./HiringWorkflow";
 
 import {
     Button,
@@ -11,13 +12,23 @@ import {
     Input,
     Row,
     Col,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup
 } from "reactstrap";
+import HiringWorkflow from "./HiringWorkflow";
 
-const EnterJobDetails = () => {
-    return <div>
+const Profiles = ["---Select---","Software Developer", "Frontend Developer", "Backend Developer", "Finance", "Operations", "Data Science", "Fintech"];
+
+const Branches = ["Aerospace Engineering",
+        "Civil Engineering",
+        "Computer Science & Engineering",
+        "Electrical Engineering",
+        "Electronics and Communication Engineering",
+        "Mechanical Engineering",
+        "Metallurgical & Materials Engineering",
+        "Production and Industrial Engineering"];
+
+
+const CreateJobForm = () => {
+    return <div className="content">
         <Card className="card-user">
             <CardHeader>
                 <CardTitle tag="h5">Enter Job Details</CardTitle>
@@ -25,89 +36,96 @@ const EnterJobDetails = () => {
             <CardBody>
                 <Form>
                     <Row>
-                        <Col md="12">
+                        <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label>Company</label>
                                 <Input
-                                    defaultValue="JP Morgan"
                                     placeholder="Enter Company Name"
                                     type="text"
                                 />
                             </FormGroup>
                         </Col>
+
+                        <Col className="pl-1" md="6">
+                            <FormGroup>
+                                <label>Profile</label>
+                                <Input type="select">
+                                    {Profiles.map(profile=><option key={profile}>{profile}</option>)}
+                                </Input>
+                            </FormGroup>
+                        </Col>
+
                     </Row>
                     <Row>
                         <Col className="pr-1" md="6">
                             <FormGroup>
-                                <label>Profile</label>
+                                <label>Job Function</label>
+                                <Input type="text" placeholder="Enter Job Function"/>
+                            </FormGroup>
+                        </Col>
+
+                        <Col className="pl-1" md="6">
+                            <FormGroup>
+                                <label>Category</label>
                                 <Input type="select">
-                                    <option>Software Developer</option>
-                                    <option>Corporate Analyst</option>
-                                    <option>Consultancy</option>
+                                <option>---Select---</option>
+                                    <option>Tier 0</option>
+                                    <option>Tier 1</option>
+                                    <option>Tier 2</option>
+                                    <option>Tier 3</option>
                                 </Input>
                             </FormGroup>
                         </Col>
-                        <Col className="pl-1" md="6">
-                            <FormGroup>
-                                <label>Location</label>
-                                <Input
-                                    defaultValue="Mumbai"
-                                    placeholder="Location"
-                                    type="text"
-                                />
-                            </FormGroup>
-                        </Col>
+
                     </Row>
                     <Row>
                         <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label>CTC/Stipend</label>
-                                <Input placeholder="CTC/Stipend" type="text" />
+                                <Input placeholder="CTC/Stipend" type="number" />
                             </FormGroup>
                         </Col>
+
                         <Col className="pl-1" md="6">
                             <FormGroup>
-                                <label>Category</label>
-                                <Input type="select">
-                                    <option>Tier 1</option>
-                                    <option>Tier 2</option>
-                                    <option>Tier 3</option>
-                                    <option>OTA</option>
-                                </Input>
+                                <label>Location</label>
+                                <Input
+                                    placeholder="Location"
+                                    type="text"
+                                />
                             </FormGroup>
                         </Col>
+                        
                     </Row>
                     <Row>
                         <Col md="12">
                             <FormGroup>
-                                <label for="exampleText">Job Description</label>
-                                <Input type="textarea" name="text" id="exampleText" />
+                                <label>Job Description</label>
+                                <Input type="textarea" name="text"/>
                             </FormGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="pr-1" md="6">
                             <FormGroup>
-                                <label for="jobdetails">Attach Job Details</label>
-                                <Input type="file" id="jobdetails" name="customFile" />
+                                <label for="logo">Attach Logo</label>
+                                <Input type="file"/>
                             </FormGroup>
                         </Col>
                         <Col className="pl-1" md="6">
-                            <FormGroup>
-                                <label for="logo">Attach Logo</label>
-                                <Input type="file" id="logo" name="companylogo" />
+                        <FormGroup>
+                                <label>Attach Job Details</label>
+                                <Input type="file"/>
                             </FormGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col md="12">
                             <FormGroup>
-                                <label>Branches Allowed</label>
-                                <Input
-                                    defaultValue="All"
-                                    placeholder="Enter the branches eligible for this job"
-                                    type="text"
-                                />
+                                <label>Branches Allowed (Press "ctrl" or "command" to select multiple)</label>
+                                <Input type="select" multiple>
+                                    {Branches.map(branch=><option key={branch}>{branch}</option>)}
+                                </Input>
                             </FormGroup>
                         </Col>
                     </Row>
@@ -117,22 +135,16 @@ const EnterJobDetails = () => {
                             <FormGroup>
                                 <label>CGPA(UG)</label>
                                 <Input
-                                    defaultValue="Required 7.0"
-                                    placeholder="Enter min. CG for eligibility"
-                                    type="text"
+                                    placeholder="Enter Min CGPA"
+                                    type="number"
+                                    step = "0.01"
                                 />
                             </FormGroup>
                         </Col>
                         <Col className="pl-1" md="6">
                             <FormGroup>
                                 <label for="exampleSelect">Backlogs</label>
-                                <Input type="select" name="select" id="exampleSelect">
-                                    <option>No Backlogs</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>No restrictions</option>
-                                </Input>
+                                <Input type="number" step="1" placeholder="Number of Backlogs allowed"/>
                             </FormGroup>
                         </Col>
                     </Row>
@@ -142,8 +154,7 @@ const EnterJobDetails = () => {
                             <FormGroup>
                                 <label>Class XII(Percentage)</label>
                                 <Input
-                                    defaultValue="Required 75%"
-                                    placeholder="Enter your Class XII Percentage"
+                                    placeholder="Min Class XII Percentage"
                                     type="text"
                                 />
                             </FormGroup>
@@ -152,28 +163,29 @@ const EnterJobDetails = () => {
                             <FormGroup>
                                 <label>Class X(Percentage)</label>
                                 <Input
-                                    defaultValue="Required 75%"
-                                    placeholder="Enter your Class X Percentage"
+                                    placeholder="Min Class X Percentage"
                                     type="text"
                                 />
                             </FormGroup>
                         </Col>
                     </Row>
+                    <HiringWorkflow/>
                     <Row>
-                        <div className="update ml-auto mr-auto">
+                        <div className="update ml-auto mr-auto"><center>
                             <Button
                                 className="btn-round"
                                 color="primary"
                                 type="submit"
                             >
                                 {"Save & Continue"}
-                            </Button>
+                            </Button></center>
                         </div>
                     </Row>
+                    
                 </Form>
             </CardBody>
         </Card>
     </div>
 }
 
-export default EnterJobDetails;
+export default CreateJobForm;

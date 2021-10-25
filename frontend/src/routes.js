@@ -4,6 +4,7 @@ import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
 import AllotedStudents from "./components/AllotedStudents";
 import JobSearch from "./containers/JobSearch/JobSearch";
 import AdminJobs from "./containers/AdminJobs/AdminJobs";
+import CreateJobForm from "./components/JobForm/CreateJobForm";
 
 var routes = [
   
@@ -52,6 +53,14 @@ var routes = [
     name: "Admin Jobs",
     icon: "fas fa-briefcase",
     component: AdminJobs,
+    layout: "/admin",
+  },
+
+  {
+    path: "/create-jobs",
+    name: "Create Jobs",
+    icon: "fas fa-briefcase",
+    component: CreateJobForm,
     layout: "/admin",
   },
   

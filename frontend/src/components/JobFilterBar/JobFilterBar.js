@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./JobFIlterBar.css";
 import SideFilterBar from "./SideFilterBar";
-
-import { Row, Button , Badge, Form } from "reactstrap";
+import Badge from 'react-bootstrap/Badge'
+import { Row, Button, Card, CardBody } from "reactstrap";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 
@@ -56,9 +56,10 @@ const JobFilterBar = () => {
             addProfile = {addProfile}
             addLocation = {addLocation}
         />
+        <br/>
         
-
-        <div>
+        <Card>
+            <CardBody>
             {selectedTiers.map(tier => {
                 return <Badge  color="info" pill className="filter-pill">{"Tier : "}{tier}
                     <AiOutlineCloseCircle
@@ -81,7 +82,8 @@ const JobFilterBar = () => {
                         size="20px"
                         style={{ marginLeft: "8px", paddingBottom: "2px", cursor: "pointer" }} /></Badge>
             })}
-        </div>
+            </CardBody>
+        </Card>
 
         <Row>  <div className="update ml-auto mr-auto">
             <center>
