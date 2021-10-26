@@ -10,7 +10,7 @@ import {
     InputGroup,
 } from "reactstrap";
 
-const HiringWorkflow = (props) => {
+const HiringWorkflow = ({setHiringWorkflowArray , changeHiringWorkflow}) => {
 
     const [showTable, toggleTable] = useState(false);
     const [numberOfActivities, setNumber] = useState(0);
@@ -29,6 +29,7 @@ const HiringWorkflow = (props) => {
                             max="7"
                             onChange={(e)=>{
                                 setNumber(e.target.value)
+                                setHiringWorkflowArray(+e.target.value)
                             }}
                         />
                         <InputGroupAddon addonType="append">
@@ -66,16 +67,24 @@ const HiringWorkflow = (props) => {
                         return <tr key={a}>
                             <th scope="row">{a + 1}</th>
                             <td>
-                                <Input type="text"/>
+                                <Input type="text" onChange = {e=>{
+                                    changeHiringWorkflow(a, "title", e.target.value)
+                                }}/>
                             </td>
                             <td>
-                                <Input type="text"/>
+                                <Input type="text" onChange = {e=>{
+                                    changeHiringWorkflow(a, "description", e.target.value)
+                                }}/>
                             </td>
                             <td>
-                                <Input type="date"/>
+                                <Input type="date" onChange = {e=>{
+                                    changeHiringWorkflow(a, "date", e.target.value)
+                                }}/>
                             </td>
                             <td>
-                                <Input type="time"/>
+                                <Input type="time" onChange = {e=>{
+                                    changeHiringWorkflow(a, "time", e.target.value)
+                                }}/>
                             </td>
                         </tr>
                     })}

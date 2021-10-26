@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HiringWorkflow";
+import { connect } from "react-redux";
+import { postJobs } from "../../store/Actions/AdminActions";
+import Select from 'react-select';
 
 import {
     Button,
@@ -15,19 +18,76 @@ import {
 } from "reactstrap";
 import HiringWorkflow from "./HiringWorkflow";
 
-const Profiles = ["---Select---","Software Developer", "Frontend Developer", "Backend Developer", "Finance", "Operations", "Data Science", "Fintech"];
+const Profiles = ["---Select---", "Software Developer", "Frontend Developer", "Backend Developer", "Finance", "Operations", "Data Science", "Fintech"];
 
-const Branches = ["Aerospace Engineering",
-        "Civil Engineering",
-        "Computer Science & Engineering",
-        "Electrical Engineering",
-        "Electronics and Communication Engineering",
-        "Mechanical Engineering",
-        "Metallurgical & Materials Engineering",
-        "Production and Industrial Engineering"];
+const Branches = [{ label: "Aerospace Engineering", value: "Aerospace Engineering" },
+{ label: "Civil Engineering", value: "Civil Engineering" },
+{ label: "Computer Science & Engineering", value: "Computer Science & Engineering" },
+{ label: "Electrical Engineering", value: "Electrical Engineering" },
+{ label: "Electronics and Communication Engineering", value: "Electronics and Communication Engineering" },
+{ label: "Mechanical Engineering", value: "Mechanical Engineering" },
+{ label: "Metallurgical & Materials Engineering", value: "Metallurgical & Materials Engineering" },
+{ label: "Production and Industrial Engineering", value: "Production and Industrial Engineering" },];
 
 
-const CreateJobForm = () => {
+const CreateJobForm = (props) => {
+
+    const [jobCreds, setJobCreds] = useState({
+        name: null,
+        profile: null,
+        location: null,
+        jobFunction: null,
+        pay: null,
+        tier: null,
+        description: null,
+        hiringWorkflow: null,
+        eligibility: {
+            cg: null,
+            branch: [],
+            backlogs: null,
+            class10: null,
+            class12: null
+        }
+    });
+
+    const changeHandler = (e) => {
+        setJobCreds(prev => {
+            return {
+                ...prev,
+                [e.target.name]: e.target.value
+            };
+        })
+    }
+
+    const changeEligibilty = (e) => {
+        setJobCreds(prev => {
+            prev.eligibility[e.target.name] = +e.target.value;
+            return prev;
+        })
+    }
+
+    const setHiringWorkflowArray = (l)=>{
+        setJobCreds(prev=>{
+            return {
+                ...prev,
+                hiringWorkflow : Array.from({ length: l }, (_, i) => i).map(_=> {return {
+                    title : null,
+                    description : null,
+                    date : null,
+                    time : null
+                }})
+            };
+        })
+    }
+
+    const changeHiringWorkflow = (index, name, value)=>{
+        setJobCreds(prev=>{
+            prev.hiringWorkflow[index][name] = value
+            return prev;
+        })
+    }
+
+
     return <div className="content">
         <Card className="card-user">
             <CardHeader>
@@ -42,6 +102,8 @@ const CreateJobForm = () => {
                                 <Input
                                     placeholder="Enter Company Name"
                                     type="text"
+                                    name="name"
+                                    onChange={changeHandler}
                                 />
                             </FormGroup>
                         </Col>
@@ -49,8 +111,8 @@ const CreateJobForm = () => {
                         <Col className="pl-1" md="6">
                             <FormGroup>
                                 <label>Profile</label>
-                                <Input type="select">
-                                    {Profiles.map(profile=><option key={profile}>{profile}</option>)}
+                                <Input type="select" name="profile" onChange={changeHandler}>
+                                    {Profiles.map(profile => <option key={profile}>{profile}</option>)}
                                 </Input>
                             </FormGroup>
                         </Col>
@@ -60,15 +122,18 @@ const CreateJobForm = () => {
                         <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label>Job Function</label>
-                                <Input type="text" placeholder="Enter Job Function"/>
+                                <Input type="text" placeholder="Enter Job Function"
+                                    name="jobFunction"
+                                    onChange={changeHandler}
+                                />
                             </FormGroup>
                         </Col>
 
                         <Col className="pl-1" md="6">
                             <FormGroup>
                                 <label>Category</label>
-                                <Input type="select">
-                                <option>---Select---</option>
+                                <Input type="select" name="tier" onChange={changeHandler}>
+                                    <option>---Select---</option>
                                     <option>Tier 0</option>
                                     <option>Tier 1</option>
                                     <option>Tier 2</option>
@@ -82,7 +147,7 @@ const CreateJobForm = () => {
                         <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label>CTC/Stipend</label>
-                                <Input placeholder="CTC/Stipend" type="number" />
+                                <Input placeholder="CTC/Stipend" type="number" name="pay" onChange={changeHandler} />
                             </FormGroup>
                         </Col>
 
@@ -92,16 +157,18 @@ const CreateJobForm = () => {
                                 <Input
                                     placeholder="Location"
                                     type="text"
+                                    name="location"
+                                    onChange={changeHandler}
                                 />
                             </FormGroup>
                         </Col>
-                        
+
                     </Row>
                     <Row>
                         <Col md="12">
                             <FormGroup>
                                 <label>Job Description</label>
-                                <Input type="textarea" name="text"/>
+                                <Input type="textarea" name="description" onChange={changeHandler} />
                             </FormGroup>
                         </Col>
                     </Row>
@@ -109,23 +176,42 @@ const CreateJobForm = () => {
                         <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label for="logo">Attach Logo</label>
-                                <Input type="file"/>
+                                <Input type="file" />
                             </FormGroup>
                         </Col>
                         <Col className="pl-1" md="6">
-                        <FormGroup>
+                            <FormGroup>
                                 <label>Attach Job Details</label>
-                                <Input type="file"/>
+                                <Input type="file" />
                             </FormGroup>
                         </Col>
                     </Row>
+                </Form>
+            </CardBody>
+            <br /><br />
+
+
+            <CardBody>
+                <h5>Enter Eligibilty Criteria</h5>
+                <Form>
                     <Row>
                         <Col md="12">
                             <FormGroup>
-                                <label>Branches Allowed (Press "ctrl" or "command" to select multiple)</label>
-                                <Input type="select" multiple>
-                                    {Branches.map(branch=><option key={branch}>{branch}</option>)}
-                                </Input>
+                                <label>Branches Allowed</label>
+                                <Select
+                                    isMulti
+                                    name=""
+                                    options={Branches}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                    onChange={e => {
+                                        setJobCreds(prev => {
+                                            prev.eligibility.branch = e.map(o => o.value)
+                                            return prev;
+                                        })
+                                    }}
+                                />
+
                             </FormGroup>
                         </Col>
                     </Row>
@@ -137,14 +223,16 @@ const CreateJobForm = () => {
                                 <Input
                                     placeholder="Enter Min CGPA"
                                     type="number"
-                                    step = "0.01"
+                                    step="0.01"
+                                    name="cg"
+                                    onChange={changeEligibilty}
                                 />
                             </FormGroup>
                         </Col>
                         <Col className="pl-1" md="6">
                             <FormGroup>
                                 <label for="exampleSelect">Backlogs</label>
-                                <Input type="number" step="1" placeholder="Number of Backlogs allowed"/>
+                                <Input type="number" step="1" placeholder="Number of Backlogs allowed" name="backlogs" onChange={changeEligibilty} />
                             </FormGroup>
                         </Col>
                     </Row>
@@ -155,7 +243,9 @@ const CreateJobForm = () => {
                                 <label>Class XII(Percentage)</label>
                                 <Input
                                     placeholder="Min Class XII Percentage"
-                                    type="text"
+                                    type="number"
+                                    name="class12"
+                                    onChange={changeEligibilty}
                                 />
                             </FormGroup>
                         </Col>
@@ -164,28 +254,56 @@ const CreateJobForm = () => {
                                 <label>Class X(Percentage)</label>
                                 <Input
                                     placeholder="Min Class X Percentage"
-                                    type="text"
+                                    type="number"
+                                    name="class10"
+                                    onChange={changeEligibilty}
                                 />
                             </FormGroup>
                         </Col>
                     </Row>
-                    <HiringWorkflow/>
-                    <Row>
-                        <div className="update ml-auto mr-auto"><center>
-                            <Button
-                                className="btn-round"
-                                color="primary"
-                                type="submit"
-                            >
-                                {"Save & Continue"}
-                            </Button></center>
-                        </div>
-                    </Row>
-                    
                 </Form>
             </CardBody>
+            <br/><br/>
+
+            <CardBody>
+                <h5>Enter Hiring Workflow</h5>
+                <Form>
+                    <HiringWorkflow 
+                        setHiringWorkflowArray = {setHiringWorkflowArray}
+                        changeHiringWorkflow = {changeHiringWorkflow}
+                        />
+                </Form>
+            </CardBody>
+
+            <Row>
+                <div className="update ml-auto mr-auto"><center>
+                    <Button
+                        className="btn-round"
+                        color="primary"
+                        onClick={() => {
+                            var flag = window.confirm("Confirm Post Job?");
+                            if (flag) {
+                                console.log(jobCreds);
+                                console.log(jobCreds.eligibility.branch)
+                                props.postJob(jobCreds)
+                            }
+                            else {
+                                console.log("No");
+                            }
+                        }}
+                    >
+                        {"Post Job"}
+                    </Button></center>
+                </div>
+            </Row>
         </Card>
     </div>
 }
 
-export default CreateJobForm;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        postJob: (jobCreds) => dispatch(postJobs(jobCreds)),
+    };
+}
+
+export default connect(null, mapDispatchToProps)(CreateJobForm);
