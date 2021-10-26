@@ -29,9 +29,9 @@ const CreateUserProfile = (props) => {
         class10: null,
         class12: null,
         cgpa : null,
-        // cgTable : null,
+        cgList : null,
         backlogs : null,
-        // backlogTable : null,
+        backlogList : null,
         semester : null
     });
 
@@ -64,9 +64,9 @@ const CreateUserProfile = (props) => {
     }
 
     const AcademicDetailsSaveFunc = (academicCred) =>{
-        let cgpa = academicCred.cgTable[academicCred.cgTable.length-1].cgpa;
+        let cgpa = academicCred.cgList[academicCred.cgList.length-1].cgpa;
         let totalBacklogs = 0;
-        if(academicCred.backlogTable!=null)academicCred.backlogTable.forEach(element => {
+        if(academicCred.backlogList!=null)academicCred.backlogList.forEach(element => {
             totalBacklogs = totalBacklogs + +element.ongoing
         });
         setUserProfile(prev=>{
@@ -74,9 +74,9 @@ const CreateUserProfile = (props) => {
                 ...prev,
                 branch : academicCred.branch,
                 semester : +academicCred.semester,
-                // cgTable : academicCred.cgTable,
+                cgList : academicCred.cgList,
                 cgpa : +cgpa,
-                // backlogTable : academicCred.backlogTable,
+                backlogList : academicCred.backlogList,
                 backlogs : +totalBacklogs,
                 class10 : +academicCred.class10,
                 class12 : +academicCred.class12

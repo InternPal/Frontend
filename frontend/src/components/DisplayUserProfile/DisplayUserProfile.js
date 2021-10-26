@@ -114,11 +114,14 @@ const DisplayUserProfile = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td className="text-right">9.75</td>
-                                    <td className="text-right">9.75</td>
+                                {user.cgList.map((data, index)=>{
+                                    return  <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td className="text-right">{data.sgpa}</td>
+                                    <td className="text-right">{data.cgpa}</td>
                                 </tr>
+                                })}
+                               
                             </tbody>
                         </Table>
             </CardBody>
@@ -126,22 +129,26 @@ const DisplayUserProfile = (props) => {
 
             <CardBody>
                 <h5>Backlog Details</h5>
+                { user.backlogs === 0 ? <p>No backlogs</p> : 
                         <Table striped responsive>
                             <thead className="text-primary">
                                 <tr>
                                     <th width="30%">Sem</th>
-                                    <th width="40%" className="text-right">Ongoing</th>
-                                    <th width="40%" className="text-right">Total</th>
+                                    <th width="40%" className="text-right">Ongoing Backlogs</th>
+                                    <th width="40%" className="text-right">Total Backlogs</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td className="text-right">9.75</td>
-                                    <td className="text-right">9.75</td>
+                                {user.backlogList.map((data, index)=>{
+                                    return <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td className="text-right">{data.ongoing}</td>
+                                    <td className="text-right">{data.total}</td>
                                 </tr>
+                                })}
+                                
                             </tbody>
-                        </Table>
+                        </Table>}
             </CardBody>
             <br/><br/>
 

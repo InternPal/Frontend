@@ -12,19 +12,12 @@
 
 .work-flow-outer-div{
     margin: auto;
+    margin-top: 50px;
     width: 50%;
     text-align: center;
 }
 
-.work-flow-terminal-div{
-    background-color: #f4f3ef;
-    height: auto;
-    font-size: 15px;
-    padding: 12.5px;
-    width: 50%;
-    margin: auto;
-    border-radius: 10px;
-}
+
 
 .work-flow-activity-div{
     background-color: #f4f3ef;

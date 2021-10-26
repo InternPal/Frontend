@@ -41,6 +41,7 @@ const CreateJobForm = (props) => {
         tier: null,
         description: null,
         hiringWorkflow: null,
+        jobType: null,
         eligibility: {
             cg: null,
             branch: [],
@@ -66,22 +67,24 @@ const CreateJobForm = (props) => {
         })
     }
 
-    const setHiringWorkflowArray = (l)=>{
-        setJobCreds(prev=>{
+    const setHiringWorkflowArray = (l) => {
+        setJobCreds(prev => {
             return {
                 ...prev,
-                hiringWorkflow : Array.from({ length: l }, (_, i) => i).map(_=> {return {
-                    title : null,
-                    description : null,
-                    date : null,
-                    time : null
-                }})
+                hiringWorkflow: Array.from({ length: l }, (_, i) => i).map(_ => {
+                    return {
+                        title: null,
+                        description: null,
+                        date: null,
+                        time: null
+                    }
+                })
             };
         })
     }
 
-    const changeHiringWorkflow = (index, name, value)=>{
-        setJobCreds(prev=>{
+    const changeHiringWorkflow = (index, name, value) => {
+        setJobCreds(prev => {
             prev.hiringWorkflow[index][name] = value
             return prev;
         })
@@ -96,7 +99,7 @@ const CreateJobForm = (props) => {
             <CardBody>
                 <Form>
                     <Row>
-                        <Col className="pr-1" md="6">
+                        <Col md="12">
                             <FormGroup>
                                 <label>Company</label>
                                 <Input
@@ -105,6 +108,22 @@ const CreateJobForm = (props) => {
                                     name="name"
                                     onChange={changeHandler}
                                 />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="pr-1" md="6">
+                            <FormGroup>
+                                <label>Job Type</label>
+                                <Input
+                                    type="select"
+                                    name="jobType"
+                                    onChange={changeHandler}
+                                >
+                                    <option>---Select---</option>
+                                    <option>Internship</option>
+                                    <option>Full Time</option>
+                                </Input>
                             </FormGroup>
                         </Col>
 
@@ -263,15 +282,15 @@ const CreateJobForm = (props) => {
                     </Row>
                 </Form>
             </CardBody>
-            <br/><br/>
+            <br /><br />
 
             <CardBody>
                 <h5>Enter Hiring Workflow</h5>
                 <Form>
-                    <HiringWorkflow 
-                        setHiringWorkflowArray = {setHiringWorkflowArray}
-                        changeHiringWorkflow = {changeHiringWorkflow}
-                        />
+                    <HiringWorkflow
+                        setHiringWorkflowArray={setHiringWorkflowArray}
+                        changeHiringWorkflow={changeHiringWorkflow}
+                    />
                 </Form>
             </CardBody>
 
@@ -285,7 +304,7 @@ const CreateJobForm = (props) => {
                             if (flag) {
                                 console.log(jobCreds);
                                 console.log(jobCreds.eligibility.branch)
-                                props.postJob(jobCreds)
+                                // props.postJob(jobCreds)
                             }
                             else {
                                 console.log("No");

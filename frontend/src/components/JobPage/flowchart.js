@@ -7,20 +7,17 @@ import {BiTime} from "react-icons/bi";
 const FlowChart = (props)=>{
     var workflow = props.workflow;
     return <div class="work-flow-outer-div">
-        <div className="work-flow-terminal-div"><GrDocumentUser/> Application</div>
-        <BsArrowDown size="30px" className="flowchart-arrow" />
-        {workflow.map((wf)=>{
+        {workflow.map((wf, index)=>{
             return <>
             <div className="work-flow-activity-div">
                 <div className="activity-title" >{wf.title}</div>
-                <div className="activity-date" ><BsCalendar4Event className="flow-chart-logos" size="14px"/> {wf.Date} <BiTime className="flow-chart-logos" size="15px"/> {wf.Time} </div>
-                <div className="acttivity-description" >{wf["Description"]}</div>
+                <div className="activity-date" ><BsCalendar4Event className="flow-chart-logos" size="14px"/> {wf.date} <BiTime className="flow-chart-logos" size="15px"/> {wf.time} </div>
+                <div className="acttivity-description" >{wf["description"]}</div>
                 </div>
-            <BsArrowDown size="30px" className="flowchart-arrow" />
+          { index < workflow.length - 1 &&  <BsArrowDown size="30px" className="flowchart-arrow" /> }
             </>
         })}
 
-        <div className="work-flow-terminal-div"><GrTrophy/> Offer</div>
     </div>
 }
 
