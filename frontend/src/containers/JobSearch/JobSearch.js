@@ -12,17 +12,35 @@ import CardHostComponent from "../../components/CardHostComponent/CardHostCompon
 const JobSearch = (props) => {
     const [showFilterBar, toggleFilterBar] = useState(false);
     const [jobs, setJobs] = useState(null);
+    const [actualJobs, setActualJobs] = useState(null);
 
     useEffect(()=>{
         axios.get("/students/filter/" + props.sid)
         .then((res)=>{
             console.log(res);
             setJobs(res.data);
+            setActualJobs(res.data);
         })
         .catch((err)=>{
             alert(err);
         })
     }, []);
+
+    const filterJobs = (tiers, profiles, locations)=>{
+        setJobs((_)=>{
+            var jobs = actualJobs;
+            if(tiers.length > 0){
+                jobs = jobs.filter((j)=>{return tiers.includes(j.tier)})
+            }
+            if(profiles.length > 0){
+                jobs = jobs.filter((j)=>{return profiles.includes(j.profile)})
+            }
+            if(locations.length > 0){
+                jobs = jobs.filter((j)=>{return locations.includes(j.location)})
+            }
+            return jobs;
+        })
+    }
 
     return <div className="content">
         
@@ -36,22 +54,24 @@ const JobSearch = (props) => {
                         <h5>Jobs</h5>
                     </CardHeader>
                     <CardBody>
-                    { jobs !== null && 
+                    { jobs !== null && <>
+                    {
                         <Row>
-                      {
+                      { jobs.length === 0 ? <p>No Available Jobs</p> :
                           jobs.map(data=>{
                               return <Col lg={showFilterBar ? 6 : 4} md="6">
                               <CardHostComponent {...data}/>
                               </Col>;
                           })
                       }
-                      </Row>}
+                      </Row>}</>}
                     </CardBody>
                 </Card> 
             </Col>
 
            { showFilterBar && <Col lg="4">
-                <JobFilterBar />
+                <JobFilterBar 
+                    filterJobs = {filterJobs} />
             </Col>}
 
         </Row>

@@ -8,7 +8,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 
 
 
-const JobFilterBar = () => {
+const JobFilterBar = (props) => {
     const TierList = ["Tier 0", "Tier 1", "Tier 2", "Tier 3"];
     const Profiles = ["Software Developer", "Frontend Developer", "Backend Developer", "Finance", "Operations", "Data Science", "Fintech"];
     const Locations = ["Mumbai", "Pune", "Bengaluru", "Delhi", "Hyderabad", "Kolkata", "Chennai", "Gurugram"];
@@ -90,6 +90,9 @@ const JobFilterBar = () => {
                             <Button
                                 className="btn-round"
                                 color="success"
+                                onClick = {()=>{
+                                    props.filterJobs(selectedTiers, selectedProfiles, selectedLocations);
+                                }}
                                >
                                 {"Apply Filters"}
                             </Button>

@@ -48,14 +48,14 @@ const AppliedJobs = (props)=>{
                   </thead>
                   <tbody>
                     {jobApplications.map((job, index)=>{
-                      return <tr key={index}  className = "table-row-applied-job">
+                      return <tr key={index}>
                       <td>
                       <img 
                       src={"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"}
                       className = "company-logo-table"
                       />
                       </td>  {/* logo link */}
-                      <td>{job.jobProfile}</td>
+                      <td><a href={"/admin/job-search/" + job.jobID} >{job.jobProfile}</a></td>
                       <td>{job.jobCompany}</td>
                       <td>{job.jobLocation}</td>
                       <td className="text-right" 
