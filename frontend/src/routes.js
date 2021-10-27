@@ -1,12 +1,14 @@
-import JobPage from "./components/JobPage/JobPage";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
 import AllotedStudents from "./components/AllotedStudents";
-import JobSearch from "./containers/JobSearch/JobSearch";
 import AdminJobs from "./containers/AdminJobs/AdminJobs";
 import CreateJobForm from "./components/JobForm/CreateJobForm";
 import DisplayUserProfile from "./components/DisplayUserProfile/DisplayUserProfile";
+<<<<<<< HEAD
 import MentorRegistrationForm from "./components/MentorRegistration/MentorRegistrationForm";
+=======
+import StudentJobs from "./containers/StudentJobs";
+>>>>>>> 8c5cd369279cc3384f8d933a6245855a6a153ac9
 
 export const StudentRoutes = [
 
@@ -22,7 +24,7 @@ export const StudentRoutes = [
     path: "/job-search",
     name: "Search Jobs",
     icon: "fas fa-search",
-    component: JobSearch,
+    component: StudentJobs,
     layout: "/admin",
   },
 
@@ -65,8 +67,13 @@ export const AdminRoutes = [
   {
     path: "/create-mentor",
     name: "Create Mentor",
+<<<<<<< HEAD
     icon: "fas fa-briefcase",
     component: () => <div className="content"><MentorRegistrationForm /></div>,
+=======
+    icon: "fas fa-user-plus",
+    component: ()=><div className="content"></div>,
+>>>>>>> 8c5cd369279cc3384f8d933a6245855a6a153ac9
     layout: "/admin",
   }
 

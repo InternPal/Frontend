@@ -24,8 +24,8 @@ const AcademicDetailsForm = (props) => {
         semester : null,
         class10 : null,
         class12 : null,
-        cgTable : null,
-        backlogTable : null 
+        cgList : null,
+        backlogList : null 
     });
 
     const changeHandler = (e)=>{
@@ -85,7 +85,7 @@ const AcademicDetailsForm = (props) => {
                                             return {
                                                 ...prev,
                                                 semester : event.target.value,
-                                                cgTable : Array.from({ length: event.target.value }, (_, i) => i).map(_=> {return {cgpa : null, sgpa : null}})
+                                                cgList : Array.from({ length: +event.target.value - 1 }, (_, i) => i).map(_=> {return {cgpa : null, sgpa : null}})
                                             };
                                         })
                                         changeHandler(event)
@@ -114,13 +114,13 @@ const AcademicDetailsForm = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Array.from({ length: sem }, (_, i) => i).map(sem => {
+                                {Array.from({ length: sem -1 }, (_, i) => i).map(sem => {
                                     return <tr key={sem}>
                                         <th scope="row">{sem + 1}</th>
                                         <td className="text-right">
                                             <Input type="number" min="0" max="10" step="0.01" onChange ={(e)=>{
                                                 setAcademicCred(prev=>{
-                                                    prev.cgTable[sem].sgpa = e.target.value;
+                                                    prev.cgList[sem].sgpa = e.target.value;
                                                     return prev;
                                                 })
                                             }} />
@@ -128,7 +128,7 @@ const AcademicDetailsForm = (props) => {
                                         <td className="text-right">
                                             <Input type="number" min="0" max="10" step="0.01" onChange ={(e)=>{
                                                 setAcademicCred(prev=>{
-                                                    prev.cgTable[sem].cgpa = e.target.value;
+                                                    prev.cgList[sem].cgpa = e.target.value;
                                                     return prev;
                                                 })
                                             }} />
@@ -151,7 +151,7 @@ const AcademicDetailsForm = (props) => {
                                         setAcademicCred(prev=>{
                                             return {
                                                 ...prev,
-                                                backlogTable : Array.from({ length: sem}, (_, i) => i).map(_=> {return {ongoing : null, total : null}})
+                                                backlogList : Array.from({ length: sem - 1}, (_, i) => i).map(_=> {return {ongoing : null, total : null}})
                                             };
                                         })
                                     }} />{' '}
@@ -165,7 +165,7 @@ const AcademicDetailsForm = (props) => {
                                         setAcademicCred(prev=>{
                                             return {
                                                 ...prev,
-                                                backlogTable : null
+                                                backlogList : null
                                             };
                                         })
                                     }} />{' '}
@@ -188,13 +188,13 @@ const AcademicDetailsForm = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Array.from({ length: sem }, (_, i) => i).map(sem => {
+                                {Array.from({ length: sem - 1 }, (_, i) => i).map(sem => {
                                     return <tr key={sem}>
                                         <th scope="row">{sem + 1}</th>
                                         <td className="text-right">
                                             <Input type="number" min="0" max="10" step="1" onChange={(e)=>{
                                                  setAcademicCred(prev=>{
-                                                    prev.backlogTable[sem].ongoing = e.target.value;
+                                                    prev.backlogList[sem].ongoing = e.target.value;
                                                     return prev;
                                                 })
                                             }}/>
@@ -202,7 +202,7 @@ const AcademicDetailsForm = (props) => {
                                         <td className="text-right">
                                             <Input type="number" min="0" max="10" step="1" onChange={(e)=>{
                                                  setAcademicCred(prev=>{
-                                                    prev.backlogTable[sem].total = e.target.value;
+                                                    prev.backlogList[sem].total = e.target.value;
                                                     return prev;
                                                 })
                                             }}/>

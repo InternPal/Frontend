@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "../../axios";
+import {connect} from "react-redux";
+
 import "./AppliedJobs.css";
 
 
@@ -10,13 +13,29 @@ import {
     Table,
   } from "reactstrap";
 
-const AppliedJobs = ()=>{
+const AppliedJobs = (props)=>{
+
+  const [jobApplications, setJobApplications] = useState(null);
+
+  useEffect(()=>{
+    axios.get("/students/jobApp/"+props.sid)
+    .then((res)=>{
+      setJobApplications(res.data);
+    })
+    .catch((err)=>{
+      alert(err);
+    })
+  }, []);
+
     return <div className="content">
             <Card>
               <CardHeader>
                 <CardTitle tag="h4">Applied Jobs</CardTitle>
               </CardHeader>
               <CardBody>
+                { jobApplications !== null &&
+                <> {
+                 jobApplications.length === 0 ? <p>No Applied Jobs</p> :
                 <Table responsive>
                   <thead className="text-primary">
                     <tr>
@@ -28,37 +47,37 @@ const AppliedJobs = ()=>{
                     </tr>
                   </thead>
                   <tbody>
-                    <tr  className = "table-row-applied-job">
-                    <td>
-                    <img 
-                    src="https://images.squarespace-cdn.com/content/v1/54d7d9f3e4b0adb809875cd9/1427991323091-IRTLN4QVP7WDG4N573BQ/01.jpg"
-                    className = "company-logo-table"
-                    />
-                    </td>  {/* logo link */}
-                    <td>Software Developer</td>
-                    <td>JP Morgan Chase</td>
-                    <td>Bangalore</td>
-                    <td className="text-right">Applied</td>
-                    </tr>
-
-                    <tr  className = "table-row-applied-job">
-                    <td>
-                    <img 
-                    src="https://cdn-icons-png.flaticon.com/512/825/825539.png"
-                    className = "company-logo-table"
-                    />
-                    </td>  {/* logo link */}
-                    <td>Data Science</td>
-                    <td>American Express</td>
-                    <td>Pune</td>
-                    <td className="text-right">Applied</td>
-                    </tr>
+                    {jobApplications.map((job, index)=>{
+                      return <tr key={index}>
+                      <td>
+                      <img 
+                      src={"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"}
+                      className = "company-logo-table"
+                      />
+                      </td>  {/* logo link */}
+                      <td><a href={"/admin/job-search/" + job.jobID} >{job.jobProfile}</a></td>
+                      <td>{job.jobCompany}</td>
+                      <td>{job.jobLocation}</td>
+                      <td className="text-right" 
+                        style = {{
+                          color : job.status === "Rejected" ? "red" : "green"
+                        }}
+                        >{job.status}</td>
+                      </tr>
+                    })}
                    
                   </tbody>
-                </Table>
+                </Table>}</> 
+}
               </CardBody>
             </Card>
     </div>
 }
 
-export default AppliedJobs;
+const mapStateToProps = (state)=>{
+  return {
+    sid : state.user.sid,
+  };
+}
+
+export default connect(mapStateToProps)(AppliedJobs);

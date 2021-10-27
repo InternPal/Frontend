@@ -1,54 +1,87 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "../../axios";
+import {connect} from "react-redux";
+
 import { Row, Button, Card, Col, CardBody, CardHeader } from "reactstrap";
 import { FiFilter } from "react-icons/fi";
 
 import JobFilterBar from "../../components/JobFilterBar/JobFilterBar";
 import CardHostComponent from "../../components/CardHostComponent/CardHostComponent";
 
-const cards = [
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
-    { image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png", title: "American Express", profile: "Data Science", location: "Gurgaon", jobtype: "Full Time" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
-    { image: "https://s.abcnews.com/images/Business/jp-morgan-file-gty-ml-200908_1599583350520_hpMain_16x9_992.jpg", title: "JP Morgan", profile: "Software Developer", location: "Mumbai", jobtype: "Internship" },
-];
 
-const JobSearch = () => {
+const JobSearch = (props) => {
     const [showFilterBar, toggleFilterBar] = useState(false);
+    const [jobs, setJobs] = useState(null);
+    const [actualJobs, setActualJobs] = useState(null);
+
+    useEffect(()=>{
+        axios.get("/students/filter/" + props.sid)
+        .then((res)=>{
+            console.log(res);
+            setJobs(res.data);
+            setActualJobs(res.data);
+        })
+        .catch((err)=>{
+            alert(err);
+        })
+    }, []);
+
+    const filterJobs = (tiers, profiles, locations)=>{
+        setJobs((_)=>{
+            var jobs = actualJobs;
+            if(tiers.length > 0){
+                jobs = jobs.filter((j)=>{return tiers.includes(j.tier)})
+            }
+            if(profiles.length > 0){
+                jobs = jobs.filter((j)=>{return profiles.includes(j.profile)})
+            }
+            if(locations.length > 0){
+                jobs = jobs.filter((j)=>{return locations.includes(j.location)})
+            }
+            return jobs;
+        })
+    }
 
     return <div className="content">
+        
         <Row>
             <Col lg={showFilterBar ? 8 : 12}>
                 <Button className="btn-round" color="primary" onClick={()=>{
                     toggleFilterBar(prev=>!prev)
                 }}><FiFilter size="20px" /> Filter Jobs</Button>
-
-                <Card>
+                    <Card>
                     <CardHeader>
                         <h5>Jobs</h5>
                     </CardHeader>
                     <CardBody>
+                    { jobs !== null && <>
+                    {
                         <Row>
-                      {
-                          cards.map(data=>{
+                      { jobs.length === 0 ? <p>No Available Jobs</p> :
+                          jobs.map(data=>{
                               return <Col lg={showFilterBar ? 6 : 4} md="6">
                               <CardHostComponent {...data}/>
                               </Col>;
                           })
                       }
-                      </Row>
+                      </Row>}</>}
                     </CardBody>
-                </Card>
+                </Card> 
             </Col>
 
            { showFilterBar && <Col lg="4">
-                <JobFilterBar />
+                <JobFilterBar 
+                    filterJobs = {filterJobs} />
             </Col>}
 
         </Row>
     </div>
 }
 
-export default JobSearch;
+const mapStateToProps = (state)=>{
+    return {
+        sid : state.user.sid
+    }
+}
+
+export default connect(mapStateToProps)(JobSearch);
