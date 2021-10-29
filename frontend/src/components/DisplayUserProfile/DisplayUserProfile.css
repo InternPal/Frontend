@@ -42,3 +42,8 @@
   object-fit: cover;
 }
 
+.doc-display{
+  width: 100%;
+  height: 600px;
+}
+

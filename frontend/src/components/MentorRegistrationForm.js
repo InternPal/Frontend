@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "../axios";
 
 import {
     Button,
@@ -13,13 +14,43 @@ import {
     Col,
 } from "reactstrap";
 
-const EnterMentorDetails = (props) => {
+const MentorRegistrationForm = () => {
+
+    const [mentorCreds, setMentorCreds] = useState({
+        email : null,
+        name : null,
+        password : null,
+        studentList : []
+    });
+
+    const changeHandler = (e)=>{
+        setMentorCreds(prev=>{
+            return {
+                ...prev,
+                [e.target.name] : e.target.value
+            };
+        })
+    }
+
+    const registerMentor = ()=>{
+        var confirm = window.confirm("Confirm Mentor Registration ? ");
+        if(confirm){
+            console.log(mentorCreds)
+            axios.post("/mentors", mentorCreds)
+            .then((_)=>{
+                alert("Registration Successful");
+            })
+            .catch((err)=>{
+                alert(err);
+            })
+        }
+    }
 
     return (
         <div>
-            <Card className="reg-card">
-                <CardHeader className="reg-header">
-                    <CardTitle tag="h5">Enter Mentor Details</CardTitle>
+            <Card>
+                <CardHeader>
+                    <CardTitle tag="h5">Mentor Registration</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form>
@@ -28,9 +59,10 @@ const EnterMentorDetails = (props) => {
                                 <FormGroup>
                                     <label>Mentor Name</label>
                                     <Input
-                                        name="mentorName"
+                                        name="name"
                                         placeholder="Mentor Name"
                                         type="text"
+                                        onChange = {changeHandler}
                                     />
                                 </FormGroup>
                             </Col>
@@ -38,49 +70,33 @@ const EnterMentorDetails = (props) => {
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label>Personal Email ID</label>
-                                    <Input type="email" name="email" placeholder="Personal email of Mentor" />
+                                    <label>Email</label>
+                                    <Input type="email" name="email" placeholder="Email Address" onChange = {changeHandler} />
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label for="department">Department</label>
-                                    <Input type="select" name="department" id="department">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Input>
+                                    <label>Password</label>
+                                    <Input type="password" name="password" placeholder="Password" onChange = {changeHandler}/>
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label>Designation</label>
-                                    <Input
-                                        name="designation"
-                                        placeholder="Enter the mentors' designation"
-                                        type="text"
-                                    />
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="12">
-                                <FormGroup>
-                                    <label for="contact">Contact Details</label>
-                                    <Input type="text" name="contact" id="contact" placeholder="Enter mobile no." />
+                                    <label>Confirm Password</label>
+                                    <Input type="password" name="confirmPassword" placeholder="Confirm password" />
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>  <div className="update ml-auto mr-auto"><center>
                             <Button
                                 className="btn-round"
-                                color="primary">
+                                color="primary"
+                                onClick = {registerMentor}
+                            >
                                 {"Confirm"}
                             </Button></center>
                         </div>
@@ -92,4 +108,4 @@ const EnterMentorDetails = (props) => {
     );
 }
 
-export default EnterMentorDetails;
+export default MentorRegistrationForm;

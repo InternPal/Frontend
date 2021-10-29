@@ -4,10 +4,11 @@ import { connect } from "react-redux";
 
 import "./JobPage.css";
 
-//demo purpose only
-import FakeDoc from "./fakeDoc.pdf";
 
-import { Card, CardHeader, CardBody, Table, Button } from "reactstrap";
+import {
+    Card, CardHeader, CardBody, Table, Button,
+    Modal, ModalBody, ModalHeader, ModalFooter,
+} from "reactstrap";
 import Badge from 'react-bootstrap/Badge';
 import FlowChart from "./flowchart";
 import { IoDocumentTextSharp } from "react-icons/io5";
@@ -19,6 +20,14 @@ const JobPage = (props) => {
     console.log(jobId);
 
     const [Job, setJob] = useState(null);
+    const [showModal, toggleModal] = useState(false);
+
+    const displayModal = () => {
+        toggleModal(true);
+    }
+    const hideModal = () => {
+        toggleModal(false);
+    }
 
     useEffect(() => {
         axios.get("/jobs/" + jobId)
@@ -30,29 +39,46 @@ const JobPage = (props) => {
             })
     }, []);
 
-    const applyJob = ()=>{
-        var confirm = window.confirm("Confirm Job Application?");
-        if(confirm){
+    const applyJob = () => {
 
-            const jobApplicationCred = {
-                studentID : props.id,
-                SID : props.SID,
-                jobID : jobId,
-                jobCompany : Job.name,
-                jobProfile : Job.profile,
-                jobLocation : Job.location,
-                status : "Applied"
-            };
+        //check if already applied
+        axios.get("/jobApp/applied/" + jobId + "/" + +props.SID)
+            .then((res) => {
+                console.log(res.data)
+                if (res.data) {
+                    alert("Already Applied");
+                }
+                else {
+                    var confirm = window.confirm("Confirm Job Application?");
+                    if (confirm) {
 
-            axios.post("/jobApp", jobApplicationCred)
-            .then((res)=>{
-                console.log(res);
-                alert("Applied To Job");
+                        const jobApplicationCred = {
+                            studentID: props.id,
+                            SID: props.SID,
+                            studentName: props.name,
+                            jobID: jobId,
+                            jobCompany: Job.name,
+                            jobProfile: Job.profile,
+                            jobLocation: Job.location,
+                            status: "Applied"
+                        };
+
+                        axios.post("/jobApp", jobApplicationCred)
+                            .then((res) => {
+                                console.log(res);
+                                alert("Applied To Job");
+                            })
+                            .catch((err) => {
+                                alert(err);
+                            })
+                    }
+                }
             })
-            .catch((err)=>{
+            .catch((err) => {
                 alert(err);
             })
-        }
+
+
     }
 
     return <div className="content">
@@ -61,7 +87,7 @@ const JobPage = (props) => {
 
                 {/* Logo + Company Name + Profile + Location */}
                 <CardHeader>
-                    <img className="job-page-company-logo" src={"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"} alt="company logo" />
+                    <img className="job-page-company-logo" src={Job.logo} alt="company logo" />
                     <h4 className="title">{Job.profile}</h4>
                     <p >{Job.name} . {Job.location}</p>
                     <Badge pill bg={
@@ -116,9 +142,11 @@ const JobPage = (props) => {
                 <CardBody>
                     <h5>Attached Documents</h5><hr />
                     <div className="job-file-links-div">
-                        <a href={FakeDoc} target="_blank"><IoDocumentTextSharp size="20px" /> View Document</a>
-                        <br />
-                        <a href={FakeDoc} download><FiDownload size="20px" /> Download Document</a>
+                        <Button className="btn-round" color="primary" onClick={displayModal}><IoDocumentTextSharp size="18px" /> View Document</Button>{" "}
+                        <Button className="btn-round" color="primary">
+                            <a style={{
+                                color: "white"
+                            }} href={Job.jobDoc} download><FiDownload size="18px" /> Download Document</a></Button>
                     </div>
                 </CardBody>
 
@@ -153,7 +181,33 @@ const JobPage = (props) => {
                         </tbody>
                     </Table>
 
-                    { props.role === "Student" &&
+                    <Modal
+                        centered
+                        fullscreen={true}
+                        scrollable
+                        size="lg"
+                        toggle={hideModal}
+                        isOpen={showModal}
+                    >
+                        <ModalHeader
+                            toggle={hideModal}
+                        >
+                            {"Attached Document"}
+                        </ModalHeader>
+                        <ModalBody>
+                            <center>
+                                <object type="application/pdf" data={Job.jobDoc} className="doc-display"></object>
+                            </center>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={hideModal} className="btn-round" color="primary">
+                                Close
+                            </Button>
+                        </ModalFooter>
+                    </Modal>
+
+
+                    {props.role === "Student" &&
                         <div align="center">
                             <Button color="primary" className="btn-round" onClick={applyJob}>Apply For Job</Button>
                         </div>
@@ -169,8 +223,8 @@ const mapStateToProps = (state) => {
     return {
         role: state.user.role,
         SID: state.user.sid,
-        name : state.user.name,
-        id : state.user.id
+        name: state.user.name,
+        id: state.user.id
     };
 }
 

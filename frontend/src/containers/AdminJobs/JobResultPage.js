@@ -1,56 +1,100 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "../../axios";
+import { Card, CardHeader, CardBody, Table, Button, Row, Col } from "reactstrap";
+import Badge from 'react-bootstrap/Badge';
 
-import WorkflowResultTable from "./WorkflowResultTable";
-import { Card, CardHeader, Badge, CardBody, Table, CardTitle, Button, Row, Col } from "reactstrap";
-
-//demo
-import job from "./fakeData";
-import StudentData from "./StudentFakeData";
 
 const JobResultPage = (props) => {
-    //demo
-    const index = props.match.params.id;
 
-    //demo
-    const [showTable, toggleTable] = useState(false);
-    const [selectedActivity, changeActivity] = useState("");
+    const jobID = props.match.params.id;
+
+    const [job, setJobData] = useState(null);
+
+    useEffect(()=>{
+        axios.get("/jobs/"+jobID)
+        .then((res)=>{
+            setJobData(res.data);
+        })
+        .catch((err)=>{
+            alert(err);
+        })
+    }, []);
+
+    const [applicants, setApplicants] = useState(null);
+
+    const searchApplicants = ()=>{
+        axios.get("/jobApp/" + jobID)
+        .then((res)=>{
+            setApplicants(res.data);
+        })
+        .catch((err)=>{
+            alert(err);
+        });
+    }
 
     return <div className="content">
+        { job !== null &&
         <Card>
             <CardHeader>
-                <img className="job-page-company-logo" src={job[index].imgSrc} />
-                <h4 className="title">{job[index].jobProfile}</h4>
-                <p >{job[index].company} . {job[index].location}</p>
-                <Badge color="info" pill>Internship</Badge>
+                <img className="job-page-company-logo" src={job.logo} alt="Logo" />
+                <h4 className="title">{job.profile}</h4>
+                <p >{job.name} . {job.location}</p>
+                <Badge pill bg={
+                        job.jobType == "Internship" ? "info" : "success"
+                    }>{job.jobType}</Badge>
             </CardHeader>
+            <br/><br/>
 
-            <WorkflowResultTable
-                showResultsFunc={(event, activity) => {
-                    event.preventDefault();
-                    toggleTable(true)
-                    changeActivity(activity)
-                }}
-            />
-        </Card>
-
-        {showTable && <Card>
-
-            <CardHeader>
-                <CardTitle tag="h4">{selectedActivity}</CardTitle>
-            </CardHeader>
             <CardBody>
-                <Table responsive>
+                <h5>Hiring Workflow</h5>
+                <hr/>
+                <Table striped responsive>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Activity</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {job.hiringWorkflow.map((wf, index)=>{
+                            return  <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{wf.title}</td>
+                                <td>{wf.date}</td>
+                                <td>{wf.time}</td>
+                            </tr>
+                        })}
+                       
+                    </tbody>    
+                </Table>
+            </CardBody>
+            
+            <CardBody>
+                <Row>
+                    <center>
+                        <Button className="btn-round" color="primary" onClick={searchApplicants}>View Applicants</Button>
+                    </center>
+                </Row>
+            </CardBody>
+
+        </Card>
+}
+         
+        {applicants !== null && <Card>
+            <CardBody>
+              { applicants.length === 0 ? <h5>No Applicants</h5>
+               :  <Table responsive>
                     <thead className="text-primary">
                         <tr>
                             <th>#</th>
                             <th>Student ID</th>
                             <th>Name</th>
-                            <th className="text-right">{
-                                selectedActivity === "Offer" ? "Result" : "Status for next round"
-                            }</th>
+                            <th className="text-right">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                         {
                             StudentData.map((student, index) => {
                                 return <tr key={index}>
@@ -78,26 +122,8 @@ const JobResultPage = (props) => {
                                 </tr>
                             })
                         }
-                    </tbody>
-                </Table>
-
-                <Row>
-                <div className="update ml-auto mr-auto">
-                    <Button
-                        className="btn-round"
-                        color="primary"
-                    >
-                        {"Save Changes"}
-                    </Button>
-                    {"   "}
-                    <Button
-                        className="btn-round"
-                        color="danger"
-                    >
-                        {"Cancel"}
-                    </Button>
-                </div>
-                </Row>
+                    </tbody> */}
+                </Table>}
             </CardBody>
 
         </Card>}

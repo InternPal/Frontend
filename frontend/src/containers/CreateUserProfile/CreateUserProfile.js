@@ -3,6 +3,7 @@ import "./CreateUserProfile.css"
 
 import { connect } from "react-redux";
 import * as StudentActions from "../../store/Actions/StudentActions";
+import axios from "../../axios";
 
 import RegForm from "components/RegForm";
 import BasicInfoForm from "../../components/BasicInfoForm";
@@ -32,8 +33,15 @@ const CreateUserProfile = (props) => {
         cgList : null,
         backlogs : null,
         backlogList : null,
-        semester : null
+        semester : null,
+        offer : false,
+        userDP : null,
+        resume : null,
+        collegeDMC : null,
+        class12DMC : null,
+        class10DMC : null
     });
+
 
 
     const RegCredSaveFunc = (regCred) => {
@@ -63,6 +71,7 @@ const CreateUserProfile = (props) => {
         props.incrementIndex();
     }
 
+
     const AcademicDetailsSaveFunc = (academicCred) =>{
         let cgpa = academicCred.cgList[academicCred.cgList.length-1].cgpa;
         let totalBacklogs = 0;
@@ -85,21 +94,40 @@ const CreateUserProfile = (props) => {
         props.incrementIndex();
     }
 
+    const finalSaveFunc = (userDocs)=>{
+        setUserProfile(prev=>{
+            return {
+                ...prev,
+                ...userDocs
+            };
+        })
+        console.log(userDocs);
+        let confirm = window.confirm("Confirm Registration ?");
+        if(confirm){
+            axios.post("/students", userProfile)
+            .then((res)=>{
+                alert("Registration Successful. CLick 'OK' To Redirect");
+                setTimeout(()=>{
+                    window.location.replace("http://localhost:3001/auth");
+                }, 2000)
+            })
+            .catch((err)=>{
+                alert(err);
+            })
+        }
+    }
+
     const componentList = [
         <RegForm saveFunc={RegCredSaveFunc} />,
         <BasicInfoForm saveFunc={BasicInfoSaveFunc} SID = {userProfile.SID} email = {userProfile.email} />,
         <AcademicDetailsForm saveFunc={AcademicDetailsSaveFunc}/>,
-        <UploadDocument saveFunc={() => {
-            console.log(userProfile);
-            props.registerStudent(userProfile)
-            window.location.replace("http://localhost:3001/auth");
-        }} />
+        <UploadDocument saveFunc={finalSaveFunc}/>
     ];
 
 
     return (<div className="user-profile-outer-div">
         <ProgressBar index={index} />
-        {componentList[index]}
+        {componentList[index]} 
     </div>
     );
 }
@@ -115,7 +143,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         regCredValidation: (regCred) => dispatch(StudentActions.RegisterCredValidation(regCred)),
         incrementIndex: ()=>dispatch(StudentActions.IncrementIndex()),
-        registerStudent: (userProfile)=>dispatch(StudentActions.RegisterStudent(userProfile)),
     };
 }
 

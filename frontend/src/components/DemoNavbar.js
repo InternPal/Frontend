@@ -25,6 +25,7 @@ function Header(props) {
   let routes = [];
   if(props.role === "Student")routes = routesTypes.StudentRoutes;
   else if(props.role === "Admin")routes = routesTypes.AdminRoutes;
+  else routes = routesTypes.MentorRoutes;
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);

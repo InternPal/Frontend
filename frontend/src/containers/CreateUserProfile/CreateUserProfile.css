@@ -92,3 +92,16 @@
 .steps {
   margin-bottom: 3em;
 }
+
+.user-dp-input{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px grey;
+}
+
+.user-dp-input:hover{
+  box-shadow: 0 0 9px grey;
+}

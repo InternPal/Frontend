@@ -48,8 +48,42 @@ const CreateJobForm = (props) => {
             backlogs: null,
             class10: null,
             class12: null
-        }
+        },
+        year : (new Date()).getFullYear(),
+        logo : null,
+        jobDoc : null
     });
+
+    const getBase64 = file => {
+        return new Promise(resolve => {
+          let baseURL = "";
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            baseURL = reader.result;
+            resolve(baseURL);
+          };
+        });
+      };
+    
+     const handleFileInputChange = e => {
+    
+       let file = e.target.files[0];   
+        getBase64(file)
+          .then(result => {
+              setJobCreds(prev=>{
+                  return {
+                      ...prev,
+                      [e.target.name] : result,
+                  };
+              })
+          })
+          .catch(err => {
+            alert(err);
+          });
+      };
+
+
 
     const changeHandler = (e) => {
         setJobCreds(prev => {
@@ -191,20 +225,27 @@ const CreateJobForm = (props) => {
                             </FormGroup>
                         </Col>
                     </Row>
+
                     <Row>
                         <Col className="pr-1" md="6">
                             <FormGroup>
                                 <label for="logo">Attach Logo</label>
-                                <Input type="file" />
+                                <Input type="file" accept="image/png, image/jpeg, image/jpg"
+                                name = "logo"
+                                onChange = {handleFileInputChange}
+                                />
                             </FormGroup>
                         </Col>
                         <Col className="pl-1" md="6">
                             <FormGroup>
                                 <label>Attach Job Details</label>
-                                <Input type="file" />
+                                <Input type="file" accept=".pdf"
+                                name = "jobDoc"
+                                onChange = {handleFileInputChange}/>
                             </FormGroup>
                         </Col>
                     </Row>
+
                 </Form>
             </CardBody>
             <br /><br />
@@ -304,7 +345,7 @@ const CreateJobForm = (props) => {
                             if (flag) {
                                 console.log(jobCreds);
                                 console.log(jobCreds.eligibility.branch)
-                                // props.postJob(jobCreds)
+                                props.postJob(jobCreds)
                             }
                             else {
                                 console.log("No");

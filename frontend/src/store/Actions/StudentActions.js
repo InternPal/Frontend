@@ -26,15 +26,3 @@ export const IncrementIndex = ()=>{
         })
     }
 }
-
-export const RegisterStudent = (userProfile)=>{
-    return (dispatch)=>{
-        axios.post("/students", userProfile)
-        .then((res)=>{
-            console.log(res);
-        })
-        .catch((err)=>{
-            alert(err._message);
-        });
-    }
-}

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import axios from "../../axios";
 
 import {
     Card,CardBody, Table
@@ -6,29 +7,35 @@ import {
 
 import JobSearchPanel from "./JobSearchPanel";
 
-//demo 
-import JobsData from "./fakeData";
 
 const JobTable = () => {
-    //demo
-    const [showTable, toggleTable] = useState(false);
+
+    const [jobs, setJobs] = useState(null);
+
+    const searchJobs = (searchCreds)=>{
+        console.log(searchCreds);
+        axios.get("/admins/getJobs/" + searchCreds.year + "/" + searchCreds.jobType)
+        .then((res)=>{
+            setJobs(res.data)
+        })
+        .catch((err)=>{
+            alert(err);
+        })
+    }
 
 
     return <div className="content">
 
         <JobSearchPanel
-        searchFunc = {()=>{
-            //demo
-            toggleTable(prev=>!prev)
-        }}
+        searchFunc = {searchJobs}
         />
         
-       { showTable && <Card>
+       { jobs!== null && <Card>
             <CardBody>
-                <Table responsive>
+              { jobs.length === 0 ? <h5>No Matching Jobs</h5> :  <Table responsive>
                     <thead className="text-primary">
                         <tr>
-                            <th></th>
+                            <th>#</th>
                             <th>Job Profile</th>
                             <th>Company</th>
                             <th>Location</th>
@@ -37,23 +44,21 @@ const JobTable = () => {
                     </thead>
                     <tbody>
 
-                        {JobsData.map((job, index)=>{
+                        {jobs.map((job, index)=>{
                             return  <tr key={index}>
-                            <td>
-                                <img
-                                    src= {job.imgSrc}
+                            <td><img
+                                    src= {job.logo}
                                     className="company-logo-table"
-                                />
-                            </td>  {/* logo link */}
-                            <td>{job.jobProfile}</td>
-                            <td>{job.company}</td>
+                                /></td> 
+                            <td>{job.profile}</td>
+                            <td>{job.name}</td>
                             <td>{job.location}</td>
-                            <td className="text-right"><a href={"/admin/admin-jobs/" + (index)}>{"View / Post Results"}</a></td>
+                            <td className="text-right"><a href={"/admin/admin-jobs/" + (job._id)}>{"View / Post Results"}</a></td>
                         </tr>
                         })}
 
                     </tbody>
-                </Table>
+                </Table>}
             </CardBody>
         </Card>}
     </div>
