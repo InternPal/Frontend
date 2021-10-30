@@ -20,7 +20,6 @@ const MentorRegistrationForm = () => {
         email : null,
         name : null,
         password : null,
-        studentList : []
     });
 
     const changeHandler = (e)=>{
@@ -47,7 +46,7 @@ const MentorRegistrationForm = () => {
     }
 
     return (
-        <div>
+        <div className="content">
             <Card>
                 <CardHeader>
                     <CardTitle tag="h5">Mentor Registration</CardTitle>

@@ -5,7 +5,9 @@ const initialState = {
     role : null || localStorage.getItem("role"),
     id : null || localStorage.getItem("id"),
     name : null || localStorage.getItem("name"),
-    sid : null || localStorage.getItem("sid")
+    sid : null || localStorage.getItem("sid"),
+    semester : null || +localStorage.getItem("semester"),
+    offer : null || (localStorage.getItem("offer") === "true" ? true : false),
 };
 
 const UserReducer = (state = initialState, action)=>{
@@ -17,7 +19,9 @@ const UserReducer = (state = initialState, action)=>{
                 role : action.role,
                 id : action.id,
                 name : action.name,
-                sid : action.sid
+                sid : action.sid,
+                semester : action.semester,
+                offer : action.offer
             };
         
         case actionTypes.LOGOUT :
@@ -26,7 +30,9 @@ const UserReducer = (state = initialState, action)=>{
                 roll : null,
                 id : null,
                 name : null,
-                sid : null
+                sid : null,
+                semester : null,
+                offer : null
             };
         default : return state; 
     }

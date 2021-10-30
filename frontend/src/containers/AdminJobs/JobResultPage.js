@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../axios";
-import { Card, CardHeader, CardBody, Table, Button, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody, Table, Button, Row,} from "reactstrap";
 import Badge from 'react-bootstrap/Badge';
+import {BiLock} from "react-icons/bi";
 
+import JobStatusModal from "./JobStatusModal";
 
 const JobResultPage = (props) => {
 
@@ -19,6 +21,38 @@ const JobResultPage = (props) => {
             alert(err);
         })
     }, []);
+
+    const [modalInfo, setModalInfo] = useState({
+        sid : null,
+        name : null,
+        initialStatus : null,
+        isOpen : false,
+        jobID : jobID,
+        refresh : null,
+    });
+
+    const showModal = (sid, name, status)=>{
+        setModalInfo(prev=>{
+            return {
+                ...prev,
+                isOpen : true,
+                sid : sid,
+                name : name,
+                status : status,
+                jobID : jobID,
+                refresh : searchApplicants
+            };
+        })
+    }
+
+    const hideModal = ()=>{
+        setModalInfo(prev=>{
+            return {
+                ...prev,
+                isOpen : false
+            };
+        })
+    }
 
     const [applicants, setApplicants] = useState(null);
 
@@ -91,41 +125,34 @@ const JobResultPage = (props) => {
                             <th>#</th>
                             <th>Student ID</th>
                             <th>Name</th>
-                            <th className="text-right">Status</th>
+                            <th>Status</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    {/* <tbody>
+                    <tbody>
                         {
-                            StudentData.map((student, index) => {
+                            applicants.map((a, index) => {
                                 return <tr key={index}>
-                                    <td>{index}</td>
-                                    <td>{student.SID}</td>
-                                    <td>{student.Name}</td>
+                                    <td>{index+1}</td>
+                                    <td>{a.SID}</td>
+                                    <td>{a.studentName}</td>
+                                    <td>{a.status}</td>
                                     <td className="text-right">
-                                        {index === 0 && <div style={{ color: "green" }}>{selectedActivity === "Offer" ? "Accepted" : "Eligible"}</div>}
-                                        {index === 1 && <div style={{ color: "red" }}>{selectedActivity === "Offer" ? "Rejected" : "Not Eligible"}</div>}
-                                        {index > 1 && <div>
-                                            <Row>
-                                                <Col>
-                                                    <Button outline
-                                                    className="btn-round"
-                                                    color="success">{selectedActivity === "Offer" ? "Accepted" : "Eligible"}
-                                                        </Button></Col>
-                                                <Col>
-                                                    <Button outline
-                                                        className="btn-round"
-                                                        color="danger">{selectedActivity === "Offer" ? "Rejected" : "Not Eligible"}
-                                                            </Button></Col>
-                                            </Row>
-                                        </div>}
+                                        { a.status === 'Applied' ? 
+                                        <a href="#" onClick={()=>{
+                                            showModal(a.SID, a.studentName, a.status)
+                                        }}>Click To Change Status</a>
+                                        :
+                                        <><BiLock size="18px"/>{"Status Locked"}</>
+                                    }
                                     </td>
                                 </tr>
                             })
                         }
-                    </tbody> */}
+                    </tbody>
                 </Table>}
             </CardBody>
-
+            <JobStatusModal hideModal = {hideModal} modalInfo = {modalInfo} />
         </Card>}
     </div>
 }

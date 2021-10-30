@@ -16,13 +16,18 @@ export const loginInit = (user)=>{
             localStorage.setItem("id", res.data._id)
             localStorage.setItem("name", res.data.name)
             localStorage.setItem("sid", user.role === "Student" ? res.data.SID : null)
+            localStorage.setItem("semester", user.role === "Student" ? res.data.semester : null)
+            localStorage.setItem("offer", user.role === "Student" ? res.data.offer : null)
+
             dispatch({
                 type : actionTypes.LOGIN_SUCCESS,
                 role : user.role,
                 email : user.email,
                 id : res.data._id,
                 name : res.data.name,
-                sid : user.role === "Student" ? res.data.SID : null
+                sid : user.role === "Student" ? res.data.SID : null,
+                semester : user.role === "Student" ? res.data.semester : null,
+                offer : user.role === "Student" ? res.data.offer : null,
             })
         })
         .catch((err)=>{
@@ -39,6 +44,9 @@ export const logout = ()=>{
         localStorage.removeItem("id")
         localStorage.removeItem("name")
         localStorage.removeItem("sid")
+        localStorage.removeItem("semester")
+        localStorage.removeItem("offer")
+        
         dispatch({
             type : actionTypes.LOGOUT
         })

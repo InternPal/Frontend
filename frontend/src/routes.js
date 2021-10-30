@@ -5,6 +5,7 @@ import AdminJobs from "./containers/AdminJobs/AdminJobs";
 import CreateJobForm from "./components/JobForm/CreateJobForm";
 import DisplayUserProfile from "./components/DisplayUserProfile/DisplayUserProfile";
 import MentorRegistrationForm from "./components/MentorRegistrationForm";
+import ManageMentor from "./containers/ManageMentor/ManageMentor";
 import StudentJobs from "./containers/StudentJobs";
 
 export const StudentRoutes = [
@@ -65,7 +66,15 @@ export const AdminRoutes = [
     path: "/create-mentor",
     name: "Create Mentor",
     icon: "fas fa-user-plus",
-    component: () => <div className="content"><MentorRegistrationForm /></div>,
+    component: MentorRegistrationForm,
+    layout: "/admin"
+  },
+
+  {
+    path: "/manage-mentor",
+    name: "Manage Mentors",
+    icon: "fas fa-tasks",
+    component: ManageMentor,
     layout: "/admin"
   }
 
