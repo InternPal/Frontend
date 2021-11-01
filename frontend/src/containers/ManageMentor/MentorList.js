@@ -26,15 +26,24 @@ const MentorList = ()=>{
                 <Table responsive>
                     <thead className="text-primary">
                         <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th></th>
+                            <th width="10%">#</th>
+                            <th width="30%">Name</th>
+                            <th width="30%">Email</th>
+                            <th width="30%" className="text-right"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {mentors.map((mentor, index)=>{
-                            
+                            return <tr key="index">
+                                <td>{index+1}</td>
+                                <td>{mentor.name}</td>
+                                <td>{mentor.email}</td>
+                                <td className="text-right">
+                                    <a href={"/admin/manage-mentor/" + mentor._id}>
+                                        Click To Manage Students
+                                    </a>
+                                </td>
+                            </tr>
                         })}
                     </tbody>
                 </Table></>}

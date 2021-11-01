@@ -1,12 +1,12 @@
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
 import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
-import AllotedStudents from "./components/AllotedStudents";
 import AdminJobs from "./containers/AdminJobs/AdminJobs";
 import CreateJobForm from "./components/JobForm/CreateJobForm";
 import DisplayUserProfile from "./components/DisplayUserProfile/DisplayUserProfile";
 import MentorRegistrationForm from "./components/MentorRegistrationForm";
 import ManageMentor from "./containers/ManageMentor/ManageMentor";
 import StudentJobs from "./containers/StudentJobs";
+import GradeStudents from "./containers/GradeStudents";
 
 export const StudentRoutes = [
 
@@ -76,16 +76,24 @@ export const AdminRoutes = [
     icon: "fas fa-tasks",
     component: ManageMentor,
     layout: "/admin"
-  }
+  },
+
+  {
+    path: "/grade-students",
+    name: "Grade Students",
+    icon: "fas fa-users",
+    component: GradeStudents,
+    layout: "/admin",
+  },
 
 ];
 
 export const MentorRoutes = [
   {
-        path: "/alloted-students",
-        name: "Alloted Students",
+        path: "/grade-students",
+        name: "Grade Students",
         icon: "fas fa-users",
-        component: AllotedStudents,
+        component: GradeStudents,
         layout: "/admin",
       },
 ];
