@@ -15,7 +15,7 @@ import {
     Label
 } from "reactstrap";
 
-
+import { validationFunc } from "../formValidation";
 
 const AcademicDetailsForm = (props) => {
 
@@ -28,6 +28,13 @@ const AcademicDetailsForm = (props) => {
         backlogList : null 
     });
 
+    const [validCRED, setValidCRED] = useState({
+        "branch": { valid: false, invalid: false },
+        "semester": { valid: false, invalid: false },
+        "class10": { valid: false, invalid: false },
+        "class12": { valid: false, invalid: false }
+    })
+
     const changeHandler = (e)=>{
         setAcademicCred(prev=>{
             return {
@@ -35,6 +42,23 @@ const AcademicDetailsForm = (props) => {
                 [e.target.name] : e.target.value
             };
         })
+        let flag = Boolean(validationFunc(e.target.name, e.target.value))
+        setValidCRED((prev) => {
+            return {
+                ...prev,
+                [e.target.name]: {
+                    valid: flag,
+                    invalid: !flag
+                }
+            }
+        })
+    }
+
+    const validator = () => {
+        let arr = Object.values(validCRED)
+        return arr.reduce((flag, key) => {
+            return (key.valid && flag)
+        }, true);
     }
 
     const Branches = ["---Select---", "Aerospace Engineering",
@@ -46,7 +70,7 @@ const AcademicDetailsForm = (props) => {
         "Metallurgical & Materials Engineering",
         "Production and Industrial Engineering"];
 
-    const semesters = Array.from({ length: 9 }, (_, i) => i);
+    const semesters = ["---Select---",5,7]
 
     const [sem, changeSem] = useState(0);
     const [backlogFlag, setBacklogFlag] = useState(false);
@@ -67,9 +91,11 @@ const AcademicDetailsForm = (props) => {
                                     type="select"
                                     name = "branch"
                                     onChange = {changeHandler}
+                                    valid={validCRED.branch.valid}
+                                    invalid={validCRED.branch.invalid}
                                 >
                                     {Branches.map((Branch) => {
-                                        return <option>{Branch}</option>;
+                                        return <option key={Branch}>{Branch}</option>;
                                     })}
                                 </Input>
                             </FormGroup>
@@ -79,6 +105,9 @@ const AcademicDetailsForm = (props) => {
                                 <label>Semester</label>
                                 <Input
                                     type="select"
+                                    name = "semester"
+                                    valid={validCRED.semester.valid}
+                                    invalid={validCRED.semester.invalid}
                                     onChange={(event) => {
                                         changeSem(event.target.value)
                                         setAcademicCred(prev=>{
@@ -92,7 +121,7 @@ const AcademicDetailsForm = (props) => {
                                     }}
                                 >
                                     {semesters.map((s) => {
-                                        return <option>{s}</option>;
+                                        return <option key={s}>{s}</option>;
                                     })}
                                 </Input>
                             </FormGroup>
@@ -101,7 +130,7 @@ const AcademicDetailsForm = (props) => {
 
                     <br />
 
-                    {/* Work Here */}
+
                     {sem > 0 && <>
                         <label>Enter Details For Each Semester </label>
 
@@ -225,6 +254,8 @@ const AcademicDetailsForm = (props) => {
                                     name = "class12"
                                     onChange = {changeHandler}
                                     type="number"
+                                    valid={validCRED.class12.valid}
+                                    invalid={validCRED.class12.invalid}
                                 />
                             </FormGroup>
                         </Col>
@@ -235,6 +266,8 @@ const AcademicDetailsForm = (props) => {
                                     name = "class10"
                                     onChange = {changeHandler}
                                     type="text"
+                                    valid={validCRED.class10.valid}
+                                    invalid={validCRED.class10.invalid}
                                 />
                             </FormGroup>
                         </Col>
@@ -248,6 +281,7 @@ const AcademicDetailsForm = (props) => {
                                 className="btn-round"
                                 color="primary"
                                 onClick={()=>props.saveFunc(academicCred)}
+                                disabled = {!validator()}
                             >
                                 {"Save & Continue"}
                             </Button></center>

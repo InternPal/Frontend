@@ -8,7 +8,6 @@ const JobStatusModal = ({hideModal, modalInfo})=>{
     const [newStatus, setNewStatus] = useState(null);
 
     const saveStatus = ()=>{
-        console.log(newStatus);
         let confirm = window.confirm("Confirm Application Status Change");
         if(confirm){
             if(newStatus === "Accepted"){
@@ -17,7 +16,6 @@ const JobStatusModal = ({hideModal, modalInfo})=>{
                     jobID : modalInfo.jobID
                 })
                 .then((res)=>{
-                    console.log(res);
                     hideModal();
                     modalInfo.refresh();
                 })
@@ -32,7 +30,6 @@ const JobStatusModal = ({hideModal, modalInfo})=>{
                     status : "Rejected"
                 })
                 .then((res)=>{
-                    console.log(res);
                     hideModal();
                     modalInfo.refresh();
                 })

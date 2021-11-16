@@ -10,12 +10,12 @@ const ProgressBar = ({index})=>{
     ];
 
     return <>
-<ol class="steps">
+<ol className="steps">
     {steps.map((step, i)=>{
         return <li key={step}className={
             "step"
-            + (i<index ? " is-complete" : "")
-            + (i==index ? " is-active" : "")
+            + (i<+index ? " is-complete" : "")
+            + (i=== +index ? " is-active" : "")
         } data-step={i+1} >
             {step}
         </li>

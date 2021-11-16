@@ -41,6 +41,7 @@ const AllotStudents = (props) => {
             .catch((err) => {
                 alert(err);
             })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return <div className="content">

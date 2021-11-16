@@ -13,6 +13,7 @@
     "react": "17.0.2",
     "react-bootstrap": "^2.0.0",
     "react-chartjs-2": "3.0.3",
+    "react-chat-window": "^1.2.1",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-notification-alert": "0.0.13",
@@ -22,7 +23,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^5.1.0",
     "react-simple-typewriter": "^3.0.1",
-    "reactstrap": "8.9.0",
+    "reactstrap": "^8.9.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

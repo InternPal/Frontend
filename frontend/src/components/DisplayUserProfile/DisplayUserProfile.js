@@ -24,17 +24,16 @@ const DisplayUserProfile = (props) => {
     let docList = [];
     let modalTitle = [];
 
-    const displayModal = (i)=>{
-        console.log(i);
+    const displayModal = (i) => {
         setIndex(i);
         toggleModal(true);
     }
 
-    const hideModal = ()=>{
+    const hideModal = () => {
         toggleModal(false);
     }
 
-    if(user){
+    if (user) {
         docList = [user.resume, user.collegeDMC, user.class12DMC, user.class10DMC];
         modalTitle = ["Resume", "College DMC", "Class XII DMC", "Class X DMC"];
     }
@@ -42,7 +41,6 @@ const DisplayUserProfile = (props) => {
 
 
     useEffect(() => {
-        console.log("making request");
         axios.get("/students/" + props.id)
             .then((res) => {
                 setUser(res.data)
@@ -50,6 +48,7 @@ const DisplayUserProfile = (props) => {
             .catch(err => {
                 alert(err);
             })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <div className="content">{
@@ -66,7 +65,7 @@ const DisplayUserProfile = (props) => {
                                 className="user-image-header-div" >
                                 <img className="user-image-header"
                                     src={user.userDP}
-                                    alt="User Display Picture"
+                                    alt="User Display"
                                 />
                             </div>
                         </center>
@@ -118,18 +117,18 @@ const DisplayUserProfile = (props) => {
                                 <td><h6 className="display-user-page-table-header">Email Address</h6></td>
                                 <td>{user.email}</td>
                             </tr>
-                            <tr>
+                            {user.github !== null && <tr>
                                 <td><h6 className="display-user-page-table-header">GitHub</h6></td>
                                 <td>
-                                    <a href={user.github} target="_blank"><IoLogoGithub size="20px" style={{ marginRight: "5px" }} />GitHub</a>
+                                    <a href={user.github} target="_blank" rel="noreferrer"><IoLogoGithub size="20px" style={{ marginRight: "5px" }} />GitHub</a>
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr>}
+                            {user.linkedin !== null && <tr>
                                 <td><h6 className="display-user-page-table-header">LinkedIn</h6></td>
                                 <td>
-                                    <a href={user.linkedin} target="_blank"><IoLogoLinkedin size="20px" style={{ marginRight: "5px" }} />LinkedIn</a>
+                                    <a href={user.linkedin} target="_blank" rel="noreferrer"><IoLogoLinkedin size="20px" style={{ marginRight: "5px" }} />LinkedIn</a>
                                 </td>
-                            </tr>
+                            </tr>}
                         </tbody>
                     </Table>
                 </CardBody>
@@ -193,7 +192,7 @@ const DisplayUserProfile = (props) => {
                             <tr>
                                 <td width="30%"><h6 className="display-user-page-table-header">Resume</h6></td>
                                 <td width="40%" className="text-right">
-                                    <Button className="btn-round" color="primary" onClick={()=>{displayModal(0)}}><IoDocumentTextSharp size="20px" /> View</Button>
+                                    <Button className="btn-round" color="primary" onClick={() => { displayModal(0) }}><IoDocumentTextSharp size="20px" /> View</Button>
                                 </td>
                                 <td width="40%" className="text-right">
                                     <a href={user.resume} download><FiDownload size="20px" /> Download</a>
@@ -202,7 +201,7 @@ const DisplayUserProfile = (props) => {
                             <tr>
                                 <td><h6 className="display-user-page-table-header">Latest College DMC</h6></td>
                                 <td className="text-right">
-                                <Button className="btn-round" color="primary" onClick={()=>{displayModal(1)}}><IoDocumentTextSharp size="20px" /> View</Button>                                </td>
+                                    <Button className="btn-round" color="primary" onClick={() => { displayModal(1) }}><IoDocumentTextSharp size="20px" /> View</Button>                                </td>
                                 <td className="text-right">
                                     <a href={user.collegeDMC} download><FiDownload size="20px" /> Download</a>
                                 </td>
@@ -210,7 +209,7 @@ const DisplayUserProfile = (props) => {
                             <tr>
                                 <td><h6 className="display-user-page-table-header">Class 12th DMC</h6></td>
                                 <td className="text-right">
-                                <Button className="btn-round" color="primary" onClick={()=>{displayModal(2)}}><IoDocumentTextSharp size="20px" /> View</Button>                                </td>
+                                    <Button className="btn-round" color="primary" onClick={() => { displayModal(2) }}><IoDocumentTextSharp size="20px" /> View</Button>                                </td>
                                 <td className="text-right">
                                     <a href={user.class12DMC} download><FiDownload size="20px" /> Download</a>
                                 </td>
@@ -218,7 +217,7 @@ const DisplayUserProfile = (props) => {
                             <tr>
                                 <td><h6 className="display-user-page-table-header">Class 10th DMC</h6></td>
                                 <td className="text-right">
-                                <Button className="btn-round" color="primary" onClick={()=>{displayModal(3)}}><IoDocumentTextSharp size="20px" /> View</Button>                                </td>
+                                    <Button className="btn-round" color="primary" onClick={() => { displayModal(3) }}><IoDocumentTextSharp size="20px" /> View</Button>                                </td>
                                 <td className="text-right">
                                     <a href={user.class10DMC} download><FiDownload size="20px" /> Download</a>
                                 </td>
@@ -227,21 +226,21 @@ const DisplayUserProfile = (props) => {
                         </tbody>
                     </Table>
 
-              <Modal
-                        fullscreen = {true}
+                    <Modal
+                        fullscreen={true}
                         scrollable
                         size="lg"
                         toggle={hideModal}
-                        isOpen = {showModal}
+                        isOpen={showModal}
                     >
                         <ModalHeader
-                         toggle={hideModal}
-                         >
-                           {modalTitle[index]}
+                            toggle={hideModal}
+                        >
+                            {modalTitle[index]}
                         </ModalHeader>
                         <ModalBody>
                             <center>
-                            <object type="application/pdf" data={docList[index]} className="doc-display"></object>
+                                <object type="application/pdf" data={docList[index]} className="doc-display" aria-label="doc"></object>
                             </center>
                         </ModalBody>
                         <ModalFooter>
@@ -249,7 +248,7 @@ const DisplayUserProfile = (props) => {
                                 Close
                             </Button>
                         </ModalFooter>
-                    </Modal> 
+                    </Modal>
 
                 </CardBody>
 

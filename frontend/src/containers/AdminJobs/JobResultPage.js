@@ -20,6 +20,7 @@ const JobResultPage = (props) => {
         .catch((err)=>{
             alert(err);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [modalInfo, setModalInfo] = useState({
@@ -74,7 +75,7 @@ const JobResultPage = (props) => {
                 <h4 className="title">{job.profile}</h4>
                 <p >{job.name} . {job.location}</p>
                 <Badge pill bg={
-                        job.jobType == "Internship" ? "info" : "success"
+                        job.jobType === "Internship" ? "info" : "success"
                     }>{job.jobType}</Badge>
             </CardHeader>
             <br/><br/>
@@ -139,9 +140,11 @@ const JobResultPage = (props) => {
                                     <td>{a.status}</td>
                                     <td className="text-right">
                                         { a.status === 'Applied' ? 
-                                        <a href="#" onClick={()=>{
+                                        <div  style={{
+                                            cursor : "pointer", color : "#51cbce"
+                                        }} onClick={()=>{
                                             showModal(a.SID, a.studentName, a.status)
-                                        }}>Click To Change Status</a>
+                                        }}>Click To Change Status</div>
                                         :
                                         <><BiLock size="18px"/>{"Status Locked"}</>
                                     }

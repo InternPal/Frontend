@@ -12,7 +12,7 @@ const SideFilterBar = (props) => {
             <Accordion.Body>
                 <ListGroup variant="flush">
                     {props.TierList.map(tier => {
-                        return <ListGroup.Item className="filterOption" onClick={()=>{
+                        return <ListGroup.Item className="filterOption" key={tier} onClick={() => {
                             props.addTier(tier)
                         }}>{tier}</ListGroup.Item>
                     })}
@@ -26,7 +26,7 @@ const SideFilterBar = (props) => {
             <Accordion.Body>
                 <ListGroup variant="flush">
                     {props.Profiles.map(profile => {
-                        return <ListGroup.Item className="filterOption" onClick={()=>{
+                        return <ListGroup.Item className="filterOption" key={profile} onClick={() => {
                             props.addProfile(profile)
                         }}>{profile}</ListGroup.Item>
                     })}
@@ -39,7 +39,7 @@ const SideFilterBar = (props) => {
             <Accordion.Body>
                 <ListGroup variant="flush">
                     {props.Locations.map(location => {
-                        return <ListGroup.Item className="filterOption" onClick={()=>{
+                        return <ListGroup.Item className="filterOption" key={location} onClick={() => {
                             props.addLocation(location)
                         }}>{location}</ListGroup.Item>
                     })}

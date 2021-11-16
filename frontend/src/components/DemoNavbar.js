@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as UserActions from "../store/Actions/UserActions";
 
 import {
@@ -18,14 +18,14 @@ import {
 
 import * as routesTypes from "../routes.js";
 
-import {AiOutlineLogout} from "react-icons/ai"
+import { AiOutlineLogout } from "react-icons/ai"
 
 function Header(props) {
 
   let routes = [];
-  if(props.role === "Student")routes = routesTypes.StudentRoutes;
-  else if(props.role === "Admin")routes = routesTypes.AdminRoutes;
-  else routes = routesTypes.MentorRoutes;
+  if (props.role === "Student") routes = routesTypes.StudentRoutes;
+  else if (props.role === "Admin") routes = routesTypes.AdminRoutes;
+  else routes = routesTypes.CoordinatorRoutes;
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -90,7 +90,7 @@ function Header(props) {
         props.location.pathname.indexOf("full-screen-maps") !== -1
           ? "navbar-absolute fixed-top"
           : "navbar-absolute fixed-top " +
-            (color === "transparent" ? "navbar-transparent " : "")
+          (color === "transparent" ? "navbar-transparent " : "")
       }
     >
       <Container fluid>
@@ -122,7 +122,7 @@ function Header(props) {
               toggle={(e) => dropdownToggle(e)}
             >
               <DropdownToggle caret nav>
-                <AiOutlineLogout size="25px"/>
+                <AiOutlineLogout size="25px" />
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem tag="a" onClick={props.logout}>Logout</DropdownItem>
@@ -135,15 +135,15 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
   return {
-    role : state.user.role
+    role: state.user.role
   }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
   return {
-    logout : ()=>dispatch(UserActions.logout())
+    logout: () => dispatch(UserActions.logout())
   }
 }
 

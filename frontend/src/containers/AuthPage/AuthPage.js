@@ -12,7 +12,8 @@ const AuthPage = () => {
     return <div className="auth-page-div">
         <img
             src={BGImg}
-            className="auth-page-bg-img" />
+            className="auth-page-bg-img" 
+            alt="Background"/>
         <Card className="auth-page-content">
             <CardBody>
                 <Row>
@@ -22,9 +23,10 @@ const AuthPage = () => {
                             <p>
                                 <Typewriter
                                     words={[
-                                        "Meet The Right Oppurtunities",
-                                        "Build For PEC",
-                                        "" //suggest text
+                                        "Meet The Right Opportunities",
+                                        "Built For PEC",
+                                        "दिशा प्रकाश की ओर",
+                                         //suggest text
                                     ]}
                                     loop={false}
                                     cursor

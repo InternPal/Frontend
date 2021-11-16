@@ -13,7 +13,6 @@ const JobTable = () => {
     const [jobs, setJobs] = useState(null);
 
     const searchJobs = (searchCreds)=>{
-        console.log(searchCreds);
         axios.get("/admins/getJobs/" + searchCreds.year + "/" + searchCreds.jobType)
         .then((res)=>{
             setJobs(res.data)
@@ -47,6 +46,7 @@ const JobTable = () => {
                         {jobs.map((job, index)=>{
                             return  <tr key={index}>
                             <td><img
+                                    alt="Company"
                                     src= {job.logo}
                                     className="company-logo-table"
                                 /></td> 

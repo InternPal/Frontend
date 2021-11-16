@@ -19,6 +19,7 @@ const SubmitGrade = (props) => {
             .catch((err) => {
                 alert(err);
             })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [showModal, toggleModal] = useState(false);
@@ -88,7 +89,7 @@ const SubmitGrade = (props) => {
                             }</td>
                         </tr>
 
-                        <tr>
+                     {evalData.midtermReport !== null &&   <tr>
                             <th scope="row" className="job-page-table-header">{"Mid-Internship Report"}</th>
                             <td style={{
                                 color: "#51cbce",
@@ -100,9 +101,9 @@ const SubmitGrade = (props) => {
                                 });
                                 toggleModal(true);
                             }}>View Report</td>
-                        </tr>
+                        </tr> }
 
-                        <tr>
+                    { evalData.finalReport &&   <tr>
                             <th scope="row" className="job-page-table-header">{"Final Report"}</th>
                             <td style={{
                                 color: "#51cbce",
@@ -114,7 +115,7 @@ const SubmitGrade = (props) => {
                                 });
                                 toggleModal(true);
                             }}>View Report</td>
-                        </tr>
+                        </tr>}
 
                     </tbody>
                 </Table>
@@ -141,7 +142,8 @@ const SubmitGrade = (props) => {
                     <Row>
                         <Col>
                             <center>
-                                <Button className="btn-round" color="primary" onClick={submitGrade}>
+                                <Button className="btn-round" color="primary" onClick={submitGrade}
+                                disabled={!(grade !== null && grade > 0 && grade < 11)}>
                                     Submit
                                 </Button>
                             </center>
@@ -170,7 +172,9 @@ const SubmitGrade = (props) => {
                     <Row>
                         <Col>
                             <center>
-                                <Button className="btn-round" color="primary" onClick={submitGrade}>
+                                <Button className="btn-round" color="primary" onClick={submitGrade}
+                                disabled={!(grade !== null && grade > 0 && grade < 11)}
+                                >
                                     Submit
                                 </Button>
                             </center>
@@ -194,7 +198,7 @@ const SubmitGrade = (props) => {
                     <center> <object style={{
                         width: "80%",
                         height: "600px"
-                    }} type="application/pdf" data={modalData.data}></object> </center>
+                    }} type="application/pdf" aria-label="doc" data={modalData.data}></object> </center>
                 </ModalBody>
             </Modal>
         </div>

@@ -1,12 +1,14 @@
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
-import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
+// import SubmissionPortal from "./components/SubmissionPortal/SubmissionPortal";
 import AdminJobs from "./containers/AdminJobs/AdminJobs";
 import CreateJobForm from "./components/JobForm/CreateJobForm";
 import DisplayUserProfile from "./components/DisplayUserProfile/DisplayUserProfile";
-import MentorRegistrationForm from "./components/MentorRegistrationForm";
+import CoordinatorRegistrationForm from "./components/CoordinatorRegistrationForm";
 import ManageMentor from "./containers/ManageMentor/ManageMentor";
 import StudentJobs from "./containers/StudentJobs";
 import GradeStudents from "./containers/GradeStudents";
+
+import StudentInternshipEvaluation from "./containers/InternshipEvaluation/StudentInternshipEvaluation";
 
 export const StudentRoutes = [
 
@@ -38,7 +40,7 @@ export const StudentRoutes = [
     path: "/submission",
     name: "Internship Evaluation",
     icon: "fas fa-clipboard-check",
-    component: SubmissionPortal,
+    component: StudentInternshipEvaluation,
     layout: "/admin",
   },
 
@@ -63,10 +65,18 @@ export const AdminRoutes = [
   },
 
   {
-    path: "/create-mentor",
-    name: "Create Mentor",
+    path: "/create-faculty-coordinator",
+    name: "Faculty Coordinator",
     icon: "fas fa-user-plus",
-    component: MentorRegistrationForm,
+    component: ()=><CoordinatorRegistrationForm role="Faculty"/>,
+    layout: "/admin"
+  },
+
+  {
+    path: "/create-industry-coordinator",
+    name: "Industry Coordinator",
+    icon: "fas fa-user-plus",
+    component: ()=><CoordinatorRegistrationForm role="Industry"/>,
     layout: "/admin"
   },
 
@@ -88,7 +98,7 @@ export const AdminRoutes = [
 
 ];
 
-export const MentorRoutes = [
+export const CoordinatorRoutes = [
   {
         path: "/grade-students",
         name: "Grade Students",

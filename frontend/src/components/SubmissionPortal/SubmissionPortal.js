@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Row, Col, Card, CardHeader, CardBody, Table } from "reactstrap";
 
 import SubmissionForm from "./SubmissionForm";
-
+import { BiErrorCircle } from "react-icons/bi";
 
 const SubmissionPortal = (props) => {
 
@@ -20,6 +20,7 @@ const SubmissionPortal = (props) => {
             .catch((err) => {
                 alert(err);
             });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const midSubmission = (report) => {
@@ -32,6 +33,13 @@ const SubmissionPortal = (props) => {
             })
                 .then((res) => {
                     alert("Submission Success");
+                    axios.get("/evals/" + props.sid)
+                        .then((res) => {
+                            setEvalData(res.data);
+                        })
+                        .catch((err) => {
+                            alert(err);
+                        });
                 })
                 .catch((err) => {
                     alert(err);
@@ -49,6 +57,13 @@ const SubmissionPortal = (props) => {
             })
                 .then((res) => {
                     alert("Submission Success");
+                    axios.get("/evals/" + props.sid)
+                        .then((res) => {
+                            setEvalData(res.data);
+                        })
+                        .catch((err) => {
+                            alert(err);
+                        });
                 })
                 .catch((err) => {
                     alert(err);
@@ -58,69 +73,78 @@ const SubmissionPortal = (props) => {
 
     return <div className="content">
         {evalData !== null &&
-            <>   <Row>
-                <Col>
+            <>
+                {evalData !== "" ? <><Row>
+                    <Col>
+                        <Card>
+                            <CardHeader>
+                                <h5>Internship Evaluation</h5>
+                            </CardHeader>
+                            <CardBody>
+                                <Table responsive>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row" className="job-page-table-header">{"SID"}</th>
+                                            <td>{evalData.SID}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" className="job-page-table-header">{"Name"}</th>
+                                            <td>{evalData.studentName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" className="job-page-table-header">{"Alloted Mentor"}</th>
+                                            <td>{evalData.mentorName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" className="job-page-table-header">{"Mentor Grade"}</th>
+                                            <td>{evalData.mentorGrade === null ? "N.A." : evalData.mentorGrade}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" className="job-page-table-header">{"Panel Grade"}</th>
+                                            <td>{evalData.panelGrade === null ? "N.A." : evalData.panelGrade}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" className="job-page-table-header">{"Final Grade"}</th>
+                                            <td>{evalData.finalGrade === null ? "N.A." : evalData.finalGrade}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+                    <Row>
+                        <Col lg="6" md="6" sm="12">
+                            <Card>
+                                <CardHeader>
+                                    <h5>Mid Internship Evaluation</h5>
+                                </CardHeader>
+                                <SubmissionForm submitFunc={midSubmission} report={evalData.midtermReport} />
+                            </Card>
+                        </Col>
+                        <Col lg="6" md="6" sm="12">
+                            <Card>
+                                <CardHeader>
+                                    <h5>Final Evaluation</h5>
+                                </CardHeader>
+                                <SubmissionForm submitFunc={finalSubmission} report={evalData.finalReport} />
+                            </Card>
+                        </Col>
+                    </Row></> :
                     <Card>
-                        <CardHeader>
-                            <h5>Internship Evaluation</h5>
-                        </CardHeader>
                         <CardBody>
-                            <Table responsive>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row" className="job-page-table-header">{"SID"}</th>
-                                        <td>{evalData.SID}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className="job-page-table-header">{"Name"}</th>
-                                        <td>{evalData.studentName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className="job-page-table-header">{"Alloted Mentor"}</th>
-                                        <td>{evalData.mentorName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className="job-page-table-header">{"Mentor Grade"}</th>
-                                        <td>{evalData.mentorGrade === null ? "N.A." : evalData.mentorGrade}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className="job-page-table-header">{"Panel Grade"}</th>
-                                        <td>{evalData.panelGrade === null ? "N.A." : evalData.panelGrade}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className="job-page-table-header">{"Final Grade"}</th>
-                                        <td>{evalData.finalGrade === null ? "N.A." : evalData.finalGrade}</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
+                            <center><BiErrorCircle size="60px" color="grey" /></center>
+                            <br />
+                            <center><h5>Evaluation Details Not Available</h5></center>
                         </CardBody>
                     </Card>
-                </Col>
-            </Row>
-                <Row>
-                    <Col>
-                        <Card>
-                            <CardHeader>
-                                <h5>Mid Internship Evaluation</h5>
-                            </CardHeader>
-                            <SubmissionForm submitFunc={midSubmission} />
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card>
-                            <CardHeader>
-                                <h5>Final Evaluation</h5>
-                            </CardHeader>
-                            <SubmissionForm submitFunc={finalSubmission}/>
-                        </Card>
-                    </Col>
-                </Row></>}
+                }</>}
     </div>
 }
 
 const mapStateToProps = (state) => {
     return {
-        sid: state.user.sid
+        sid: state.user.sid,
     };
 }
 

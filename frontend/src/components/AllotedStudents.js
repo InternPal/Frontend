@@ -14,7 +14,6 @@ const AllotedStudents = (props) => {
     if (props.role === "Mentor") {
       axios.get("/eval/" + props.mentorID)
         .then((res) => {
-          console.log(res);
           setAllotedStudents(res.data);
         })
         .catch((err) => {
@@ -24,32 +23,32 @@ const AllotedStudents = (props) => {
     if (props.role === "Admin") {
       axios.get("/eval")
         .then((res) => {
-          console.log(res);
           setAllotedStudents(res.data);
         })
         .catch((err) => {
           alert(err);
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div className="content">
     {allotedStudents !== null &&
       <Card>
         <CardHeader>
-          <CardTitle tag="h4">{ props.role === "Admin" ? "Students" : "Alloted Students"}</CardTitle>
+          <CardTitle tag="h4">{props.role === "Admin" ? "Students" : "Alloted Students"}</CardTitle>
         </CardHeader>
         <CardBody>
 
           {allotedStudents.length === 0 ?
-            <p>{ props.role === "Admin" ? "No Students" : "No Alloted Students"}</p> :
+            <p>{props.role === "Admin" ? "No Students" : "No Alloted Students"}</p> :
             <Table responsive>
               <thead className="text-primary">
                 <tr>
                   <th>#</th>
                   <th>Student ID</th>
                   <th>Name</th>
-                  <th>{ props.role === "Admin" ? "Panel Grade" : "Mentor Grade"}</th>
+                  <th>{props.role === "Admin" ? "Panel Grade" : "Mentor Grade"}</th>
                   <th className="text-right">Grade Status</th>
                 </tr>
               </thead>
@@ -61,9 +60,9 @@ const AllotedStudents = (props) => {
                       <td>{index + 1}</td>
                       <td>{student.SID}</td>
                       <td>{student.studentName}</td>
-                      <td>{ props.role === "Admin" ? (
+                      <td>{props.role === "Admin" ? (
                         student.panelGrade === null ? "N.A."
-                          : student.panelGrade) :(
+                          : student.panelGrade) : (
                         student.mentorGrade === null ? "N.A."
                           : student.mentorGrade)
                       }</td>

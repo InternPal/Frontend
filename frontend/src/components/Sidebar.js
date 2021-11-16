@@ -34,7 +34,7 @@ function Sidebar(props) {
     >
       <div className="logo">
         <center>
-        <a
+        <a href="/"
           className="simple-text logo-normal"
         >
           InternPal

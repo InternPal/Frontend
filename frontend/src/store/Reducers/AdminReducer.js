@@ -1,5 +1,3 @@
-import * as actionTypes from "../actionTypes";
-
 const initialState = {};
 
 const AdminReducer = (state = initialState, action)=>{

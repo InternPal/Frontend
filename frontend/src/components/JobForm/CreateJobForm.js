@@ -229,7 +229,7 @@ const CreateJobForm = (props) => {
                     <Row>
                         <Col className="pr-1" md="6">
                             <FormGroup>
-                                <label for="logo">Attach Logo</label>
+                                <label>Attach Logo</label>
                                 <Input type="file" accept="image/png, image/jpeg, image/jpg"
                                 name = "logo"
                                 onChange = {handleFileInputChange}
@@ -291,7 +291,7 @@ const CreateJobForm = (props) => {
                         </Col>
                         <Col className="pl-1" md="6">
                             <FormGroup>
-                                <label for="exampleSelect">Backlogs</label>
+                                <label>Backlogs</label>
                                 <Input type="number" step="1" placeholder="Number of Backlogs allowed" name="backlogs" onChange={changeEligibilty} />
                             </FormGroup>
                         </Col>
@@ -343,12 +343,7 @@ const CreateJobForm = (props) => {
                         onClick={() => {
                             var flag = window.confirm("Confirm Post Job?");
                             if (flag) {
-                                console.log(jobCreds);
-                                console.log(jobCreds.eligibility.branch)
                                 props.postJob(jobCreds)
-                            }
-                            else {
-                                console.log("No");
                             }
                         }}
                     >

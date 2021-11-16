@@ -15,7 +15,7 @@ const StudentDashboard = (props)=>{
   let routes = [];
   if(props.role === "Student")routes = routesTypes.StudentRoutes;
   else if(props.role === "Admin")routes = routesTypes.AdminRoutes;
-  else routes = routesTypes.MentorRoutes;
+  else routes = routesTypes.CoordinatorRoutes;
   
 const backgroundColor = "black";
 const activeColor = "info";

@@ -3,21 +3,22 @@ import axios from "../../axios";
 import { connect } from "react-redux";
 
 import "./JobPage.css";
-
-
 import {
     Card, CardHeader, CardBody, Table, Button,
     Modal, ModalBody, ModalHeader, ModalFooter,
 } from "reactstrap";
-import Badge from 'react-bootstrap/Badge';
+
 import FlowChart from "./flowchart";
+// import Chatbot from "../chatbot";
+
+import Badge from 'react-bootstrap/Badge';
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { FiDownload } from "react-icons/fi";
+
 
 const JobPage = (props) => {
 
     const jobId = props.match.params.id;
-    console.log(jobId);
 
     const [Job, setJob] = useState(null);
     const [showModal, toggleModal] = useState(false);
@@ -37,6 +38,7 @@ const JobPage = (props) => {
             .catch((err) => {
                 alert(err);
             })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const applyJob = () => {
@@ -44,9 +46,9 @@ const JobPage = (props) => {
         //check if already applied
         axios.get("/jobApp/applied/" + jobId + "/" + +props.SID)
             .then((res) => {
-                console.log(res.data)
                 if (res.data) {
                     alert("Already Applied");
+                    console.log(res);
                 }
                 else {
                     var confirm = window.confirm("Confirm Job Application?");
@@ -65,7 +67,6 @@ const JobPage = (props) => {
 
                         axios.post("/jobApp", jobApplicationCred)
                             .then((res) => {
-                                console.log(res);
                                 alert("Applied To Job");
                             })
                             .catch((err) => {
@@ -91,7 +92,7 @@ const JobPage = (props) => {
                     <h4 className="title">{Job.profile}</h4>
                     <p >{Job.name} . {Job.location}</p>
                     <Badge pill bg={
-                        Job.jobType == "Internship" ? "info" : "success"
+                        Job.jobType === "Internship" ? "info" : "success"
                     }>{Job.jobType}</Badge>
                 </CardHeader>
 
@@ -139,7 +140,7 @@ const JobPage = (props) => {
 
                 <br /><br />
                 {/* Attached Documents */}
-                <CardBody>
+                {Job.jobDoc !== null && <CardBody>
                     <h5>Attached Documents</h5><hr />
                     <div className="job-file-links-div">
                         <Button className="btn-round" color="primary" onClick={displayModal}><IoDocumentTextSharp size="18px" /> View Document</Button>{" "}
@@ -148,7 +149,7 @@ const JobPage = (props) => {
                                 color: "white"
                             }} href={Job.jobDoc} download><FiDownload size="18px" /> Download Document</a></Button>
                     </div>
-                </CardBody>
+                </CardBody>}
 
 
 
@@ -196,7 +197,7 @@ const JobPage = (props) => {
                         </ModalHeader>
                         <ModalBody>
                             <center>
-                                <object type="application/pdf" data={Job.jobDoc} className="doc-display"></object>
+                                <object type="application/pdf" data={Job.jobDoc} className="doc-display" aria-label="doc"></object>
                             </center>
                         </ModalBody>
                         <ModalFooter>
@@ -214,7 +215,7 @@ const JobPage = (props) => {
                     }
 
                 </CardBody>
-
+               {/* {props.role === "Student" && <Chatbot job = {Job}/>} */}
             </Card>}
     </div>
 }

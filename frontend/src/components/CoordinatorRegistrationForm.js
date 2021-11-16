@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "../axios";
 
 import {
     Button,
@@ -17,35 +18,21 @@ import {
 
 import { validationFunc } from "../formValidation";
 
-const RegForm = (props) => {
+const CoordinatorRegistrationForm = ({role}) => {
 
-    const [regCred, setRegCred] = useState({
-        SID: null,
+    const [mentorCreds, setMentorCreds] = useState({
         email: null,
-        password: null
+        name: null,
+        password: null,
     });
 
-    const [validCRED, setValidCRED] = useState({
-        "SID": { valid: false, invalid: false },
-        "email": { valid: false, invalid: false },
-        "password": { valid: false, invalid: false },
-        "confirmPassword": { valid: false, invalid: false }
-    })
-
-    const validator = () => {
-        let arr = Object.values(validCRED)
-        return arr.reduce((flag, key) => {
-            return (key.valid && flag)
-        }, true);
-    }
-
     const changeHandler = (e) => {
-        setRegCred((prev) => {
+        setMentorCreds(prev => {
             return {
                 ...prev,
                 [e.target.name]: e.target.value
             };
-        })
+        });
         let flag = Boolean(validationFunc(e.target.name, e.target.value))
         setValidCRED((prev) => {
             return {
@@ -58,25 +45,52 @@ const RegForm = (props) => {
         })
     }
 
+    const validator = () => {
+        let arr = Object.values(validCRED)
+        return arr.reduce((flag, key) => {
+            return (key.valid && flag)
+        }, true);
+    }
+
+    const registerMentor = () => {
+        var confirm = window.confirm(`Confirm Registration ? `);
+        if (confirm) {
+            axios.post("/mentors", mentorCreds)
+                .then((_) => {
+                    alert("Registration Successful");
+                })
+                .catch((err) => {
+                    alert(err);
+                })
+        }
+    }
+
+    const [validCRED, setValidCRED] = useState({
+        "name": { valid: false, invalid: false },
+        "email": { valid: false, invalid: false },
+        "password": { valid: false, invalid: false },
+        "confirmPassword": { valid: false, invalid: false }
+    })
+
     return (
-        <div className="reg-form-div">
-            <Card className="reg-card">
-                <CardHeader className="reg-header">
-                    <CardTitle tag="h5">Registration Details</CardTitle>
+        <div className="content">
+            <Card>
+                <CardHeader>
+                    <CardTitle tag="h5">{role} Coordinator Registration</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form>
                         <Row>
                             <Col md="12">
                                 <FormGroup>
-                                    <label>SID</label>
+                                    <label>{role} Coordinator Name</label>
                                     <Input
-                                        name="SID"
-                                        placeholder="SID"
+                                        name="name"
+                                        placeholder={role + " Coordinator Name"}
                                         type="text"
                                         onChange={changeHandler}
-                                        valid={validCRED.SID.valid}
-                                        invalid={validCRED.SID.invalid}
+                                        valid={validCRED.name.valid}
+                                        invalid={validCRED.name.invalid}
                                     />
                                 </FormGroup>
                             </Col>
@@ -85,7 +99,7 @@ const RegForm = (props) => {
                             <Col md="12">
                                 <FormGroup>
                                     <label>Email</label>
-                                    <Input type="email" name="email" placeholder="Email" onChange={changeHandler} valid={validCRED.email.valid}
+                                    <Input type="email" name="email" placeholder="Email Address" onChange={changeHandler} valid={validCRED.email.valid}
                                         invalid={validCRED.email.invalid} />
                                 </FormGroup>
                             </Col>
@@ -109,18 +123,17 @@ const RegForm = (props) => {
                                     <Input type="password" name="confirmPassword" placeholder="Confirm password" valid={validCRED.confirmPassword.valid}
                                         invalid={validCRED.confirmPassword.invalid} onChange={(e) => {
                                             setValidCRED(prev => {
-                                                let flag = Boolean(e.target.value === regCred.password);
+                                                let flag = Boolean(e.target.value === mentorCreds.password);
                                                 return {
                                                     ...prev,
                                                     confirmPassword: {
-                                                        valid: flag,
+                                                        valid: flag, 
                                                         invalid: !flag
                                                     }
                                                 }
                                             })
                                         }} />
                                     <FormFeedback>Does Not Match With Password</FormFeedback>
-
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -128,12 +141,10 @@ const RegForm = (props) => {
                             <Button
                                 className="btn-round"
                                 color="primary"
-                                onClick={() => {
-                                    props.saveFunc(regCred);
-                                }}
+                                onClick={registerMentor}
                                 disabled={!validator()}
                             >
-                                {"Save & Continue"}
+                                {"Confirm"}
                             </Button></center>
                         </div>
                         </Row>
@@ -144,4 +155,4 @@ const RegForm = (props) => {
     );
 }
 
-export default RegForm;
+export default CoordinatorRegistrationForm;

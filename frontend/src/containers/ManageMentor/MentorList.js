@@ -15,6 +15,7 @@ const MentorList = ()=>{
         .catch((err)=>{
             alert(err);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return <div className="content">
@@ -34,7 +35,7 @@ const MentorList = ()=>{
                     </thead>
                     <tbody>
                         {mentors.map((mentor, index)=>{
-                            return <tr key="index">
+                            return <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{mentor.name}</td>
                                 <td>{mentor.email}</td>

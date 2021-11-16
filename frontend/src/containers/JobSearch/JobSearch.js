@@ -17,13 +17,13 @@ const JobSearch = (props) => {
     useEffect(()=>{
         axios.get("/students/filter/" + props.sid)
         .then((res)=>{
-            console.log(res);
             setJobs(res.data);
             setActualJobs(res.data);
         })
         .catch((err)=>{
             alert(err);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const filterJobs = (tiers, profiles, locations)=>{
@@ -58,8 +58,8 @@ const JobSearch = (props) => {
                     {
                         <Row>
                       { jobs.length === 0 ? <p>No Available Jobs</p> :
-                          jobs.map(data=>{
-                              return <Col lg={showFilterBar ? 6 : 4} md="6">
+                          jobs.map((data, index)=>{
+                              return <Col key={index} lg={showFilterBar ? 6 : 4} md="6">
                               <CardHostComponent {...data}/>
                               </Col>;
                           })

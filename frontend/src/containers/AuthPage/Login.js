@@ -36,7 +36,8 @@ const Login = (props) => {
                         <Input type="select" name="role" onChange={changeHandler}>
                             <option>{"---Select---"}</option>
                             <option>{"Admin"}</option>
-                            <option>{"Mentor"}</option>
+                            <option>{"Faculty Coordinator"}</option>
+                            <option>{"Industry Coordinator"}</option>
                             <option>{"Student"}</option>
                         </Input>
                     </FormGroup>

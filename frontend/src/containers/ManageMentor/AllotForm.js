@@ -14,7 +14,6 @@ const AllotForm = ({ mentor , reset}) => {
         axios.get('/students/unAlloted')
             .then((res) => {
                 setUnallotedStudents(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 alert(err);
@@ -40,7 +39,6 @@ const AllotForm = ({ mentor , reset}) => {
                 axios.get('/students/unAlloted')
             .then((res) => {
                 setUnallotedStudents(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 alert(err);

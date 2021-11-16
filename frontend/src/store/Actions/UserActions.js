@@ -3,14 +3,12 @@ import * as actionTypes from "../actionTypes";
 
 export const loginInit = (user)=>{
     return (dispatch)=>{
-        console.log(user);
         axios.post("/login", {
             type : user.role,
             email : user.email,
             password : user.password
         })
         .then((res)=>{
-            console.log(res);
             localStorage.setItem("role", user.role);
             localStorage.setItem("email", user.email);
             localStorage.setItem("id", res.data._id)
@@ -31,7 +29,6 @@ export const loginInit = (user)=>{
             })
         })
         .catch((err)=>{
-            console.log(err);
             alert("Invalid Credentials");
         });
     }
