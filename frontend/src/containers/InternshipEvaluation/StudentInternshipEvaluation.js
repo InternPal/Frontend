@@ -13,6 +13,7 @@ import Annexure3 from "./Annexures/Annexure3";
 import Annexure4 from "./Annexures/Annexure4";
 import Annexure9 from "./Annexures/Annexure9";
 import Annexure10 from "./Annexures/Annexure10";
+import Annexure11 from "./Annexures/Annexure11";
 
 const StudentInternshipEvaluation = (props) => {
 
@@ -28,6 +29,8 @@ const StudentInternshipEvaluation = (props) => {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
 
     return <div className="content">
         {evalData !== null &&
@@ -98,6 +101,13 @@ const StudentInternshipEvaluation = (props) => {
                             <Accordion.Header>Student Feedback Form (Student)</Accordion.Header>
                             <Accordion.Body>
                                 <Annexure10 sid = {evalData.SID} name = {evalData.studentName} />
+                            </Accordion.Body>
+                        </Accordion.Item>
+
+                        <Accordion.Item eventKey="5">
+                            <Accordion.Header>Mid Term / Final Evaluation (Industry Coordinator)</Accordion.Header>
+                            <Accordion.Body>
+                                <Annexure11 sid = {evalData.SID} name = {evalData.studentName} />
                             </Accordion.Body>
                         </Accordion.Item>
 

@@ -20,14 +20,14 @@ import { validationFunc } from "../formValidation";
 
 const CoordinatorRegistrationForm = ({role}) => {
 
-    const [mentorCreds, setMentorCreds] = useState({
+    const [coordinatorCreds, setcoordinatorCreds] = useState({
         email: null,
         name: null,
         password: null,
     });
 
     const changeHandler = (e) => {
-        setMentorCreds(prev => {
+        setcoordinatorCreds(prev => {
             return {
                 ...prev,
                 [e.target.name]: e.target.value
@@ -52,10 +52,10 @@ const CoordinatorRegistrationForm = ({role}) => {
         }, true);
     }
 
-    const registerMentor = () => {
+    const registercoordinator = () => {
         var confirm = window.confirm(`Confirm Registration ? `);
         if (confirm) {
-            axios.post("/mentors", mentorCreds)
+            axios.post(`/${ role === "Industry" ? "industry" : "faculty" }Coordinator/`, coordinatorCreds)
                 .then((_) => {
                     alert("Registration Successful");
                 })
@@ -123,7 +123,7 @@ const CoordinatorRegistrationForm = ({role}) => {
                                     <Input type="password" name="confirmPassword" placeholder="Confirm password" valid={validCRED.confirmPassword.valid}
                                         invalid={validCRED.confirmPassword.invalid} onChange={(e) => {
                                             setValidCRED(prev => {
-                                                let flag = Boolean(e.target.value === mentorCreds.password);
+                                                let flag = Boolean(e.target.value === coordinatorCreds.password);
                                                 return {
                                                     ...prev,
                                                     confirmPassword: {
@@ -141,7 +141,7 @@ const CoordinatorRegistrationForm = ({role}) => {
                             <Button
                                 className="btn-round"
                                 color="primary"
-                                onClick={registerMentor}
+                                onClick={registercoordinator}
                                 disabled={!validator()}
                             >
                                 {"Confirm"}

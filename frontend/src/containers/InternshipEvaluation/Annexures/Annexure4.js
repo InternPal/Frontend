@@ -180,15 +180,12 @@ const FacultySecondVisitReport = (props) => {
 
             <br/>
             <Row>
-                <Col md="12">
+                <Col lg="4" md="4">
                     <FormGroup>
                         <label>{"Over all Progress"}</label>
                     </FormGroup>
                 </Col>
-            </Row>
-            <CardBody>
-            <Row>
-                <Col md="12">
+                <Col lg="4" md="4">
             <FormGroup check>
             <Label style={{color : "green"}}>
                     Satisfactory
@@ -199,9 +196,7 @@ const FacultySecondVisitReport = (props) => {
                 />
             </FormGroup>
             </Col>
-            </Row>
-            <Row>
-                <Col md="12">
+                <Col lg="4" md="4">
             <FormGroup check>
             <Label style={{color : "red"}}>
                     Not Satisfactory
@@ -213,9 +208,9 @@ const FacultySecondVisitReport = (props) => {
             </FormGroup>
             </Col>
             </Row>
-            </CardBody>
 
 
+<br/>
             <Row>
                 <div className="update ml-auto mr-auto"><center>
                     <Button
