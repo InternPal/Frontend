@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 
 import FlowChart from "./flowchart";
-// import Chatbot from "../chatbot";
+import Chatbot from "../chatbot";
 
 import Badge from 'react-bootstrap/Badge';
 import { IoDocumentTextSharp } from "react-icons/io5";
@@ -215,7 +215,7 @@ const JobPage = (props) => {
                     }
 
                 </CardBody>
-               {/* {props.role === "Student" && <Chatbot job = {Job}/>} */}
+               {props.role === "Student" && <Chatbot job = {Job}/>}
             </Card>}
     </div>
 }
