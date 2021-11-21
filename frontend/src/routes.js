@@ -6,6 +6,8 @@ import CoordinatorRegistrationForm from "./components/CoordinatorRegistrationFor
 import StudentJobs from "./containers/StudentJobs";
 import StudentInternshipEvaluation from "./containers/InternshipEvaluation/StudentInternshipEvaluation";
 import ManageCoordinators from "./containers/ManageCoordinators/ManageCoordinators";
+import ManageEvaluations from "./containers/ManageEvaluations.js/ManageEvaluations";
+import CoordinatorEvaluation from "./containers/CoordinatorEvaluation/CoordinatorEvaluations";
 
 export const StudentRoutes = [
 
@@ -33,13 +35,13 @@ export const StudentRoutes = [
     layout: "/admin",
   },
 
-  // {
-  //   path: "/submission",
-  //   name: "Internship Evaluation",
-  //   icon: "fas fa-clipboard-check",
-  //   component: StudentInternshipEvaluation,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/submission",
+    name: "Internship Evaluation",
+    icon: "fas fa-clipboard-check",
+    component: StudentInternshipEvaluation,
+    layout: "/admin",
+  },
 
 ];
 
@@ -85,11 +87,24 @@ export const AdminRoutes = [
     layout: "/admin"
   },
 
+  {
+    path: "/manage-evaluations",
+    name: "Manage Evaluations",
+    icon: "fas fa-clipboard-check",
+    component: ManageEvaluations,
+    layout: "/admin",
+  },
 
 ];
 
 export const CoordinatorRoutes = [
-
+  {
+    path: "/coordinator-evaluations",
+    name: "Evaluations",
+    icon: "fas fa-clipboard-check",
+    component: CoordinatorEvaluation,
+    layout: "/admin",
+  },
 ];
 
 

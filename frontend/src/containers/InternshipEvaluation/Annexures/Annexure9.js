@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "../../../axios";
+import { connect } from "react-redux";
+
 import { CardBody, FormGroup,
     Form,
     Input,
@@ -8,6 +11,36 @@ import { CardBody, FormGroup,
     Table, Label } from "reactstrap";
 
 const IndustryFeedbackForm = (props) => {
+
+    const isIndustryCoordinator = props.role === "Industry Coordinator";
+
+    const [industryFeedbackForm , setIndustryFeedbackForm] = useState({
+        ...props.eval.industryFeedbackForm
+    });
+
+    const changeHandler = (e) => {
+        setIndustryFeedbackForm((prev)=>{
+            return {
+                ...prev,
+                [e.target.name] : e.target.value
+            };
+        })
+    }
+
+    const submitHandler = () => {
+        const confirm = window.confirm("Confirm Changes ? ");
+        if (confirm) {
+            axios.post("/eval/specials", {
+                id: props.eval._id,
+                key: "industryFeedbackForm",
+                value: industryFeedbackForm
+            }).then((_) => {
+                alert("Changes Saved Successfully");
+            }).catch((err) => {
+                alert(err);
+            })
+        }
+    }
 
     const Parameters = [
         "Intellegence/Learning Aptitude", "Professional Skill/Knowledge", "Work Output/Performance",
@@ -25,9 +58,8 @@ const IndustryFeedbackForm = (props) => {
                     <FormGroup>
                         <label>SID</label>
                         <Input
-                            defaultValue={props.sid}
+                            defaultValue={props.eval.SID}
                             disabled
-                            placeholder="SID"
                         />
                     </FormGroup>
                 </Col>
@@ -37,7 +69,7 @@ const IndustryFeedbackForm = (props) => {
                         <label>
                             Name
                         </label>
-                        <Input placeholder={props.name} disabled />
+                        <Input defaultValue = {props.eval.studentName} disabled />
                     </FormGroup>
                 </Col>
             </Row>
@@ -46,14 +78,22 @@ const IndustryFeedbackForm = (props) => {
                 <Col className="pr-1" md="6">
                     <FormGroup>
                         <label>Date Of Joining (Internship)</label>
-                        <Input type = "date"/>
+                        <Input type = "date" 
+                        disabled = {!isIndustryCoordinator}
+                        name = "dateOfJoining"
+                        defaultValue = {industryFeedbackForm.dateOfJoining}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
 
                 <Col className="pl-1" md="6">
                     <FormGroup>
                         <label>Date of Completion (Internship)</label>
-                        <Input type="date"/>
+                        <Input type="date"
+                        disabled = {!isIndustryCoordinator}
+                        name = "dateOfCompletion"
+                        defaultValue = {industryFeedbackForm.dateOfCompletion}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
             </Row>
@@ -64,14 +104,18 @@ const IndustryFeedbackForm = (props) => {
                 <Col className="pr-1" md="6">
                     <FormGroup>
                         <label>Name</label>
-                        <Input type = "text"/>
+                        <Input disabled defaultValue = {props.eval.industryCoordinatorName}/>
                     </FormGroup>
                 </Col>
 
                 <Col className="pl-1" md="6">
                     <FormGroup>
                         <label>Designation</label>
-                        <Input type="text"/>
+                        <Input type="text"
+                        disabled = {!isIndustryCoordinator}
+                        name = "icDesignation"
+                        defaultValue = {industryFeedbackForm.icDesignation}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
             </Row>
@@ -79,7 +123,11 @@ const IndustryFeedbackForm = (props) => {
                 <Col md="12">
                     <FormGroup>
                         <label>{"Company’s/ Organization’s Name"}</label>
-                        <Input type="text" />
+                        <Input type="text"
+                        disabled = {!isIndustryCoordinator}
+                        name = "organizationName"
+                        defaultValue = {industryFeedbackForm.organizationName}
+                        onChange = {changeHandler} />
                     </FormGroup>
                 </Col>
             </Row>
@@ -87,7 +135,11 @@ const IndustryFeedbackForm = (props) => {
                 <Col md="12">
                     <FormGroup>
                         <label>{"Company Address"}</label>
-                        <Input type="textarea" />
+                        <Input type="textarea" 
+                        disabled = {!isIndustryCoordinator}
+                        name = "organizationAddress"
+                        defaultValue = {industryFeedbackForm.organizationAddress}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
             </Row>
@@ -96,14 +148,22 @@ const IndustryFeedbackForm = (props) => {
                 <Col className="pr-1" md="6">
                     <FormGroup>
                         <label>Phone</label>
-                        <Input type = "tel"/>
+                        <Input type = "tel"
+                        disabled = {!isIndustryCoordinator}
+                        name = "icPhone"
+                        defaultValue = {industryFeedbackForm.icPhone}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
 
                 <Col className="pl-1" md="6">
                     <FormGroup>
                         <label>Mobile Number</label>
-                        <Input type="tel"/>
+                        <Input type="tel" 
+                        disabled = {!isIndustryCoordinator}
+                        name = "icMobile"
+                        defaultValue = {industryFeedbackForm.icMobile}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
             </Row>
@@ -112,14 +172,22 @@ const IndustryFeedbackForm = (props) => {
                 <Col className="pr-1" md="6">
                     <FormGroup>
                         <label>Email ID</label>
-                        <Input type = "email"/>
+                        <Input type = "email"
+                        disabled = {!isIndustryCoordinator}
+                        name = "icEmail"
+                        defaultValue = {industryFeedbackForm.icEmail}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
 
                 <Col className="pl-1" md="6">
                     <FormGroup>
                         <label>Fax Number</label>
-                        <Input type="text" />
+                        <Input type="text"
+                        disabled = {!isIndustryCoordinator}
+                        name = "icFax"
+                        defaultValue = {industryFeedbackForm.icFax}
+                        onChange = {changeHandler} />
                     </FormGroup>
                 </Col>
             </Row>
@@ -145,17 +213,17 @@ const IndustryFeedbackForm = (props) => {
                 <tbody>
                     {Parameters.map((p, index) => {
                         return <tr key={p}>
-                            <td scope="row">{index + 1}</td>
+                            <td>{index + 1}</td>
                             <td>
                                {p} 
                             </td>
                             <td>
                                <Row>
-                                   <Col xs="2"><Input type="radio" name={p}/></Col>
-                                   <Col xs="2"><Input type="radio" name={p}/></Col>
-                                   <Col xs="2"><Input type="radio" name={p}/></Col>
-                                   <Col xs="2"><Input type="radio" name={p}/></Col>
-                                   <Col xs="2"><Input type="radio" name={p}/></Col>
+                                   <Col xs="2"><Input type="radio" name={p} value="A+" onChange={changeHandler} disabled={!isIndustryCoordinator} checked = {industryFeedbackForm[p] === "A+"}/></Col>
+                                   <Col xs="2"><Input type="radio" name={p} value="A" onChange={changeHandler} disabled={!isIndustryCoordinator} checked = {industryFeedbackForm[p] === "A"}/></Col>
+                                   <Col xs="2"><Input type="radio" name={p} value="B" onChange={changeHandler} disabled={!isIndustryCoordinator} checked = {industryFeedbackForm[p] === "B"}/></Col>
+                                   <Col xs="2"><Input type="radio" name={p} value="C" onChange={changeHandler} disabled={!isIndustryCoordinator} checked = {industryFeedbackForm[p] === "C"}/></Col>
+                                   <Col xs="2"><Input type="radio" name={p} value="D" onChange={changeHandler} disabled={!isIndustryCoordinator} checked = {industryFeedbackForm[p] === "D"}/></Col>
                                </Row>
                             </td>
                         </tr>
@@ -178,8 +246,12 @@ const IndustryFeedbackForm = (props) => {
                     Yes
                 </Label>
                 <Input
-                    name="radio1"
+                    name="internSatisfaction"
                     type="radio"
+                    value = "true"
+                    onChange = {changeHandler}
+                    checked = {industryFeedbackForm.internSatisfaction === "true"}
+                    disabled = {!isIndustryCoordinator}
                 />
             </FormGroup>
             </Col>
@@ -189,8 +261,12 @@ const IndustryFeedbackForm = (props) => {
                     No
                 </Label>
                 <Input
-                    name="radio1"
+                    name="internSatisfaction"
                     type="radio"
+                    value = "false"
+                    onChange = {changeHandler}
+                    checked = {industryFeedbackForm.internSatisfaction === "false"}
+                    disabled = {!isIndustryCoordinator}
                 />
             </FormGroup>
             </Col>
@@ -212,8 +288,12 @@ const IndustryFeedbackForm = (props) => {
                     Yes
                 </Label>
                 <Input
-                    name="radio1"
+                    name="pecSatisfaction"
                     type="radio"
+                    value = "true"
+                    onChange = {changeHandler}
+                    checked = {industryFeedbackForm.pecSatisfaction === "true"}
+                    disabled = {!isIndustryCoordinator}
                 />
             </FormGroup>
             </Col>
@@ -223,8 +303,12 @@ const IndustryFeedbackForm = (props) => {
                     No
                 </Label>
                 <Input
-                    name="radio1"
+                    name="pecSatisfaction"
                     type="radio"
+                    value = "false"
+                    onChange = {changeHandler}
+                    checked = {industryFeedbackForm.pecSatisfaction === "false"}
+                    disabled = {!isIndustryCoordinator}
                 />
             </FormGroup>
             </Col>
@@ -246,8 +330,12 @@ const IndustryFeedbackForm = (props) => {
                     Yes
                 </Label>
                 <Input
-                    name="radio1"
+                    name="interact"
                     type="radio"
+                    value = "Yes"
+                    onChange = {changeHandler}
+                    checked = {industryFeedbackForm.interact === "Yes"}
+                    disabled = {!isIndustryCoordinator}
                 />
             </FormGroup>
             </Col>
@@ -257,8 +345,12 @@ const IndustryFeedbackForm = (props) => {
                     No
                 </Label>
                 <Input
-                    name="radio1"
+                    name="interact"
                     type="radio"
+                    value = "No"
+                    onChange = {changeHandler}
+                    checked = {industryFeedbackForm.interact === "No"}
+                    disabled = {!isIndustryCoordinator}
                 />
             </FormGroup>
             </Col>
@@ -269,7 +361,11 @@ const IndustryFeedbackForm = (props) => {
                 <Col md="12">
                     <FormGroup>
                         <label>{"Please specify Did you offer your intern any further employment? If yes, Package & Joining Details"}</label>
-                        <Input type="textarea" />
+                        <Input type="textarea" 
+                        disabled = {!isIndustryCoordinator}
+                        name = "furtherEmployement"
+                        defaultValue = {industryFeedbackForm.furtherEmployement}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
             </Row>
@@ -278,26 +374,39 @@ const IndustryFeedbackForm = (props) => {
                 <Col md="12">
                     <FormGroup>
                         <label>{"Any other suggestions/feedback:"}</label>
-                        <Input type="textarea" />
+                        <Input type="textarea" 
+                        disabled = {!isIndustryCoordinator}
+                        name = "suggestion"
+                        defaultValue = {industryFeedbackForm.suggestion}
+                        onChange = {changeHandler}/>
                     </FormGroup>
                 </Col>
             </Row>
 
 
 
-            <Row>
+           { isIndustryCoordinator && <Row>
                 <div className="update ml-auto mr-auto"><center>
                     <Button
                         className="btn-round"
                         color="primary"
-                        onClick={() => { }}
+                        onClick={submitHandler}
                     >
                         {"Save & Submit"}
                     </Button></center>
                 </div>
-            </Row>
+            </Row>}
          </Form>
     </CardBody>
 }
 
-export default IndustryFeedbackForm;
+const mapStateToProps = (state) => {
+    return {
+        role: state.user.role,
+    };
+}
+
+
+
+
+export default connect(mapStateToProps)(IndustryFeedbackForm);

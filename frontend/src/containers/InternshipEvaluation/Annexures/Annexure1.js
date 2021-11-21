@@ -1,6 +1,7 @@
-//add date of joining
+import React, { useState } from "react";
+import axios from "../../../axios";
+import { connect } from "react-redux";
 
-import React from "react";
 import {
     CardBody, FormGroup,
     Form,
@@ -11,6 +12,38 @@ import {
 } from "reactstrap";
 
 const JoiningReport = (props) => {
+
+    const isStudent = props.role === "Student";
+    const isIndustryCoordinator = props.role === "Industry Coordinator";
+
+    const [joiningReport, setJoiningReport] = useState({
+        ...props.eval.joiningReport
+    })
+
+    const submitHandler = () => {
+        const confirm = window.confirm("Confirm Changes ? ");
+        if (confirm) {
+            axios.post("/eval/specials", {
+                id: props.eval._id,
+                key: "joiningReport",
+                value: joiningReport
+            }).then((_) => {
+                alert("Changes Saved Successfully");
+            }).catch((err) => {
+                alert(err);
+            })
+        }
+    }
+
+    const changeHandler = (e) => {
+        setJoiningReport((prev)=>{
+            return {
+                ...prev,
+                [e.target.name] : e.target.value
+            };
+        })
+    }
+
     return <>
         <CardBody>
             <h5>Joining Report</h5>
@@ -20,7 +53,7 @@ const JoiningReport = (props) => {
                         <FormGroup>
                             <label>SID</label>
                             <Input
-                                defaultValue={props.sid}
+                                defaultValue={props.eval.SID}
                                 disabled
                                 placeholder="SID"
                             />
@@ -32,7 +65,7 @@ const JoiningReport = (props) => {
                             <label>
                                 Name
                             </label>
-                            <Input placeholder={props.name} disabled />
+                            <Input defaultValue={props.eval.studentName} disabled />
                         </FormGroup>
                     </Col>
                 </Row>
@@ -42,6 +75,10 @@ const JoiningReport = (props) => {
                             <label>Name of the Project</label>
                             <Input
                                 type="text"
+                                disabled = {!isStudent}
+                                name = "ProjectName"
+                                defaultValue = {joiningReport.ProjectName}
+                                onChange = {changeHandler}
                             />
                         </FormGroup>
                     </Col>
@@ -55,7 +92,23 @@ const JoiningReport = (props) => {
                     <Col md="12">
                         <FormGroup>
                             <label>{"Name & Address of the Organization"}</label>
-                            <Input type="text" />
+                            <Input type="text" 
+                            disabled = {!isStudent}
+                            name = "OrganizationNameAndAddress"
+                            defaultValue = {joiningReport.OrganizationNameAndAddress}
+                            onChange = {changeHandler}/>
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="12">
+                        <FormGroup>
+                            <label>{"Date of Joining"}</label>
+                            <Input type="date" 
+                            disabled = {!isStudent}
+                            name = "dateOfJoining"
+                            defaultValue = {joiningReport.dateOfJoining}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -63,14 +116,22 @@ const JoiningReport = (props) => {
                     <Col className="pr-1" md="6">
                         <FormGroup>
                             <label>Telephone No.</label>
-                            <Input type="tel" />
+                            <Input type="tel" 
+                             disabled = {!isStudent}
+                             name = "organizationPhone"
+                             defaultValue = {joiningReport.organizationPhone}
+                             onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
 
                     <Col className="pl-1" md="6">
                         <FormGroup>
                             <label>E-mail</label>
-                            <Input type="email" />
+                            <Input type="email"
+                             disabled = {!isStudent}
+                             name = "organizationEmail"
+                             defaultValue = {joiningReport.organizationEmail}
+                             onChange = {changeHandler} />
                         </FormGroup>
                     </Col>
                 </Row>
@@ -83,7 +144,11 @@ const JoiningReport = (props) => {
                     <Col md="12">
                         <FormGroup>
                             <label>{"Address of the Site"}</label>
-                            <Input type="text" />
+                            <Input type="text" 
+                            disabled = {!isStudent}
+                            name = "siteAddress"
+                            defaultValue = {joiningReport.siteAddress}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -91,14 +156,22 @@ const JoiningReport = (props) => {
                     <Col className="pr-1" md="6">
                         <FormGroup>
                             <label>Telephone No.</label>
-                            <Input type="tel" />
+                            <Input type="tel" 
+                            disabled = {!isStudent}
+                            name = "sitePhone"
+                            defaultValue = {joiningReport.sitePhone}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
 
                     <Col className="pl-1" md="6">
                         <FormGroup>
                             <label>E-mail</label>
-                            <Input type="email" />
+                            <Input type="email" 
+                            disabled = {!isStudent}
+                            name = "siteEmail"
+                            defaultValue = {joiningReport.siteEmail}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -111,7 +184,11 @@ const JoiningReport = (props) => {
                     <Col md="12">
                         <FormGroup>
                             <label>{"Residential Address of the Student"}</label>
-                            <Input type="text" />
+                            <Input type="text" 
+                            disabled = {!isStudent}
+                            name = "studentAddress"
+                            defaultValue = {joiningReport.studentAddress}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -119,31 +196,39 @@ const JoiningReport = (props) => {
                     <Col className="pr-1" md="6">
                         <FormGroup>
                             <label>Telephone No.</label>
-                            <Input type="tel" />
+                            <Input type="tel" 
+                            disabled = {!isStudent}
+                            name = "studentPhone"
+                            defaultValue = {joiningReport.studentPhone}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
 
                     <Col className="pl-1" md="6">
                         <FormGroup>
                             <label>E-mail</label>
-                            <Input type="email" />
+                            <Input type="email" 
+                            disabled = {!isStudent}
+                            name = "studentEmail"
+                            defaultValue = {joiningReport.studentEmail}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
             </Form>
             <br />
 
-            <Row>
+           { isStudent && <Row>
                 <div className="update ml-auto mr-auto"><center>
                     <Button
                         className="btn-round"
                         color="primary"
-                        onClick={() => { }}
+                        onClick={submitHandler}
                     >
                         {"Save & Submit"}
                     </Button></center>
                 </div>
-            </Row>
+            </Row> }
         </CardBody>
 
         <CardBody>
@@ -154,14 +239,18 @@ const JoiningReport = (props) => {
                     <Col className="pr-1" md="6">
                         <FormGroup>
                             <label>Name</label>
-                            <Input type="text" defaultValue={"XYZ"} disabled />
+                            <Input type="text" defaultValue={props.eval.facultyCoordinatorName} disabled />
                         </FormGroup>
                     </Col>
 
                     <Col className="pl-1" md="6">
                         <FormGroup>
                             <label>Designation</label>
-                            <Input type="text" />
+                            <Input type="text" 
+                            disabled = {!isIndustryCoordinator}
+                            name = "icDesignation"
+                            defaultValue = {joiningReport.icDesignation}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -170,34 +259,48 @@ const JoiningReport = (props) => {
                     <Col className="pr-1" md="6">
                         <FormGroup>
                             <label>Telephone No.</label>
-                            <Input type="tel" />
+                            <Input type="tel" 
+                            disabled = {!isIndustryCoordinator}
+                            name = "icPhone"
+                            defaultValue = {joiningReport.icPhone}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
 
                     <Col className="pl-1" md="6">
                         <FormGroup>
                             <label>E-mail</label>
-                            <Input type="email" />
+                            <Input type="email" 
+                            disabled = {!isIndustryCoordinator}
+                            name = "icEmail"
+                            defaultValue = {joiningReport.icEmail}
+                            onChange = {changeHandler}/>
                         </FormGroup>
                     </Col>
                 </Row>
             </Form>
             <br />
 
-            <Row>
+           { isIndustryCoordinator && <Row>
                 <div className="update ml-auto mr-auto"><center>
                     <Button
                         className="btn-round"
                         color="primary"
-                        onClick={() => { }}
+                        onClick={submitHandler}
                     >
                         {"Save & Submit"}
                     </Button></center>
                 </div>
-            </Row>
+            </Row>}
 
         </CardBody>
     </>
 }
 
-export default JoiningReport;
+const mapStateToProps = (state) => {
+    return {
+        role: state.user.role,
+    };
+}
+
+export default connect(mapStateToProps)(JoiningReport);

@@ -17,10 +17,13 @@ import Annexure11 from "./Annexures/Annexure11";
 
 const StudentInternshipEvaluation = (props) => {
 
+    const id = props.match.params.id;
+    const sid = (typeof(id) === "undefined") ? props.sid : id;
+
     const [evalData, setEvalData] = useState(null);
 
     useEffect(() => {
-        axios.get("/evals/" + props.sid)
+        axios.get("/evals/" + sid)
             .then((res) => {
                 setEvalData(res.data);
             })
@@ -30,6 +33,39 @@ const StudentInternshipEvaluation = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    let annexures = [];
+    if(props.role === "Student"){
+        annexures = [
+        { title : "Joining Report", form : <Annexure1 eval = {evalData}/>}, 
+        { title : "Feedback Form", form : <Annexure10 eval = {evalData}/>}
+    ]
+    }
+    else if(props.role === "Faculty Coordinator"){
+        annexures = [
+            { title : "First Visit Report", form : <Annexure3 eval = {evalData}/>},
+            { title : "Second Visit Report", form : <Annexure4 eval = {evalData}/>}
+        ];
+    }
+    else if(props.role === "Industry Coordinator"){
+        annexures = [
+            { title : "Industry Feedback Form", form : <Annexure9 eval = {evalData}/>}, 
+            { title : "Industry Evaluation Form", form : <Annexure11 eval = {evalData}/>}, 
+            { title : "First Visit Report (Faculty Coordinator)", form : <Annexure3 eval = {evalData}/>}, 
+            { title : "Second Visit Report (Faculty Coordinator)", form : <Annexure4 eval = {evalData}/>},
+            { title : "Joining Report (Student)", form : <Annexure1 eval = {evalData}/>},              
+        ];
+    }
+    //else - Admin
+    else{
+        annexures = [
+            { title : "Industry Evaluation Form (Industry Coordinator)", form : <Annexure11 eval = {evalData}/>},
+            { title : "Industry Feedback Form (Industry Coordinator)", form : <Annexure9 eval = {evalData}/>}, 
+            { title : "First Visit Report (Faculty Coordinator)", form : <Annexure3 eval = {evalData}/>}, 
+            { title : "Second Visit Report (Faculty Coordinator)", form : <Annexure4 eval = {evalData}/>},
+            { title : "Joining Report (Student)", form : <Annexure1 eval = {evalData}/>},              
+            { title : "Feedback Form (Student)", form : <Annexure10 eval = {evalData}/>},  
+        ];
+    }
 
 
     return <div className="content">
@@ -54,11 +90,11 @@ const StudentInternshipEvaluation = (props) => {
                                         </tr>
                                         <tr>
                                             <th scope="row" className="job-page-table-header">{"Faculty Coordinator"}</th>
-                                            <td>{"ABC"}</td>
+                                            <td>{evalData.facultyCoordinatorName}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" className="job-page-table-header">{"Industry Coordinator"}</th>
-                                            <td>{"XYZ"}</td>
+                                            <td>{evalData.industryCoordinatorName}</td>
                                         </tr>
                                     </tbody>
                                 </Table>
@@ -69,47 +105,17 @@ const StudentInternshipEvaluation = (props) => {
 
                     <Accordion>
 
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>Joining Report (Student) </Accordion.Header>
+                    {
+                        annexures.map((annexure, index)=>{
+                            return <Accordion.Item eventKey={index} key={index}>
+                            <Accordion.Header>{annexure.title}</Accordion.Header>
                             <Accordion.Body>
-                                <Annexure1 sid = {evalData.SID} name = {evalData.studentName} />
+                                {annexure.form}
                             </Accordion.Body>
                         </Accordion.Item>
-
-                        <Accordion.Item eventKey="1">
-                            <Accordion.Header>First Visit Report (Faculty Coordinator) </Accordion.Header>
-                            <Accordion.Body>
-                                <Annexure3 sid = {evalData.SID} name = {evalData.studentName} />
-                            </Accordion.Body>
-                        </Accordion.Item>
-
-                        <Accordion.Item eventKey="2">
-                            <Accordion.Header>Second Visit Report (Faculty Coordinator) </Accordion.Header>
-                            <Accordion.Body>
-                                <Annexure4 sid = {evalData.SID} name = {evalData.studentName} />
-                            </Accordion.Body>
-                        </Accordion.Item>
-
-                        <Accordion.Item eventKey="3">
-                            <Accordion.Header>Industry Feedback Form (Industry Coordinator)</Accordion.Header>
-                            <Accordion.Body>
-                                <Annexure9 sid = {evalData.SID} name = {evalData.studentName} />
-                            </Accordion.Body>
-                        </Accordion.Item>
-
-                        <Accordion.Item eventKey="4">
-                            <Accordion.Header>Student Feedback Form (Student)</Accordion.Header>
-                            <Accordion.Body>
-                                <Annexure10 sid = {evalData.SID} name = {evalData.studentName} />
-                            </Accordion.Body>
-                        </Accordion.Item>
-
-                        <Accordion.Item eventKey="5">
-                            <Accordion.Header>Mid Term / Final Evaluation (Industry Coordinator)</Accordion.Header>
-                            <Accordion.Body>
-                                <Annexure11 sid = {evalData.SID} name = {evalData.studentName} />
-                            </Accordion.Body>
-                        </Accordion.Item>
+                        })
+                    }
+                     
 
                     </Accordion>
 
@@ -127,6 +133,7 @@ const StudentInternshipEvaluation = (props) => {
 const mapStateToProps = (state) => {
     return {
         sid: state.user.sid,
+        role : state.user.role
     };
 }
 

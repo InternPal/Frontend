@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 
 import { Row, Button, Card, Col, CardBody, CardHeader } from "reactstrap";
 import { FiFilter } from "react-icons/fi";
+import {BiTrophy} from "react-icons/bi";
 
 import JobFilterBar from "../../components/JobFilterBar/JobFilterBar";
 import CardHostComponent from "../../components/CardHostComponent/CardHostComponent";
@@ -43,7 +44,13 @@ const JobSearch = (props) => {
     }
 
     return <div className="content">
-        
+        {props.offer ? <Card>
+                        <CardBody>
+                            <center><BiTrophy size="60px" color="grey" /></center>
+                            <br />
+                            <center><h5>You have already accepted an Offer</h5></center>
+                        </CardBody>
+                    </Card> :
         <Row>
             <Col lg={showFilterBar ? 8 : 12}>
                 <Button className="btn-round" color="primary" onClick={()=>{
@@ -74,13 +81,14 @@ const JobSearch = (props) => {
                     filterJobs = {filterJobs} />
             </Col>}
 
-        </Row>
+        </Row>}
     </div>
 }
 
 const mapStateToProps = (state)=>{
     return {
-        sid : state.user.sid
+        sid : state.user.sid,
+        offer : state.user.offer,
     }
 }
 

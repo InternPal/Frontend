@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "../../../axios";
+import { connect } from "react-redux";
+
 import { CardBody,FormGroup,
     Form,
     Input,
@@ -9,6 +12,39 @@ import { CardBody,FormGroup,
 
 const IndustryCoordinatorEvaluationForm = (props)=>{
 
+    const isIndustryCoordinator = props.role === "Industry Coordinator";
+
+    const [industryEvaluationForm , setIndustryEvaluationForm] = useState({
+        ...props.eval.industryEvaluationForm
+    })
+
+    const changeHandler = (e) => {
+        setIndustryEvaluationForm((prev)=>{
+            return {
+                ...prev,
+                [e.target.name] : e.target.value
+            };
+        })
+    }
+
+    const submitHandler = () => {
+        const confirm = window.confirm("Confirm Changes ? ");
+        if (confirm) {
+            axios.post("/eval/specials", {
+                id: props.eval._id,
+                key: "industryEvaluationForm",
+                value: industryEvaluationForm
+            }).then((_) => {
+                alert("Changes Saved Successfully");
+            }).catch((err) => {
+                alert(err);
+            })
+        }
+    }
+
+
+
+
     const Grades = ["---Select---","A+", "A", "B+", "B", "C+", "C", "D", "F"];
     const Performance = [
         null, "Outstanding", "Excellent",
@@ -17,13 +53,17 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
     ];
 
     return <CardBody>
+        <h5>Industry Evaluation Form</h5>
         <Form>
-            
         <Row>
             <Col md="12">
                 <FormGroup>
                     <label>{"Name of the Organisation"}</label>
-                    <Input type="text" />
+                    <Input type="text" 
+                    disabled = {!isIndustryCoordinator}
+                    name = "organisationName"
+                    defaultValue = {industryEvaluationForm.organisationName}
+                    onChange = {changeHandler}/>
                 </FormGroup>
             </Col>
         </Row>
@@ -33,9 +73,8 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
                     <FormGroup>
                         <label>SID</label>
                         <Input
-                            defaultValue={props.sid}
+                            defaultValue={props.eval.SID}
                             disabled
-                            placeholder="SID"
                         />
                     </FormGroup>
                 </Col>
@@ -45,7 +84,7 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
                         <label>
                             Name
                         </label>
-                        <Input placeholder={props.name} disabled />
+                        <Input defaultValue = {props.eval.studentName} disabled />
                     </FormGroup>
                 </Col>
             </Row>
@@ -54,7 +93,11 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
                 <Col className="pr-1" md="6">
                     <FormGroup>
                         <label>Mid Term Grade</label>
-                        <Input type="select">
+                        <Input type="select"
+                        disabled = {!isIndustryCoordinator}
+                        name = "midTermGrade"
+                        defaultValue = {industryEvaluationForm.midTermGrade}
+                        onChange = {changeHandler}>
                             {Grades.map((g)=>{
                                 return <option key={g}>{g}</option>
                             })}
@@ -67,7 +110,11 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
                         <label>
                             Final Evaluation Grade
                         </label>
-                        <Input type="select">
+                        <Input type="select"
+                        disabled = {!isIndustryCoordinator}
+                        name = "finalGrade"
+                        defaultValue = {industryEvaluationForm.finalGrade}
+                        onChange = {changeHandler}>
                             {Grades.map((g)=>{
                                 return <option key={g}>{g}</option>
                             })}
@@ -76,17 +123,17 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
                 </Col>
             </Row>
             <br/>
-            <Row>
+           { isIndustryCoordinator && <Row>
                 <div className="update ml-auto mr-auto"><center>
                     <Button
                         className="btn-round"
                         color="primary"
-                        onClick={() => { }}
+                        onClick={submitHandler}
                     >
                         {"Save & Submit"}
                     </Button></center>
                 </div>
-            </Row>
+            </Row>}
 
         <br/><br/>
         <center>
@@ -114,4 +161,11 @@ const IndustryCoordinatorEvaluationForm = (props)=>{
     </CardBody>
 }
 
-export default IndustryCoordinatorEvaluationForm;
+const mapStateToProps = (state) => {
+    return {
+        role: state.user.role,
+    };
+}
+
+
+export default connect(mapStateToProps)(IndustryCoordinatorEvaluationForm);
